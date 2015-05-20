@@ -1,1 +1,2 @@
 Django >= 1.8
+django-debig-toolbar >= 1.3.0

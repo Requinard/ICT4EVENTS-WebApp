@@ -80,6 +80,10 @@
 		<div class="col-lg-4">
 			<h1>Dit is een zijkolom</h1>
 			<p>hier kan vanalles</p>
+
+			{% for event in events %}
+			{{ event.eventname }}
+			{% endfor %}
 		</div>
 	</div>
 

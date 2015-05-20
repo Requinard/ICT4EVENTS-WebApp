@@ -32,7 +32,7 @@ class Event(models.Model):
     endtime = models.DateField()
 
     class Meta:
-        managed = False
+        managed = True
         db_table = 'event'
 
 

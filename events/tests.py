@@ -29,6 +29,17 @@ class AccountTests(TestCase):
 
         self.assertEqual(len(g), 0)
 
+    def test_account_str(self):
+        u = User.objects.get(username='test')
+        g = Account.objects.get(gebruiker=u)
+        self.assertEqual('test', str(g), 'Names do not match')
+
+    def test_account_str(self):
+        u = User.objects.get(username='test')
+        g = Account.objects.get(gebruiker=u)
+        self.assertNotEqual('not test', str(g))
+
+
 class BijdrageTests(TestCase):
     def setUp(self):
         pass

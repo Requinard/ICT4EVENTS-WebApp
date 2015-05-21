@@ -8,13 +8,15 @@
 # Also note: You'll have to insert the output of 'django-admin sqlcustom [app_label]'
 # into your database.
 from __future__ import unicode_literals
+from django.contrib.auth.models import User
 
 from django.db import models
+from django.db.models.signals import post_save, pre_delete
+from django.dispatch import receiver
 
 
 class Account(models.Model):
-    gebruikersnaam = models.CharField(unique=True, max_length=510, blank=True, null=True)
-    email = models.CharField(unique=True, max_length=510)
+    gebruiker = models.OneToOneField(User)
     activatiehash = models.CharField(max_length=510)
     geactiveerd = models.BooleanField()
 
@@ -22,6 +24,20 @@ class Account(models.Model):
         managed = True
         db_table = 'account'
 
+    @receiver(post_save, sender=User)
+    def create_new(sender, instance=None, created=False, **kwargs):
+        if created:
+            Account.objects.get_or_create(gebruiker=instance, activatiehash=hash(User.pk), geactiveerd=False)
+
+    @receiver(pre_delete, sender=User)
+    def delete_on_parent(sender, instance=None, **kwargs):
+        if instance:
+            acc = Account.objects.get(gebruiker=instance)
+
+            acc.delete()
+
+    def __str__(self):
+        return self.gebruiker.username
 
 class AccountBijdrage(models.Model):
     bijdrage = models.ForeignKey('Bijdrage')
@@ -56,7 +72,10 @@ class Bestand(models.Model):
 
 class Bijdrage(models.Model):
     datum = models.DateField(blank=True, null=True)
-    soort = models.CharField(max_length=510)
+    soort = models.CharField(max_length=510, choices=(
+        ('bericht', 'bericht'),
+        ('categorie', 'categorie'),
+    ))
 
     class Meta:
         managed = True

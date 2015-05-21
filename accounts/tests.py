@@ -40,8 +40,6 @@ class LoginViewTest(TestCase):
 
         messages = list(r.context['messages'])
 
-        print r.context
-
         self.assertTrue(messages)
         self.assertIn("Uitloggen",messages[0].message)
 

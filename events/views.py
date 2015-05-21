@@ -8,4 +8,4 @@ class IndexView(View):
     def get(self, request):
         context = {}
         context['events'] = Event.objects.all()
-        return render(request, 'base.html', context)
+        return render(request, 'events/index.html', context)

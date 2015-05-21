@@ -27,7 +27,7 @@ class Account(models.Model):
     @receiver(post_save, sender=User)
     def create_new(sender, instance=None, created=False, **kwargs):
         if created:
-            Account.objects.get_or_create(gebruiker=instance, activatiehash=hash(User.pk), geactiveerd=False)
+            Account.objects.get_or_create(gebruiker=instance, activatiehash=hash(sender.pk), geactiveerd=False)
 
     @receiver(pre_delete, sender=User)
     def delete_on_parent(sender, instance=None, **kwargs):

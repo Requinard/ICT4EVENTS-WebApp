@@ -58,6 +58,7 @@
 						<ul class="dropdown-menu" role="menu">
 							{% if user.is_superuser %}
 								<li><a href="{% url 'admin:index' %}">Admin</a></li>
+								<li><a href="/api/">API</a> </li>
 								<li class="divider"></li>
 							{% endif %}
 							<li><a href="{% url 'account:logout' %}">Logout</a></li>

@@ -41,6 +41,7 @@ INSTALLED_APPS = (
     'debug_toolbar',
     'crispy_forms',
     'social.apps.django_app.default',
+    'rest_framework',
     'events',
     'accounts',
 )

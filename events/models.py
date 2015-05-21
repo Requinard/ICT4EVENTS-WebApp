@@ -50,7 +50,7 @@ class AccountBijdrage(models.Model):
 
 
 class Bericht(models.Model):
-    bijdrage = models.ForeignKey('Bijdrage', primary_key=True)
+    bijdrage = models.OneToOneField('Bijdrage')
     titel = models.CharField(max_length=510, blank=True, null=True)
     inhoud = models.CharField(max_length=255)
 
@@ -60,7 +60,7 @@ class Bericht(models.Model):
 
 
 class Bestand(models.Model):
-    bijdrage = models.ForeignKey('Bijdrage', primary_key=True)
+    bijdrage = models.OneToOneField('Bijdrage')
     categorie = models.ForeignKey('Categorie')
     bestandslocatie = models.CharField(max_length=510)
     grootte = models.IntegerField(blank=True, null=True)
@@ -92,7 +92,7 @@ class BijdrageBericht(models.Model):
 
 
 class Categorie(models.Model):
-    bijdrage = models.ForeignKey(Bijdrage, primary_key=True)
+    bijdrage = models.OneToOneField(Bijdrage)
     categorie_gerelateerd = models.ForeignKey('Categorie', blank=True, null=True, related_name="+")
     naam = models.CharField(max_length=510)
 

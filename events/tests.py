@@ -12,5 +12,6 @@ class AccountTests(TestCase):
     def test_account_is_created(self):
         u = User.objects.get(username='test')
         g = Account.objects.get(gebruiker=u)
+
         self.assertIsNotNone(g, 'gebruiker gevonden')
         self.assertIsNot(g.activatiehash, '1')

@@ -3,7 +3,10 @@ $(document).ready(function() {
        // This is enter
        if(e.charCode === 13)
        {
-           alert(e);
+           var text = e.currentTarget.value;
+           text = text.replace(' ', '+');
+           var url = "/search/"
+           window.location = url + text + "/"
        }
    })
 });

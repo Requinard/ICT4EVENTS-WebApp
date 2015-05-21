@@ -16,8 +16,9 @@ from django.dispatch import receiver
 
 
 class Account(models.Model):
-    gebruiker = models.OneToOneField(User)
+    gebruiker = models.OneToOneField(User, related_name="settings")
     activatiehash = models.CharField(max_length=510)
+    active_event = models.ForeignKey('Event', null=True, blank=True)
     geactiveerd = models.BooleanField()
 
     class Meta:

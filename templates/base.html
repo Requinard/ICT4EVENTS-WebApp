@@ -37,7 +37,7 @@
 						<span class="caret"></span></a>
 					<ul class="dropdown-menu" role="menu">
 						{% for event in events %}
-							<li><a href="#">{{ event }}</a></li>
+							<li><a href="{% url 'events:set_active_event' event.id %}">{{ event }}</a></li>
 						{% endfor %}
 					</ul>
 				</li>

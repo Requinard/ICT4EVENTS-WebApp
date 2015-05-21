@@ -37,7 +37,8 @@ class Account(models.Model):
             acc.delete()
 
     def __str__(self):
-        return self.gebruiker.username
+        return str(self.gebruiker.username)
+
 
 class AccountBijdrage(models.Model):
     bijdrage = models.ForeignKey('Bijdrage')
@@ -74,7 +75,9 @@ class Bijdrage(models.Model):
     datum = models.DateField(blank=True, null=True)
     soort = models.CharField(max_length=510, choices=(
         ('bericht', 'bericht'),
+        ('bestand', 'bestand'),
         ('categorie', 'categorie'),
+        ('account', 'account')
     ))
 
     class Meta:

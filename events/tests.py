@@ -34,7 +34,7 @@ class AccountTests(TestCase):
         g = Account.objects.get(gebruiker=u)
         self.assertEqual('test', str(g), 'Names do not match')
 
-    def test_account_str(self):
+    def test_account_str_fails(self):
         u = User.objects.get(username='test')
         g = Account.objects.get(gebruiker=u)
         self.assertNotEqual('not test', str(g))
@@ -62,8 +62,4 @@ class BijdrageTests(TestCase):
         b = Bijdrage()
         b.soort = "Dit kan nooit"
         b.datum = datetime.now()
-        try:
-            b.save()
-            self.assertEqual(True, False, 'Managed to create bijdrage that cannot be')
-        except:
-            pass
+        self.assertRaises(Exception, b.save())

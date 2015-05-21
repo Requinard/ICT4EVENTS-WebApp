@@ -13,7 +13,6 @@ from django.db import models
 
 
 class Account(models.Model):
-    id = models.IntegerField(primary_key=True)  # AutoField?
     gebruikersnaam = models.CharField(unique=True, max_length=510, blank=True, null=True)
     email = models.CharField(unique=True, max_length=510)
     activatiehash = models.CharField(max_length=510)
@@ -25,8 +24,6 @@ class Account(models.Model):
 
 
 class AccountBijdrage(models.Model):
-    id = models.IntegerField(primary_key=True)  # AutoField?
-    account = models.ForeignKey(Account)
     bijdrage = models.ForeignKey('Bijdrage')
     like = models.BooleanField()
     ongewenst = models.BooleanField()
@@ -58,8 +55,6 @@ class Bestand(models.Model):
 
 
 class Bijdrage(models.Model):
-    id = models.IntegerField(primary_key=True)  # AutoField?
-    account = models.ForeignKey(Account)
     datum = models.DateField(blank=True, null=True)
     soort = models.CharField(max_length=510)
 
@@ -88,7 +83,6 @@ class Categorie(models.Model):
 
 
 class Event(models.Model):
-    id = models.IntegerField(primary_key=True)  # AutoField?
     locatie = models.ForeignKey('Locatie', blank=True, null=True)
     naam = models.CharField(max_length=510)
     datumstart = models.DateField(blank=True, null=True)
@@ -104,7 +98,6 @@ class Event(models.Model):
 
 
 class Locatie(models.Model):
-    id = models.IntegerField(primary_key=True)  # AutoField?
     naam = models.CharField(unique=True, max_length=510)
     straat = models.CharField(max_length=510, blank=True, null=True)
     nr = models.CharField(max_length=510, blank=True, null=True)
@@ -117,7 +110,6 @@ class Locatie(models.Model):
 
 
 class Persoon(models.Model):
-    id = models.IntegerField(primary_key=True)  # AutoField?
     voornaam = models.CharField(max_length=510)
     tussenvoegsel = models.CharField(max_length=510, blank=True, null=True)
     achternaam = models.CharField(max_length=510)
@@ -132,8 +124,6 @@ class Persoon(models.Model):
 
 
 class Plek(models.Model):
-    id = models.IntegerField(primary_key=True)  # AutoField?
-    locatie = models.ForeignKey(Locatie)
     nummer = models.CharField(max_length=510, blank=True, null=True)
     capaciteit = models.IntegerField(blank=True, null=True)
 
@@ -143,8 +133,6 @@ class Plek(models.Model):
 
 
 class PlekReservering(models.Model):
-    id = models.IntegerField(primary_key=True)  # AutoField?
-    plek = models.ForeignKey(Plek)
     reservering = models.ForeignKey('Reservering')
 
     class Meta:
@@ -153,7 +141,6 @@ class PlekReservering(models.Model):
 
 
 class PlekSpecificatie(models.Model):
-    id = models.IntegerField(primary_key=True)  # AutoField?
     specificatie = models.ForeignKey('Specificatie')
     plek = models.ForeignKey(Plek)
     waarde = models.CharField(max_length=510)
@@ -164,7 +151,6 @@ class PlekSpecificatie(models.Model):
 
 
 class Polsbandje(models.Model):
-    id = models.IntegerField(primary_key=True)  # AutoField?
     barcode = models.CharField(unique=True, max_length=510)
     actief = models.BooleanField()
 
@@ -174,7 +160,6 @@ class Polsbandje(models.Model):
 
 
 class Product(models.Model):
-    id = models.IntegerField(primary_key=True)  # AutoField?
     productcategorie = models.ForeignKey('Productcat', related_name="+")
     merk = models.CharField(max_length=510, blank=True, null=True)
     serie = models.CharField(max_length=510, blank=True, null=True)
@@ -187,7 +172,6 @@ class Product(models.Model):
 
 
 class Productcat(models.Model):
-    id = models.IntegerField(primary_key=True)  # AutoField?
     productcategorie = models.ForeignKey('self', blank=True, null=True, related_name="+")
     naam = models.CharField(unique=True, max_length=510)
 
@@ -197,9 +181,6 @@ class Productcat(models.Model):
 
 
 class Productexemplaar(models.Model):
-    id = models.IntegerField(primary_key=True)  # AutoField?
-    product = models.ForeignKey(Product)
-    volgnummer = models.IntegerField()
     barcode = models.CharField(unique=True, max_length=510, blank=True, null=True)
 
     class Meta:
@@ -208,8 +189,6 @@ class Productexemplaar(models.Model):
 
 
 class Reservering(models.Model):
-    id = models.IntegerField(primary_key=True)  # AutoField?
-    persoon = models.ForeignKey(Persoon)
     datumstart = models.DateField(blank=True, null=True)
     datumeinde = models.DateField(blank=True, null=True)
     betaald = models.BooleanField()
@@ -220,19 +199,12 @@ class Reservering(models.Model):
 
 
 class ReserveringPolsbandje(models.Model):
-    id = models.IntegerField(primary_key=True)  # AutoField?
-    reservering = models.ForeignKey(Reservering)
-    polsbandje = models.ForeignKey(Polsbandje)
-    account = models.ForeignKey(Account)
-    aanwezig = models.BooleanField()
-
     class Meta:
         managed = True
         db_table = 'reservering_polsbandje'
 
 
 class Specificatie(models.Model):
-    id = models.IntegerField(primary_key=True)  # AutoField?
     naam = models.CharField(unique=True, max_length=510)
 
     class Meta:
@@ -241,7 +213,6 @@ class Specificatie(models.Model):
 
 
 class Verhuur(models.Model):
-    id = models.IntegerField(primary_key=True)  # AutoField?
     productexemplaar = models.ForeignKey(Productexemplaar, blank=True, null=True)
     res_pb = models.ForeignKey(ReserveringPolsbandje, blank=True, null=True)
     datumin = models.DateField(blank=True, null=True)

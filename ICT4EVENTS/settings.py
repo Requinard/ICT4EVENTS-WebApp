@@ -40,6 +40,7 @@ INSTALLED_APPS = (
     'django.contrib.staticfiles',
     'debug_toolbar',
     'crispy_forms',
+    'social.apps.django_app.default',
     'events',
 )
 
@@ -129,3 +130,6 @@ MESSAGE_TAGS = {
     messages.WARNING: 'warning',
     messages.ERROR: 'danger'
 }
+
+SOCIAL_AUTH_TWITTER_KEY = 'TPCyOZBq49Sje3qr3txoc8FVL'
+SOCIAL_AUTH_TWITTER_SECRET = 'pnMSAx1HKZmoUydhF0IG4zH3nJu4FuFFpmp8dBbhD5fAkendSx'

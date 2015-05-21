@@ -1,0 +1,1 @@
+https://travis-ci.org/Requinard/ICT4EVENTS-WebApp.svg?branch=master

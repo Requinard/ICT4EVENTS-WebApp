@@ -22,7 +22,7 @@ class LoginView(View):
                 messages.success(request, "Inloggen gelukt!")
                 return redirect("events:index")
             else:
-                messages.error("Deze account is niet geactiveerd")
+                messages.error(request, "Deze account is niet geactiveerd")
                 return self.get(request)
         else:
             messages.warning(request, "Gebruikersnaam of wachtwoord klopt niet")

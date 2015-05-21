@@ -42,6 +42,7 @@ INSTALLED_APPS = (
     'crispy_forms',
     'social.apps.django_app.default',
     'events',
+    'accounts',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -53,6 +54,12 @@ MIDDLEWARE_CLASSES = (
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'django.middleware.security.SecurityMiddleware',
+)
+
+AUTHENTICATION_BACKENDS = (
+    'django.contrib.auth.backends.ModelBackend',
+
+    'social.backends.twitter.TwitterOAuth',
 )
 
 ROOT_URLCONF = 'ICT4EVENTS.urls'
@@ -130,6 +137,10 @@ MESSAGE_TAGS = {
     messages.WARNING: 'warning',
     messages.ERROR: 'danger'
 }
+
+LOGIN_URL = "account:login"
+LOGIN_REDIRECT_URL = "events:index"
+LOGOUT_REDIRECT_URL = "events:index"
 
 SOCIAL_AUTH_TWITTER_KEY = 'TPCyOZBq49Sje3qr3txoc8FVL'
 SOCIAL_AUTH_TWITTER_SECRET = 'pnMSAx1HKZmoUydhF0IG4zH3nJu4FuFFpmp8dBbhD5fAkendSx'

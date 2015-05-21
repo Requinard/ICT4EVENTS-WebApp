@@ -54,11 +54,11 @@
 								<li><a href="{% url 'admin:index' %}">Admin</a></li>
 								<li class="divider"></li>
 							{% endif %}
-							<li><a href="{% url 'admin:logout' %}">Logout</a></li>
+							<li><a href="{% url 'account:logout' %}">Logout</a></li>
 						</ul>
 					</li>
 				{% else %}
-					<li><a href="{% url 'admin:login' %}"><i class="fa fa-child"></i> Log in</a></li>
+					<li><a href="{% url 'account:login' %}"><i class="fa fa-child"></i> Log in</a></li>
 				{% endif %}
 			</ul>
 		</div>

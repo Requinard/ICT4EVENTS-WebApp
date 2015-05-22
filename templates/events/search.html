@@ -7,5 +7,44 @@
 				<h1 class="page-header">Searched for {{ query }}</h1>
 			</div>
 		</div>
+		<div class="row">
+			<div class="col-md-4">
+				<div class="panel">
+					<div class="panel-body">
+						<h3>Gevonden events</h3>
+						<ul>
+							{% for event in result_events %}
+								<li>{{ event }}</li>
+							{% endfor %}
+						</ul>
+					</div>
+				</div>
+			</div>
+			<div class="col-md-4">
+				<div class="panel">
+					<div class="panel-body">
+						<h3>Gevonden posts</h3>
+						<ul>
+							{% for post in result_posts %}
+								<li>{{ post.titel }}</li>
+							{% endfor %}
+						</ul>
+					</div>
+				</div>
+			</div>
+			<div class="col-md-4">
+				<div class="panel">
+					<div class="panel-body">
+						<h3>Gevonden users</h3>
+
+						<ul>
+							{% for user in result_users %}
+								<li>{{ user.username }}</li>
+							{% endfor %}
+						</ul>
+					</div>
+				</div>
+			</div>
+		</div>
 	</div>
 {% endblock %}

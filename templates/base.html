@@ -10,12 +10,12 @@
 	<link rel="stylesheet" href="{% static 'css/roboto.min.css' %}">
 	<link rel="stylesheet" href="{% static 'css/font-awesome.min.css' %}">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<title>ICT4EVENTS</title>
+	<title>{% if user.settings.active_event %} {{ user.settings.active_event }} {% else %} ICT4EVENT {% endif %}</title>
 </head>
 <body>
 
 <nav class="navbar navbar-default">
-	<div class="container">
+	<div class="container-fluid">
 		<!-- Brand and toggle get grouped for better mobile display -->
 		<div class="navbar-header">
 			<button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
@@ -25,7 +25,7 @@
 				<span class="icon-bar"></span>
 				<span class="icon-bar"></span>
 			</button>
-			<a class="navbar-brand" href="{% url 'events:index' %}">ICT4EVENTS</a>
+			<a class="navbar-brand" href="{% url 'events:index' %}">{% if user.settings.active_event %} {{ user.settings.active_event|upper }} {% else %} ICT4EVENT {% endif %}</a>
 		</div>
 
 		<!-- Collect the nav links, forms, and other content for toggling -->
@@ -35,7 +35,7 @@
 					<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Events
 						<span class="caret"></span></a>
 					<ul class="dropdown-menu" role="menu">
-						{% for event in events %}
+						{% for event in pre_events %}
 							<li><a href="{% url 'events:set_active_event' event.id %}">{{ event }}</a></li>
 						{% endfor %}
 					</ul>

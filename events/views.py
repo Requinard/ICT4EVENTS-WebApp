@@ -16,6 +16,7 @@ class SetActiveEventView(View):
         new_event = get_object_or_404(Event, pk=event_id)
 
         request.user.settings.active_event = new_event
+        request.user.settings.save()
 
         messages.info(request, "Overgestapt naar event %s" % (new_event.naam))
 
@@ -25,4 +26,8 @@ class SearchView(View):
     def get(self, request, query):
         context = {}
         context['query'] = query.replace('+', ' ')
+
+        context['result_events'] = Event.objects.filter(naam__icontains=context['query'])
+        context['result_posts'] = Bericht.objects.filter(titel__icontains=context['query'])
+        context['result_users'] = User.objects.filter(username__icontains=context['query'])
         return render(request, 'events/search.html', context)

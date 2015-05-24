@@ -30,4 +30,5 @@ class SearchView(View):
         context['result_events'] = Event.objects.filter(naam__icontains=context['query'])
         context['result_posts'] = Bericht.objects.filter(titel__icontains=context['query'])
         context['result_users'] = User.objects.filter(username__icontains=context['query'])
+
         return render(request, 'events/search.html', context)

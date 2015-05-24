@@ -4,10 +4,16 @@
 <html>
 <head lang="en">
 	<meta charset="UTF-8">
-	<link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
-	<link rel="stylesheet" href="{% static 'css/material.min.css' %}">
-	<link rel="stylesheet" href="{% static 'css/ripples.min.css' %}">
-	<link rel="stylesheet" href="{% static 'css/roboto.min.css' %}">
+
+	{% if 1 %}
+		<link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+		<link rel="stylesheet" href="{% static 'css/material.min.css' %}">
+		<link rel="stylesheet" href="{% static 'css/ripples.min.css' %}">
+		<link rel="stylesheet" href="{% static 'css/roboto.min.css' %}">
+	{% else %}
+		<link rel="stylesheet" href="{% static 'css/i328/bootstrap.css' %}">
+		<link rel="stylesheet" href="{% static 'css/i328/bootstrap-theme.css' %}">
+	{% endif %}
 	<link rel="stylesheet" href="{% static 'css/font-awesome.min.css' %}">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<title>{% if user.settings.active_event %} {{ user.settings.active_event }} {% else %} ICT4EVENT {% endif %}</title>
@@ -25,7 +31,8 @@
 				<span class="icon-bar"></span>
 				<span class="icon-bar"></span>
 			</button>
-			<a class="navbar-brand" href="{% url 'events:index' %}">{% if user.settings.active_event %} {{ user.settings.active_event|upper }} {% else %} ICT4EVENT {% endif %}</a>
+			<a class="navbar-brand" href="{% url 'events:index' %}">{% if user.settings.active_event %}
+				{{ user.settings.active_event|upper }} {% else %} ICT4EVENT {% endif %}</a>
 		</div>
 
 		<!-- Collect the nav links, forms, and other content for toggling -->
@@ -57,7 +64,7 @@
 						<ul class="dropdown-menu" role="menu">
 							{% if user.is_superuser %}
 								<li><a href="{% url 'admin:index' %}">Admin</a></li>
-								<li><a href="/api/">API</a> </li>
+								<li><a href="/api/">API</a></li>
 								<li class="divider"></li>
 							{% endif %}
 							<li><a href="{% url 'account:logout' %}">Logout</a></li>

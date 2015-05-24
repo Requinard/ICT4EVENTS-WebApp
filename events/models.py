@@ -20,6 +20,11 @@ class Account(models.Model):
     activatiehash = models.CharField(max_length=510)
     active_event = models.ForeignKey('Event', null=True, blank=True)
     geactiveerd = models.BooleanField()
+    active_theme = models.IntegerField(choices=(
+        (1, 'Material Design'),
+        (2, 'Metro'),
+        (3, 'I328 Terminal'),
+    ))
 
     class Meta:
         managed = True

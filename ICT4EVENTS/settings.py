@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/1.8/ref/settings/
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 import os
+
 from django.contrib import messages
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -39,6 +40,7 @@ INSTALLED_APPS = (
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'debug_toolbar',
+   'django_python3_ldap',
     'crispy_forms',
     'social.apps.django_app.default',
     'rest_framework',
@@ -58,8 +60,8 @@ MIDDLEWARE_CLASSES = (
 )
 
 AUTHENTICATION_BACKENDS = (
+ #   'django_python3_ldap.auth.LDAPBackend',
     'django.contrib.auth.backends.ModelBackend',
-
     'social.backends.twitter.TwitterOAuth',
 )
 
@@ -95,7 +97,7 @@ DATABASES = {
     },
 }
 
-orcl= {
+orcl = {
     'ENGINE': 'django.db.backends.oracle',
     'NAME': 'XE',
     'USER': 'toets2',
@@ -133,16 +135,52 @@ STATICFILES_DIRS = (
 )
 
 MESSAGE_TAGS = {
-    messages.DEBUG: 'default',
-    messages.INFO: 'primary',
+    messages.DEBUG: 'info',
+    messages.INFO: 'info',
     messages.SUCCESS: 'success',
     messages.WARNING: 'warning',
     messages.ERROR: 'danger'
 }
 
+
+# Managing login urls
 LOGIN_URL = "account:login"
 LOGIN_REDIRECT_URL = "events:index"
 LOGOUT_REDIRECT_URL = "events:index"
 
+# Social auth
 SOCIAL_AUTH_TWITTER_KEY = 'TPCyOZBq49Sje3qr3txoc8FVL'
 SOCIAL_AUTH_TWITTER_SECRET = 'pnMSAx1HKZmoUydhF0IG4zH3nJu4FuFFpmp8dBbhD5fAkendSx'
+
+# LDAP Auth
+
+# The URL of the LDAP server.
+LDAP_AUTH_URL = "ldap://188.226.248.153:389"
+
+# Initiate TLS on connection.
+LDAP_AUTH_USE_TLS = False
+
+# The LDAP search base for looking up users.
+LDAP_AUTH_SEARCH_BASE = "ou=ICT4EVENT,dc=test,dc=com"
+
+# The LDAP class that represents a user.
+LDAP_AUTH_OBJECT_CLASS = "inetOrgPersonn"
+
+# User model fields mapped to the LDAP
+# attributes that represent them.
+LDAP_AUTH_USER_FIELDS = {
+    "username": "uid",
+    "first_name": "givenName",
+    "last_name": "sn",
+    "email": "mail",
+    "password": "userPassword"
+}
+
+# A tuple of fields used to uniquely identify a user.
+LDAP_AUTH_USER_LOOKUP_FIELDS = ("username",)
+
+# Callable that transforms the user data loaded from
+# LDAP into a form suitable for creating a user.
+# Override this to set custom field formatting for your
+# user model.
+LDAP_AUTH_CLEAN_USER_DATA = 'django_python3_ldap.utils.clean_user_data'

@@ -16,12 +16,14 @@
 		<!-- CSS -->
 		<link rel="stylesheet" href="{% static 'css/i328/bootstrap.css' %}">
 		<link rel="stylesheet" href="{% static 'css/i328/bootstrap-theme.css' %}">
-		{% elif user.settings.active_theme == 4 %}
+	{% elif user.settings.active_theme == 4 %}
 		<link rel="stylesheet" href="{% static 'css/bootsflat/bootstrap.min.css' %}">
 		<link rel="stylesheet" href="{% static 'css/bootsflat/site.min.css' %}">
 
 		<!-- JS -->
 		<script src="{% static 'js/bootsflat/site.min.js' %}"></script>
+	{% elif user.settings.active_theme == 5 %}
+		<link rel="stylesheet" href="{% static 'css/bootstrap/bootstrap.min.css' %}">
 	{% else %}
 		<!-- CSS -->
 		<link rel="stylesheet" href="{% static 'css/bootstrap/bootstrap.min.css' %}">
@@ -77,6 +79,7 @@
 				{% if user.is_authenticated %}
 
 					<li>
+
 						<div class="navbar-form">
 							<input type="text" class="form-control" placeholder="Search" id="form-field-search">
 						</div>
@@ -95,6 +98,7 @@
 						</ul>
 					</li>
 				{% else %}
+					<li><a href="{% url 'account:create' %}">Create account</a> </li>
 					<li><a href="{% url 'account:login' %}"><i class="fa fa-child"></i> Log in</a></li>
 				{% endif %}
 			</ul>

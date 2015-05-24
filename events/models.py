@@ -24,7 +24,9 @@ class Account(models.Model):
         (1, 'Material Design'),
         (2, 'Metro'),
         (3, 'I328 Terminal'),
-    ))
+        (4, 'Bootsflat'),
+        (5, 'Basic'),
+    ), default=1)
 
     class Meta:
         managed = True

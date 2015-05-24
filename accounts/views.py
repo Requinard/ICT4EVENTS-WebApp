@@ -36,6 +36,28 @@ class LogoutView(View):
 
         return redirect("account:login")
 
+class CreateNewAccountView(View):
+    def get(self, request):
+        return render(request, "account/new.html", {})
+
+    def post(self, request):
+        username = request.POST['username']
+        email = request.POST['email']
+        password = request.POST['password']
+        password_conf = request.POST['password_repeat']
+
+        if password != password_conf:
+            messages.error(request, "De wachtwoorden kwamen niet overeen")
+            return self.get(request)
+
+        user = User.objects.create_user(username=username, password=password, email=email)
+
+        if user.pk != None:
+            messages.success(request, "Account aangemaakt!")
+        else:
+            messages.error(request, "Account niet aangemaakt")
+
+        return redirect("events:index")
 
 class MagicView(View):
     def get(self, request):

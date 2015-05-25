@@ -54,7 +54,7 @@ class Locatie(models.Model):
         db_table = 'locatie'
 
     def __str__(self):
-        return "%s\n%s %s\n%s %s" % (self.naam, self.straat, self.nr, self.postcode, self.plaats)
+        return self.naam
 
     def GetSlugifiedName(self):
         s = "%s+%s,%s,%s" % (self.straat, self.nr, self.postcode, self.plaats)
@@ -93,6 +93,9 @@ class Polsbandje(models.Model):
         managed = True
         db_table = 'polsbandje'
 
+    def __str__(self):
+        return self.barcode
+
 
 class Reservering(models.Model):
     datumstart = models.DateField(blank=True, null=True)
@@ -106,11 +109,21 @@ class Reservering(models.Model):
         managed = True
         db_table = 'reservering'
 
+    def __str__(self):
+        return "%s tot %s" % (self.datumstart, self.datumeinde)
+
 
 class ReserveringPolsbandje(models.Model):
+    polsband = models.ForeignKey(Polsbandje)
+
     class Meta:
         managed = True
         db_table = 'reservering_polsbandje'
+
+    def __str__(self):
+        return self.polsband
+
+
 
 
 class Specificatie(models.Model):
@@ -135,3 +148,9 @@ class Persoon(models.Model):
     class Meta:
         managed = True
         db_table = 'persoon'
+
+    def GetFullName(self):
+        return "%s %s" % (self.voornaam, self.achternaam)
+
+    def __str__(self):
+        return self.GetFullName()

@@ -101,6 +101,8 @@ class Event(models.Model):
 
         return reservations
 
+    def GetAllUnpaidRegistrations(self):
+        return self.GetAllRegistrations(False)
 
 class Locatie(models.Model):
     naam = models.CharField(unique=True, max_length=510)

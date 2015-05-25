@@ -9,7 +9,7 @@ def base(request):
     """
     context = {}
     if request.user.is_active:
-        context['pre_events'] = Event.objects.all()
+        context['pre_events'] = request.user.settings.GetRegistrations
 
     context['google_api_key'] = "AIzaSyC2E9WBTy_FhPgl35Qes98lQUxkvm78vmM"
 

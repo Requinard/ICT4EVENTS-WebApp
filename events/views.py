@@ -34,7 +34,8 @@ class EventDetailsView(View):
 
     @method_decorator(login_required)
     def post(self, request, event_id):
-        return self.get(request, event_id)
+        return self.get(request, event_id
+                        )
 
 class SearchView(View):
     def get(self, request, query):

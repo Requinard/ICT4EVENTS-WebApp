@@ -5,7 +5,7 @@ from django.db import models
 from django.db.models.signals import post_save, pre_delete
 from django.dispatch import receiver
 
-from events.models import Event
+from events.models import Event, Reservering, Plek, Locatie, Persoon
 
 
 class Account(models.Model):
@@ -20,6 +20,7 @@ class Account(models.Model):
         (4, 'Bootsflat'),
         (5, 'Basic'),
     ), default=1)
+    persoon = models.ForeignKey(Persoon)
 
     class Meta:
         managed = True
@@ -39,3 +40,19 @@ class Account(models.Model):
 
     def __str__(self):
         return str(self.gebruiker.username)
+
+    def GetRegistrations(self):
+        events = []
+
+        reservations = Reservering.objects.filter(persoon=self.persoon)
+
+        for r in reservations:
+            plekken = r.plekken
+
+            for p in plekken.all():
+                print(p.locatie)
+                event = Event.objects.filter(locatie=p.locatie)
+                for e in event:
+                    events.append(e)
+
+        return events

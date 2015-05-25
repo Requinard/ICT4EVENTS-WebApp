@@ -56,10 +56,24 @@
 								</div>
 							</div>
 							<div class="col-md-6">
-								<h3>Huidige inschrijvingen</h3>
-								{% for res in event.GetAllRegistrations %}
-								<p>{{ res.persoon.voornaam }} {{ res.persoon.achternaam }}</p>
-								{% endfor %}
+								<h3 class="text-center">Huidige inschrijvingen</h3>
+								{% if event.GetAllRegistrations %}
+									{% for res in event.GetAllRegistrations %}
+										<p>{{ res.persoon.voornaam }} {{ res.persoon.achternaam }}</p>
+									{% endfor %}
+								{% else %}
+									<p>Er zijn nog geen geregistreerden!</p>
+								{% endif %}
+							</div>
+							<div class="col-md-6">
+								<h3 class="text-center">Onbestigde reserveringen</h3>
+								{% if event.GetAllUnpaidRegistrations %}
+									{% for res in event.GetAllUnpaidRegistrations %}
+										<p>{{ res.persoon.voornaam }} {{ res.persoon.achternaam }}</p>
+									{% endfor %}
+								{% else %}
+									<p>alle registraties zijn betaald</p>
+								{% endif %}
 							</div>
 						</div>
 

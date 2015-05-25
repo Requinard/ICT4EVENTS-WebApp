@@ -15,6 +15,7 @@ class IndexView(View):
         return render(request, 'events/index.html', context)
 
 class SetActiveEventView(View):
+    @method_decorator(login_required)
     def get(self, request, event_id):
         #TODO: Schrijf unit tests hiervoor
         new_event = get_object_or_404(Event, pk=event_id)
@@ -49,11 +50,14 @@ class SearchView(View):
 
         return render(request, 'events/search.html', context)
 
+
 class ReserveView(View):
+    @method_decorator(login_required)
     def get(self, request, event_id):
         context = {}
 
         return render(request, "events/reservation.html", context)
 
+    @method_decorator(login_required)
     def post(self, request, event_id):
         return self.get(request)

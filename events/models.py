@@ -32,10 +32,11 @@ class Event(models.Model):
         location = self.locatie
 
         spots = Plek.objects.filter(locatie=location)
-
-        reservations = Reservering.objects.filter(plekken__contains=spots.all(), betaald=paid,
-                                                  datumstart__gte=self.datumstart, datumeinde__lte=self.datumeinde)
-
+        try:
+            reservations = Reservering.objects.filter(plekken__contains=spots.all(), betaald=paid,
+                                                  datumstart__gte=self.datumstart, datumeinde__lte=self.datumeinde) or []
+        except:
+            reservations = []
         return reservations
 
     def GetAllUnpaidRegistrations(self):

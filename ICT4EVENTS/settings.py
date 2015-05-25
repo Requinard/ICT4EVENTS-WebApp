@@ -47,7 +47,7 @@ INSTALLED_APPS = (
     'events',
     'accounts',
     'sharing',
-    'reservations'
+    'reservations',
 )
 
 MIDDLEWARE_CLASSES = (

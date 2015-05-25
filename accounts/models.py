@@ -4,8 +4,7 @@ from django.db import models
 # Create your models here.
 from django.db.models.signals import post_save, pre_delete
 from django.dispatch import receiver
-
-from events.models import Event, Reservering, Plek, Locatie, Persoon
+from events.models import Event, Reservering, Persoon
 
 
 class Account(models.Model):
@@ -51,7 +50,7 @@ class Account(models.Model):
 
             for p in plekken.all():
                 print(p.locatie)
-                event = Event.objects.filter(locatie=p.locatie)
+                event = Event.objects.filter(locatie=p.locatie, datumstart__lte=r.datumstart, datumeinde__gte=r.datumeinde)
                 for e in event:
                     events.append(e)
 

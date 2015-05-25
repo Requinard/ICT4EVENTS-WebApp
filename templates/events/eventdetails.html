@@ -23,8 +23,6 @@
 										<br/>
 										<h4>Locatie: {{ event.locatie.naam }}</h4>
 
-										<p>TODO: voeg google maps toe</p>
-
 										<p>{{ event.locatie.straat }} {{ event.locatie.nr }}</p>
 
 										<p>{{ event.locatie.postcode }} {{ event.locatie.plaats }}</p>
@@ -32,12 +30,7 @@
 										<br/>
 
 										{% if user.is_authenticated %}
-											<form method="get">
-												<button type="submit" class="btn btn-primary btn-block">Schrijf je in
-													voor dit
-													event
-												</button>
-											</form>
+											<a href="{% url 'events:register' event.id %}">Schrijf je in</a>
 										{% else %}
 											<a href="{% url 'account:login' %}" class="btn btn-warning btn-block">Log in
 												om je

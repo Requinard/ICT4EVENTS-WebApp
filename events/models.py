@@ -70,16 +70,20 @@ class Plek(models.Model):
         managed = True
         db_table = 'plek'
 
+    def __str__(self):
+        return self.nummer
 
 class PlekSpecificatie(models.Model):
-    specificatie = models.ForeignKey('Specificatie')
     plek = models.ForeignKey(Plek)
     waarde = models.CharField(max_length=510)
+    specificatie = models.ForeignKey('Specificatie')
 
     class Meta:
         managed = True
         db_table = 'plek_specificatie'
 
+    def __str__(self):
+        return self.waarde
 
 class Polsbandje(models.Model):
     barcode = models.CharField(unique=True, max_length=510)
@@ -111,10 +115,12 @@ class ReserveringPolsbandje(models.Model):
 
 class Specificatie(models.Model):
     naam = models.CharField(unique=True, max_length=510)
-
     class Meta:
         managed = True
         db_table = 'specificatie'
+
+    def __str__(self):
+        return self.naam
 
 
 class Persoon(models.Model):

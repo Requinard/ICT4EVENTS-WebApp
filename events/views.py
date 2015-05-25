@@ -5,6 +5,8 @@ from django.contrib import messages
 from django.utils.decorators import method_decorator
 from django.views.generic import View
 from .models import *
+from sharing.models import Bericht
+
 
 class IndexView(View):
     def get(self, request):
@@ -34,8 +36,7 @@ class EventDetailsView(View):
 
     @method_decorator(login_required)
     def post(self, request, event_id):
-        return self.get(request, event_id
-                        )
+        return self.get(request, event_id)
 
 class SearchView(View):
     def get(self, request, query):
@@ -47,3 +48,12 @@ class SearchView(View):
         context['result_users'] = User.objects.filter(username__icontains=context['query'])
 
         return render(request, 'events/search.html', context)
+
+class ReserveView(View):
+    def get(self, request, event_id):
+        context = {}
+
+        return render(request, "events/reservation.html", context)
+
+    def post(self, request, event_id):
+        return self.get(request)

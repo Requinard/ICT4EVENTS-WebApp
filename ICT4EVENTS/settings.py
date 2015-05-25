@@ -46,6 +46,8 @@ INSTALLED_APPS = (
     'rest_framework',
     'events',
     'accounts',
+    'sharing',
+    'reservations'
 )
 
 MIDDLEWARE_CLASSES = (

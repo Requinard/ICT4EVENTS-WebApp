@@ -1,16 +1,21 @@
-from django.shortcuts import render
-
 # Create your views here.
 from rest_framework import viewsets
-from api.serializers import PlekSerializer
-from rest_framework.generics import ListAPIView, ListCreateAPIView
-from events.models import PlekSpecificatie
+
+from rest_framework.generics import ListCreateAPIView
+
+from api.serializers import PlekSerializer, PlekSpecificatieSerializer
+from events.models import PlekSpecificatie, Plek
 
 
 class PlekAutocompleteViewset(ListCreateAPIView):
-    serializer_class = PlekSerializer
+    serializer_class = PlekSpecificatieSerializer
 
     def get_queryset(self):
         name = self.kwargs['name']
-        plekken = PlekSpecificatie.objects.filter(waarde__icontains=name)
+        plekken = PlekSpecificatie.objects.filter(plek__nummer__icontains=str(name))
         return plekken
+
+
+class PlekViewset(viewsets.ModelViewSet):
+    serializer_class = PlekSerializer
+    queryset = Plek.objects.all()

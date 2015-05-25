@@ -12,9 +12,9 @@
 				<div class="panel">
 					<div class="panel-body">
 						<h3>Gevonden events</h3>
-						<ul>
+						<ul class="list-group">
 							{% for event in result_events %}
-								<li>{{ event }}</li>
+								<li class="list-group-item"><a href="{% url 'events:details' event.id %}">{{ event }}</a></li>
 							{% endfor %}
 						</ul>
 					</div>

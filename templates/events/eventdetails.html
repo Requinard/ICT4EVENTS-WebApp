@@ -1,0 +1,72 @@
+{% extends 'base.html' %}
+
+{% block content %}
+	<div class="container">
+		<div class="row">
+			<div class="col-lg-12">
+				<div class="panel">
+					<div class="panel-body">
+						<h1 class="page-header text-center">{{ event.naam }}</h1>
+
+						<div class="row">
+							<div class="col-md-12">
+								<div class="row">
+									<div class="col-md-4">
+										<h3>Details</h3>
+										{% if event.datumstart and event.datumeinde %}
+											<p><strong>Van </strong>{{ event.datumstart|date }}
+												<strong>Tot</strong> {{ event.datumeinde|date }}</p>
+										{% else %}
+											<p class="text-muted">Er staan nog geen datums vast</p>
+										{% endif %}
+
+										<br/>
+										<h4>Locatie: {{ event.locatie.naam }}</h4>
+
+										<p>TODO: voeg google maps toe</p>
+
+										<p>{{ event.locatie.straat }} {{ event.locatie.nr }}</p>
+
+										<p>{{ event.locatie.postcode }} {{ event.locatie.plaats }}</p>
+
+										<br/>
+
+										{% if user.is_authenticated %}
+											<form method="get">
+												<button type="submit" class="btn btn-primary btn-block">Schrijf je in
+													voor dit
+													event
+												</button>
+											</form>
+										{% else %}
+											<a href="{% url 'account:login' %}" class="btn btn-warning btn-block">Log in
+												om je
+												te registreren</a>
+										{% endif %}
+									</div>
+									<div class="col-md-8">
+										<iframe
+												width="100%"
+												height="400"
+												frameborder="0" style="border:0"
+												src="https://www.google.com/maps/embed/v1/place?key={{ google_api_key }}
+    &q={{ event.locatie.GetSlugifiedName }}">
+										</iframe>
+									</div>
+								</div>
+							</div>
+							<div class="col-md-6">
+								<h3>Huidige inschrijvingen</h3>
+								{% for res in event.GetAllRegistrations %}
+								<p>{{ res.persoon.voornaam }} {{ res.persoon.achternaam }}</p>
+								{% endfor %}
+							</div>
+						</div>
+
+					</div>
+				</div>
+
+			</div>
+		</div>
+	</div>
+{% endblock %}

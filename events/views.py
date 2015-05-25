@@ -1,6 +1,8 @@
+from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib import messages
 # Create your views here.
+from django.utils.decorators import method_decorator
 from django.views.generic import View
 from .models import *
 
@@ -21,6 +23,18 @@ class SetActiveEventView(View):
         messages.info(request, "Overgestapt naar event %s" % (new_event.naam))
 
         return redirect("events:index")
+
+class EventDetailsView(View):
+    def get(self,request, event_id):
+        context = {}
+
+        context['event'] = get_object_or_404(Event, pk=event_id)
+        return render(request, "events/eventdetails.html", context)
+
+
+    @method_decorator(login_required)
+    def post(self, request, event_id):
+        return self.get(request, event_id)
 
 class SearchView(View):
     def get(self, request, query):

@@ -1,0 +1,9 @@
+<div class="col-lg-12">
+	<a href="{% url 'events:details' event.id %}"><h3>{{ event.naam }}</h3></a>
+	{% if event.datumstart and event.datumeinde %}
+		<p><strong>Van </strong>{{ event.datumstart|date }} <strong>Tot</strong> {{ event.datumeinde|date }}</p>
+	{% else %}
+		<p class="text-muted">Er staan nog gen datums vast</p>
+	{% endif %}
+	<p>Locatie: {{ event.locatie.naam }}</p>
+</div>

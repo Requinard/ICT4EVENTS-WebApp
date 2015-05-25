@@ -40,7 +40,7 @@ INSTALLED_APPS = (
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'debug_toolbar',
-   'django_python3_ldap',
+    'django_python3_ldap',
     'crispy_forms',
     'social.apps.django_app.default',
     'rest_framework',
@@ -110,7 +110,7 @@ orcl = {
 # Internationalization
 # https://docs.djangoproject.com/en/1.8/topics/i18n/
 
-LANGUAGE_CODE = 'en-us'
+LANGUAGE_CODE = 'nl-nl'
 
 TIME_ZONE = 'UTC'
 
@@ -155,13 +155,13 @@ SOCIAL_AUTH_TWITTER_SECRET = 'pnMSAx1HKZmoUydhF0IG4zH3nJu4FuFFpmp8dBbhD5fAkendSx
 # LDAP Auth
 
 # The URL of the LDAP server.
-LDAP_AUTH_URL = "ldap://188.226.248.153:389"
+LDAP_AUTH_URL = "ldap://ldap.terarion.com:389"
 
 # Initiate TLS on connection.
 LDAP_AUTH_USE_TLS = False
 
 # The LDAP search base for looking up users.
-LDAP_AUTH_SEARCH_BASE = "ou=ICT4EVENT,dc=test,dc=com"
+LDAP_AUTH_SEARCH_BASE = "cn=users,dc=test,dc=com"
 
 # The LDAP class that represents a user.
 LDAP_AUTH_OBJECT_CLASS = "inetOrgPersonn"

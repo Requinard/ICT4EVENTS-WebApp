@@ -4,19 +4,14 @@
 	<div class="container">
 		<div class="row">
 			<div class="col-lg-8">
-				<h1 class="page-header">Recente posts</h1>
+				<h1 class="page-header">Opkomende Events</h1>
 
 				<div class="panel">
 					<div class="panel-body">
 						<div class="row">
-							<div class=" col-lg-3 col-sm-12">
-								<img src="http://lorempixel.com/800/800" alt="" class="img-responsive"/>
-							</div>
-							<div class="col-lg-8 col-sm-12">
-								<h3><b>Posted by:</b> Admin <b>on</b> May 11th.</h3>
-
-								<p>Wat vinden jullie van dit event</p>
-							</div>
+							{% for event in events %}
+								{% include 'snippet/event.html' %}
+							{% endfor %}
 						</div>
 					</div>
 				</div>

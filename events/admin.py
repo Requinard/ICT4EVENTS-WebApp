@@ -4,7 +4,6 @@ from .models import *
 class EventAdmin(admin.ModelAdmin):
     list_display = ('id', 'naam')
 
-admin.site.register(Account)
 admin.site.register(AccountBijdrage)
 admin.site.register(Bericht)
 admin.site.register(Bestand)
@@ -15,7 +14,6 @@ admin.site.register(Event, EventAdmin)
 admin.site.register(Locatie)
 admin.site.register(Persoon)
 admin.site.register(Plek)
-admin.site.register(PlekReservering)
 admin.site.register(PlekSpecificatie)
 admin.site.register(Polsbandje)
 admin.site.register(Product)

@@ -19,7 +19,7 @@ class Account(models.Model):
         (4, 'Bootsflat'),
         (5, 'Basic'),
     ), default=1)
-    persoon = models.ForeignKey(Persoon)
+    persoon = models.ForeignKey(Persoon, null=True, blank=True)
 
     class Meta:
         managed = True

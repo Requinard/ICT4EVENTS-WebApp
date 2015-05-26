@@ -63,8 +63,8 @@ MIDDLEWARE_CLASSES = (
 
 AUTHENTICATION_BACKENDS = (
     'django_auth_ldap3.backends.LDAPBackend',
- #   'django.contrib.auth.backends.ModelBackend',
-  #  'social.backends.twitter.TwitterOAuth',
+    'django.contrib.auth.backends.ModelBackend',
+    'social.backends.twitter.TwitterOAuth',
 )
 
 ROOT_URLCONF = 'ICT4EVENTS.urls'

@@ -14,6 +14,28 @@ An app for managing events. Created for Fontys Hogeschool as a Semester Project.
 
 - DDownload psycopgs [here](http://www.stickpeople.com/projects/python/win-psycopg/)
 
+## Setting up the ldap server
+
+- Install slapd
+- install phpldapadmin
+- Go to /usr/share/phpldapadmin/templates/creation/
+- Open posixAccount.xml
+- Add the following text
+
+    \<attribute id="mail">
+            <display>Email</display>
+    \</attribute>
+
+- Go to /etc/ldap/scheme/
+- Open nis.schema and add the following lines
+
+attributetype ( 1.3.6.1.1.1.1.3 NAME 'mail'
+        DESC 'a users email adress'
+        EQUALITY caseExactIA5Match
+        SYNTAX 1.3.6.1.4.1.1466.115.121.1.26 SINGLE-VALUE )
+
+
+
 ## How to run
 
 - First, make sure you already have python

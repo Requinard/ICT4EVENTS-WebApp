@@ -40,7 +40,7 @@ INSTALLED_APPS = (
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'debug_toolbar',
-    'django_python3_ldap',
+    'django_auth_ldap3',
     'crispy_forms',
     'social.apps.django_app.default',
     'rest_framework',
@@ -62,9 +62,9 @@ MIDDLEWARE_CLASSES = (
 )
 
 AUTHENTICATION_BACKENDS = (
- #   'django_python3_ldap.auth.LDAPBackend',
-    'django.contrib.auth.backends.ModelBackend',
-    'social.backends.twitter.TwitterOAuth',
+    'django_auth_ldap3.backends.LDAPBackend',
+ #   'django.contrib.auth.backends.ModelBackend',
+  #  'social.backends.twitter.TwitterOAuth',
 )
 
 ROOT_URLCONF = 'ICT4EVENTS.urls'
@@ -164,33 +164,6 @@ SOCIAL_AUTH_TWITTER_SECRET = 'pnMSAx1HKZmoUydhF0IG4zH3nJu4FuFFpmp8dBbhD5fAkendSx
 
 # LDAP Auth
 
-# The URL of the LDAP server.
-LDAP_AUTH_URL = "ldap://ldap.terarion.com:389"
-
-# Initiate TLS on connection.
-LDAP_AUTH_USE_TLS = False
-
-# The LDAP search base for looking up users.
-LDAP_AUTH_SEARCH_BASE = "cn=users,dc=test,dc=com"
-
-# The LDAP class that represents a user.
-LDAP_AUTH_OBJECT_CLASS = "inetOrgPersonn"
-
-# User model fields mapped to the LDAP
-# attributes that represent them.
-LDAP_AUTH_USER_FIELDS = {
-    "username": "uid",
-    "first_name": "givenName",
-    "last_name": "sn",
-    "email": "mail",
-    "password": "userPassword"
-}
-
-# A tuple of fields used to uniquely identify a user.
-LDAP_AUTH_USER_LOOKUP_FIELDS = ("username",)
-
-# Callable that transforms the user data loaded from
-# LDAP into a form suitable for creating a user.
-# Override this to set custom field formatting for your
-# user model.
-LDAP_AUTH_CLEAN_USER_DATA = 'django_python3_ldap.utils.clean_user_data'
+AUTH_LDAP_URI = 'ldap://ldap.terarion.com:389'
+AUTH_LDAP_BASE_DN = 'cn=users,dc=test,dc=com'
+AUTH_LDAP_BIND_TEMPLATE = "uid={username},cn=users,dc=test,dc=com"

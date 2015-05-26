@@ -49,6 +49,7 @@ class Event(models.Model):
 
         return False
 
+
 class Locatie(models.Model):
     naam = models.CharField(unique=True, max_length=510)
     straat = models.CharField(max_length=510, blank=True, null=True)
@@ -145,13 +146,21 @@ class Specificatie(models.Model):
 
 
 class Persoon(models.Model):
-    voornaam = models.CharField(max_length=510)
     tussenvoegsel = models.CharField(max_length=510, blank=True, null=True)
-    achternaam = models.CharField(max_length=510)
     straat = models.CharField(max_length=510, blank=True, null=True)
     huisnr = models.CharField(max_length=510, blank=True, null=True)
     woonplaats = models.CharField(max_length=510, blank=True, null=True)
     banknr = models.CharField(max_length=510, blank=True, null=True)
+
+    user = models.ForeignKey(User, related_name="details", null=True, blank=True)
+
+    @property
+    def voornaam(self):
+        return self.user.first_name
+
+    @property
+    def achternaam(self):
+        return self.user.last_name
 
     class Meta:
         managed = True

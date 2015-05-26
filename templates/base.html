@@ -68,9 +68,13 @@
 					<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Events
 						<span class="caret"></span></a>
 					<ul class="dropdown-menu" role="menu">
-						{% for event in pre_events %}
-							<li><a href="{% url 'events:set_active_event' event.id %}">{{ event }}</a></li>
-						{% endfor %}
+						{% if pre_events %}
+							{% for event in pre_events %}
+								<li><a href="{% url 'events:set_active_event' event.id %}">{{ event }}</a></li>
+							{% endfor %}
+						{% else %}
+							<li class="navbar-text">Geen registraties!</li>
+						{% endif %}
 					</ul>
 				</li>
 			</ul>
@@ -98,7 +102,7 @@
 						</ul>
 					</li>
 				{% else %}
-					<li><a href="{% url 'account:create' %}">Create account</a> </li>
+					<li><a href="{% url 'account:create' %}">Create account</a></li>
 					<li><a href="{% url 'account:login' %}"><i class="fa fa-child"></i> Log in</a></li>
 				{% endif %}
 			</ul>

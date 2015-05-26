@@ -10,6 +10,10 @@ An app for managing events. Created for Fontys Hogeschool as a Semester Project.
 - Python(2.7, 3.3, 3.4)
 - A server
 
+## Preparing on windows
+
+- DDownload psycopgs [here](http://www.stickpeople.com/projects/python/win-psycopg/)
+
 ## How to run
 
 - First, make sure you already have python

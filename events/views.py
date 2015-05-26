@@ -32,6 +32,10 @@ class EventDetailsView(View):
         context = {}
 
         context['event'] = get_object_or_404(Event, pk=event_id)
+
+        if request.user.is_authenticated:
+            context['registered'] = context['event'].EvaluateUserHasRegistered(request.user)
+
         return render(request, "events/eventdetails.html", context)
 
 

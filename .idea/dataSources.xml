@@ -1,11 +1,25 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
-  <component name="DataSourceManagerImpl" format="xml" hash="2224221481">
-    <data-source source="LOCAL" name="SQLite -" uuid="46c38f10-b1c7-4c5f-94b1-2a5a68319e52">
+  <component name="DataSourceManagerImpl" format="xml" hash="63598077">
+    <data-source source="LOCAL" name="SQLite -" uuid="89f076ee-7a2e-497f-8dbb-9ba0d2d9317a">
       <driver-ref>sqlite.xerial</driver-ref>
       <synchronize>true</synchronize>
       <jdbc-driver>org.sqlite.JDBC</jdbc-driver>
       <jdbc-url>jdbc:sqlite:$PROJECT_DIR$/db.sqlite3</jdbc-url>
+      <libraries />
+    </data-source>
+    <data-source source="LOCAL" name="SQLite - [2]" uuid="32683fd8-d034-4de6-90f2-6af70754c7c7">
+      <driver-ref>sqlite.xerial</driver-ref>
+      <synchronize>true</synchronize>
+      <jdbc-driver>org.sqlite.JDBC</jdbc-driver>
+      <jdbc-url>jdbc:sqlite:$PROJECT_DIR$/db.sqlite3</jdbc-url>
+      <libraries />
+    </data-source>
+    <data-source source="LOCAL" name="PostgreSQL - pts2@ldap.terarion.com" uuid="7ddcc3c7-12e2-43fa-aa49-a57508c8f1d5">
+      <driver-ref>postgresql</driver-ref>
+      <synchronize>true</synchronize>
+      <jdbc-driver>org.postgresql.Driver</jdbc-driver>
+      <jdbc-url>jdbc:postgresql://ldap.terarion.com:5432/pts2</jdbc-url>
       <libraries />
     </data-source>
   </component>

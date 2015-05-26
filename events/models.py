@@ -34,7 +34,8 @@ class Event(models.Model):
         spots = Plek.objects.filter(locatie=location)
         try:
             reservations = Reservering.objects.filter(plekken__contains=spots.all(), betaald=paid,
-                                                  datumstart__gte=self.datumstart, datumeinde__lte=self.datumeinde) or []
+                                                      datumstart__gte=self.datumstart,
+                                                      datumeinde__lte=self.datumeinde) or []
         except:
             reservations = []
         return reservations
@@ -42,6 +43,11 @@ class Event(models.Model):
     def GetAllUnpaidRegistrations(self):
         return self.GetAllRegistrations(False)
 
+    def EvaluateUserHasRegistered(self, user):
+        if self in user.settings.GetRegistrations():
+            return True
+
+        return False
 
 class Locatie(models.Model):
     naam = models.CharField(unique=True, max_length=510)
@@ -74,6 +80,7 @@ class Plek(models.Model):
     def __str__(self):
         return self.nummer
 
+
 class PlekSpecificatie(models.Model):
     plek = models.ForeignKey(Plek)
     waarde = models.CharField(max_length=510)
@@ -85,6 +92,7 @@ class PlekSpecificatie(models.Model):
 
     def __str__(self):
         return self.waarde
+
 
 class Polsbandje(models.Model):
     barcode = models.CharField(unique=True, max_length=510)
@@ -125,10 +133,9 @@ class ReserveringPolsbandje(models.Model):
         return self.polsband
 
 
-
-
 class Specificatie(models.Model):
     naam = models.CharField(unique=True, max_length=510)
+
     class Meta:
         managed = True
         db_table = 'specificatie'

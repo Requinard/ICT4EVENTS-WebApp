@@ -59,10 +59,12 @@ class CreateNewAccountView(View):
 
         return redirect("events:index")
 
-class MagicView(View):
+def MagicView(View):
     def get(self, request):
         context = {}
 
-        context['dummy_user'] = User.objects.get(id=1)
+        user = User.objects.get(id=1)
 
-        return render(request, 'account/dummy.html', context)
+        context['active_user'] = user
+
+        return render(request, "account/dummy.html", context)

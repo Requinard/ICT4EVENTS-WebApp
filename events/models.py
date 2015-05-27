@@ -125,6 +125,7 @@ class Reservering(models.Model):
 
 class ReserveringPolsbandje(models.Model):
     polsband = models.ForeignKey(Polsbandje)
+    reservering = models.ForeignKey(Reservering)
 
     class Meta:
         managed = True

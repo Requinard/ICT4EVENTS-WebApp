@@ -11,8 +11,8 @@ $(document).ready(function () {
 
 });
 
-$(function() {
-    $( ".datepicker" ).datepicker();
+$(function () {
+    $(".datepicker").datepicker();
 });
 $(document).ready(function () {
     $("#plek_autosearch").on('input', function (e) {
@@ -23,7 +23,9 @@ $(document).ready(function () {
 
         var totalURL = url + value + "/";
 
-        console.log(totalURL)
+        console.log(totalURL);
+
+        var plekken = {};
 
         $.get(totalURL, function (data) {
             if (data.length <= 0) {
@@ -31,16 +33,58 @@ $(document).ready(function () {
                 list.append('<li class="list-group-item">Niks gevonden!</li>')
             }
             else {
-                console.log(data);
-                list.empty();
+                list.empty()
+                //TODO: make pretty representation
                 for (var i = 0; i != data.length; i++) {
-                    $.get("/api/plek/" + data[i]['plek'] + "/", function (plek_data) {
+                    var inter = {};
+                    var id = data[i]['plek']['id']
+                    if (id in plekken) {
+                        plekken[id]['specificatie'].push(data[i]['specificatie']['naam']);
+                        plekken[id]['waarde'].push(data[i]['waarde']);
+                    }
+                    else {
 
-                        list.append('<li class="list-group-item">' + plek_data['nummer'] + '</li>');
-                    })
+                        inter['naam'] = data[i]['plek']['nummer'];
+                        inter['capaciteit'] = data[i]['plek']['capaciteit'];
 
+                        inter['specificatie'] = [data[i]['specificatie']['naam']];
+
+                        inter['waarde'] = [data[i]['waarde']];
+
+                        plekken[id] = inter;
+                    }
+                }
+
+                for (var item in plekken) {
+                    var specString = "";
+                    for (var i = 0; i != plekken[item]['specificatie'].length; i++) {
+                        var internal_state = plekken[item]['specificatie'][i] + ": " + plekken[item]['waarde'][i] + "<br />";
+                        specString += internal_state
+                    }
+
+                    var string = '<li class="list-group-item">Naam: ' + plekken[item]['naam'] + "<br />" + specString + "<a href='#' class='btn btn-default plek_clickable' plek_id=" + item + ">Reserveer</a></li>";
+
+                    console.log(string);
+                    list.append(string);
                 }
             }
         })
     });
+});
+
+$(document).ready(function(){
+    $(".plek_clickable").click(function(e){
+        console.log(e);
+    })
+})
+$(document).ready(function ($) {
+
+    $('.password-field').strength({
+        strengthClass: 'strength',
+        strengthMeterClass: 'strength_meter',
+        strengthButtonClass: '',
+        strengthButtonText: '',
+        strengthButtonTextToggle: 'Hide Password'
+    });
+
 });

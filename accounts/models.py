@@ -5,6 +5,7 @@ from django.db import models
 from django.db.models.signals import post_save, pre_delete
 from django.dispatch import receiver
 from events.models import Event, Reservering, Persoon, Polsbandje
+from sharing.models import Bericht
 
 
 class Account(models.Model):
@@ -39,7 +40,7 @@ class Account(models.Model):
     def __str__(self):
         return str(self.gebruiker.username)
 
-    def GetRegistrations(self):
+    def get_reservations(self):
         events = []
 
         reservations = Reservering.objects.filter(persoon=self.gebruiker.details)
@@ -55,6 +56,8 @@ class Account(models.Model):
 
         return events
 
+    def get_posts(self):
+        return Bericht.objects.filter(bijdrage__user=self.gebruiker)
 
 class ReserveringPolsbandje(models.Model):
     polsband = models.ForeignKey(Polsbandje)

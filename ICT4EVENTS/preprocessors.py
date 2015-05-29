@@ -10,7 +10,7 @@ def base(request):
     context = {}
     if request.user.is_active:
         try:
-            context['pre_events'] = request.user.settings.GetRegistrations
+            context['pre_events'] = request.user.settings.get_reservations
         except:
             pass
 

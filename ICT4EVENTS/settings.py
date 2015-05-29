@@ -41,8 +41,7 @@ INSTALLED_APPS = (
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'debug_toolbar',
-    'django_auth_ldap3',
-    'crispy_forms',
+     'crispy_forms',
     'social.apps.django_app.default',
     'rest_framework',
     'events',
@@ -63,7 +62,7 @@ MIDDLEWARE_CLASSES = (
 )
 
 AUTHENTICATION_BACKENDS = (
-    'django_auth_ldap3.backends.LDAPBackend',
+  #  'django_auth_ldap3.backends.LDAPBackend',
     'django.contrib.auth.backends.ModelBackend',
     'social.backends.twitter.TwitterOAuth',
 )
@@ -94,11 +93,11 @@ WSGI_APPLICATION = 'ICT4EVENTS.wsgi.application'
 # https://docs.djangoproject.com/en/1.8/ref/settings/#databases
 
 DATABASES = {
-    'sqlite': {
+    'default': {
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
     },
-    'default':{
+    'sqlite':{
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
         'NAME' : 'pts2',
         'USER': 'david',

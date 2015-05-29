@@ -46,7 +46,7 @@ class Event(models.Model):
         return self.GetAllRegistrations(False)
 
     def evaluate_user_registered(self, user):
-        if self in user.settings.GetRegistrations():
+        if self in user.settings.get_reservations():
             return True
 
         return False
@@ -137,7 +137,6 @@ class Specificatie(models.Model):
 
 
 class Persoon(models.Model):
-    tussenvoegsel = models.CharField(max_length=510, blank=True, null=True)
     straat = models.CharField(max_length=510, blank=True, null=True)
     huisnr = models.CharField(max_length=510, blank=True, null=True)
     woonplaats = models.CharField(max_length=510, blank=True, null=True)

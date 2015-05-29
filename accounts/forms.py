@@ -86,7 +86,7 @@ class RegisterForm(forms.Form):
             Field("email"),
             Field("first_name"),
             Field("last_name"),
-            Field("password"),
+            Field("password", css_class="password-field"),
             Field("password_repeat"),
 
             Submit("submit", "Submit", css_class="btn-primary btn-block")

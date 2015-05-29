@@ -113,8 +113,10 @@ class ProfileView(View):
 
             if form.is_valid():
                 form.save()
+                messages.success(request, "Persoonsgegevens veranderd")
                 return self.get(request)
             else:
+                messages.warning(request, "Er zijn een paar velden niet goed ingevuld")
                 context['detailsform'] = form
 
         elif mode == "profile":
@@ -122,8 +124,10 @@ class ProfileView(View):
 
             if user.is_valid():
                 user.save()
+                messages.success(request, "Profiel opgeslagen!")
                 return self.get(request)
             else:
+                messages.warning(request, "Er zijn een paar velden niet goed ingevuld")
                 context['userform'] = user
 
         elif mode == "settings":
@@ -131,8 +135,10 @@ class ProfileView(View):
 
             if settings.is_valid():
                 settings.save()
+                messages.success(request,"Intelling gewijzigd")
                 return self.get(request)
             else:
+                messages.warning(request, "Er zijn een paar velden niet goed ingevuld")
                 context['settingsform'] = settings
 
         return render(request, "account/profile.html", context)

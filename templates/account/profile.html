@@ -5,26 +5,32 @@
 {% block content %}
 	<div class="container">
 		<div class="row">
-			<div class="col-lg-7">
-				<h1>{{ user }}</h1>
-			</div>
-			<div class="col-lg-5">
+			<div class="{% if detailsform %}col-lg-7{% else %} col-lg-12{% endif %}">
 				<div class="panel">
 					<div class="panel-body">
-						{% crispy detailsform %}
-					</div>
-				</div>
-				<div class="panel">
-					<div class="panel-body">
-						{% crispy userform %}
-					</div>
-				</div>
-				<div class="panel">
-					<div class="panel-body">
-						{% crispy settingsform %}
+						<h1>{{ requested_user.get_full_name }}</h1>
 					</div>
 				</div>
 			</div>
+			{% if detailsform %}
+				<div class="col-lg-5">
+					<div class="panel">
+						<div class="panel-body">
+							{% crispy detailsform %}
+						</div>
+					</div>
+					<div class="panel">
+						<div class="panel-body">
+							{% crispy userform %}
+						</div>
+					</div>
+					<div class="panel">
+						<div class="panel-body">
+							{% crispy settingsform %}
+						</div>
+					</div>
+				</div>
+			{% endif %}
 		</div>
 	</div>
 {% endblock %}

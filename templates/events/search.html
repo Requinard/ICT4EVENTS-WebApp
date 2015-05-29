@@ -37,9 +37,9 @@
 					<div class="panel-body">
 						<h3>Gevonden users</h3>
 
-						<ul>
+						<ul class="list-group">
 							{% for user in result_users %}
-								<li>{{ user.username }}</li>
+								<li class="list-group-item"><a href="{% url 'account:profile-user' user.username %}"> {{ user.username }}</a></li>
 							{% endfor %}
 						</ul>
 					</div>

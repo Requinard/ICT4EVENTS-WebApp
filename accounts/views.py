@@ -1,6 +1,6 @@
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib import messages
 
 # Create your views here.
@@ -89,12 +89,12 @@ class ProfileView(View):
         context = {}
 
         if username== None:
-            context['user'] = request.user
+            context['requested_user'] = request.user
             context['detailsform'] = DetailsForm(instance=request.user.details)
             context['userform'] = UserForm(instance=request.user)
             context['settingsform'] = SettingsForm(instance=request.user.settings)
         else:
-            context['user'] = User.objects.filter(username=username)
+            context['requested_user'] = get_object_or_404(User, username=username)
 
         return render(request, "account/profile.html", context)
 

@@ -173,3 +173,7 @@ SOCIAL_AUTH_TWITTER_SECRET = 'pnMSAx1HKZmoUydhF0IG4zH3nJu4FuFFpmp8dBbhD5fAkendSx
 AUTH_LDAP_URI = 'ldap://ldap.terarion.com:389'
 AUTH_LDAP_BASE_DN = 'cn=users,dc=test,dc=com'
 AUTH_LDAP_BIND_TEMPLATE = "uid={username},cn=users,dc=test,dc=com"
+
+# Crispy Forms
+
+CRISPY_TEMPLATE_PACK = 'bootstrap3'

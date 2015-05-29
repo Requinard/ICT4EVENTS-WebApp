@@ -43,7 +43,7 @@ class Event(models.Model):
     def GetAllUnpaidRegistrations(self):
         return self.GetAllRegistrations(False)
 
-    def EvaluateUserHasRegistered(self, user):
+    def evaluate_user_registered(self, user):
         if self in user.settings.GetRegistrations():
             return True
 
@@ -123,18 +123,6 @@ class Reservering(models.Model):
         return "%s tot %s" % (self.datumstart, self.datumeinde)
 
 
-class ReserveringPolsbandje(models.Model):
-    polsband = models.ForeignKey(Polsbandje)
-    reservering = models.ForeignKey(Reservering)
-
-    class Meta:
-        managed = True
-        db_table = 'reservering_polsbandje'
-
-    def __str__(self):
-        return self.polsband
-
-
 class Specificatie(models.Model):
     naam = models.CharField(unique=True, max_length=510)
 
@@ -153,7 +141,7 @@ class Persoon(models.Model):
     woonplaats = models.CharField(max_length=510, blank=True, null=True)
     banknr = models.CharField(max_length=510, blank=True, null=True)
 
-    user = models.ForeignKey(User, related_name="details", null=True, blank=True)
+    user = models.OneToOneField(User, related_name="details", null=True, blank=True)
 
     @property
     def voornaam(self):
@@ -167,8 +155,8 @@ class Persoon(models.Model):
         managed = True
         db_table = 'persoon'
 
-    def GetFullName(self):
+    def get_full_name(self):
         return "%s %s" % (self.voornaam, self.achternaam)
 
     def __str__(self):
-        return self.GetFullName()
+        return self.get_full_name()

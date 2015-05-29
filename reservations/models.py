@@ -1,7 +1,7 @@
 from django.db import models
 
 # Create your models here.
-from events.models import ReserveringPolsbandje
+from accounts.models import ReserveringPolsbandje
 
 
 class Productcat(models.Model):
@@ -15,6 +15,8 @@ class Productcat(models.Model):
 
 class Productexemplaar(models.Model):
     barcode = models.CharField(unique=True, max_length=510, blank=True, null=True)
+
+    product = models.ForeignKey('Product')
 
     class Meta:
         managed = True

@@ -93,6 +93,8 @@
 						   aria-expanded="false"><i class="fa fa-user"></i> {{ user.get_full_name }} <span
 								class="caret"></span></a>
 						<ul class="dropdown-menu" role="menu">
+						<li><a href="{% url 'account:profile' %}">Profiel</a> </li>
+						<li class="divider"></li>
 							{% if user.is_superuser %}
 								<li><a href="{% url 'admin:index' %}">Admin</a></li>
 								<li><a href="/api/">API</a></li>

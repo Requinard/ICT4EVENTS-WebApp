@@ -30,11 +30,11 @@ class SetActiveEventView(View):
 class EventDetailsView(View):
     def get(self,request, event_id):
         context = {}
-
+        Event.objects.filter(pk=event_id)
         context['event'] = get_object_or_404(Event, pk=event_id)
 
         if request.user.is_authenticated:
-            context['registered'] = context['event'].EvaluateUserHasRegistered(request.user)
+            context['registered'] = context['event'].evaluate_user_registered(request.user)
 
         return render(request, "events/eventdetails.html", context)
 

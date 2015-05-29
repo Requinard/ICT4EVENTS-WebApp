@@ -4,7 +4,7 @@ from django.db import models
 # Create your models here.
 from django.db.models.signals import post_save, pre_delete
 from django.dispatch import receiver
-from events.models import Event, Reservering, Persoon
+from events.models import Event, Reservering, Persoon, Polsbandje
 
 
 class Account(models.Model):
@@ -19,7 +19,6 @@ class Account(models.Model):
         (4, 'Bootsflat'),
         (5, 'Basic'),
     ), default=1)
-    persoon = models.ForeignKey(Persoon, null=True, blank=True)
 
     class Meta:
         managed = True
@@ -43,7 +42,7 @@ class Account(models.Model):
     def GetRegistrations(self):
         events = []
 
-        reservations = Reservering.objects.filter(persoon=self.persoon)
+        reservations = Reservering.objects.filter(persoon=self.gebruiker.details)
 
         for r in reservations:
             plekken = r.plekken
@@ -55,3 +54,18 @@ class Account(models.Model):
                     events.append(e)
 
         return events
+
+
+class ReserveringPolsbandje(models.Model):
+    polsband = models.ForeignKey(Polsbandje)
+    reservering = models.ForeignKey(Reservering)
+    account = models.ForeignKey(Account)
+
+    aanwezig = models.BooleanField(default=False)
+
+    class Meta:
+        managed = True
+        db_table = 'reservering_polsbandje'
+
+    def __str__(self):
+        return self.polsband

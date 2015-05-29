@@ -1,48 +1,14 @@
 {% extends 'base.html' %}
 
+{% load crispy_forms_tags %}
+
 {% block content %}
 	<div class="container">
 		<div class="row">
 			<div class="col-lg-12 panel">
 				<h1 class="page-header">Registreer</h1>
 
-				<form method="post" class="form-horizontal">
-					{% csrf_token %}
-
-					<div class="form-group">
-						<label for="inputEmail3" class="col-sm-2 control-label">Gebruikersnaam</label>
-
-						<div class="col-sm-10">
-							<input type="text" class="form-control" id="inputEmail3" placeholder="Gebruikersnaam"
-								   name="username">
-						</div>
-					</div>
-					<div class="form-group">
-						<label for="inputEmail3" class="col-sm-2 control-label">Email</label>
-
-						<div class="col-sm-10">
-							<input type="email" class="form-control" id="inputEmail3" placeholder="test@gebruiker.com"
-								   name="email">
-						</div>
-					</div>
-					<div class="form-group">
-						<label for="inputPassword3" class="col-sm-2 control-label">Wachtwoord</label>
-
-						<div class="col-sm-10">
-							<input type="password" class="form-control" id="inputPassword3" placeholder="Wachtwoord"
-								   name="password">
-						</div>
-					</div>
-					<div class="form-group">
-						<label for="inputPassword4" class="col-sm-2 control-label">Herhaal het wachtwoord</label>
-
-						<div class="col-sm-10">
-							<input type="password" class="form-control" id="inputPassword4" placeholder="Wachtwoord"
-								   name="password_repeat">
-						</div>
-					</div>
-					<button type="submit" class="btn btn-primary">Submit</button>
-				</form>
+				{% crispy registerform %}
 			</div>
 		</div>
 	</div>

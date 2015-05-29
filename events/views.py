@@ -4,6 +4,7 @@ from django.contrib import messages
 # Create your views here.
 from django.utils.decorators import method_decorator
 from django.views.generic import View
+from events.forms import PlekReserveringForm
 from .models import *
 from sharing.models import Bericht
 
@@ -59,7 +60,7 @@ class ReserveView(View):
     @method_decorator(login_required)
     def get(self, request, event_id):
         context = {}
-
+        context['form'] = PlekReserveringForm()
         return render(request, "events/reservation.html", context)
 
     @method_decorator(login_required)

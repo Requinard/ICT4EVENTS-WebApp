@@ -11,6 +11,9 @@ $(document).ready(function () {
 
 });
 
+$(function() {
+    $( ".datepicker" ).datepicker();
+});
 $(document).ready(function () {
     $("#plek_autosearch").on('input', function (e) {
         var value = e.currentTarget.value;

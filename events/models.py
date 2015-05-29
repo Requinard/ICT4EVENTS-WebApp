@@ -11,6 +11,8 @@ from __future__ import unicode_literals
 
 from django.contrib.auth.models import User
 from django.db import models
+from django.db.models.signals import post_save, pre_delete
+from django.dispatch import receiver
 
 
 class Event(models.Model):
@@ -160,3 +162,16 @@ class Persoon(models.Model):
 
     def __str__(self):
         return self.get_full_name()
+
+    @receiver(post_save, sender=User)
+    def create_new(sender, instance=None, created=False, **kwargs):
+        if created:
+            Persoon.objects.get_or_create(user=instance)
+
+    @receiver(pre_delete, sender=User)
+    def delete_on_parent(sender, instance=None, **kwargs):
+        if instance:
+            persoon = Persoon.objects.get(user=instance)
+
+            persoon.delete()
+

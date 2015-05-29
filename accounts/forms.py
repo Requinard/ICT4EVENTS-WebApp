@@ -2,6 +2,8 @@ from crispy_forms.bootstrap import FormActions
 from crispy_forms.layout import Submit, Layout, Field
 from django import forms
 from crispy_forms.helper import FormHelper
+from django.contrib.auth.models import User
+from accounts.models import Account
 from events.models import Persoon
 
 
@@ -101,6 +103,49 @@ class DetailsForm(forms.ModelForm):
         self.helper.field_class = 'col-lg-8'
 
 
+        self.helper.form_action = "/account/profile/set/details/"
+
+        self.helper.add_input(Submit('submit', 'Adres opslaan', css_class="btn-block"))
+
+
     class Meta:
         model = Persoon
         exclude = ("id", "user")
+
+class UserForm(forms.ModelForm):
+    def __init__(self, *args, **kwargs):
+        super(UserForm, self).__init__(*args, **kwargs)
+        self.helper = FormHelper()
+
+        self.helper.form_class = 'form-horizontal'
+
+        self.helper.label_class = 'col-lg-3'
+        self.helper.field_class = 'col-lg-8'
+
+        self.helper.form_action = "/account/profile/set/profile/"
+
+        self.helper.add_input(Submit('submit', 'Profiel opslaan', css_class="btn-block"))
+
+
+    class Meta:
+        model = User
+        fields = ("username", "first_name", "last_name", "email")
+
+class SettingsForm(forms.ModelForm):
+    def __init__(self, *args, **kwargs):
+        super(SettingsForm, self).__init__(*args, **kwargs)
+        self.helper = FormHelper()
+
+        self.helper.form_class = 'form-horizontal'
+
+        self.helper.label_class = 'col-lg-3'
+        self.helper.field_class = 'col-lg-8'
+
+        self.helper.form_action = "/account/profile/set/settings/"
+
+        self.helper.add_input(Submit('submit', 'Instellingen opslaan', css_class="btn-block"))
+
+
+    class Meta:
+        model = Account
+        exclude = ("id", "gebruiker", "activatiehash", "active_event", "geactiveerd")

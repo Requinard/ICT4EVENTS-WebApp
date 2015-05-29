@@ -5,7 +5,7 @@ from django.contrib import messages
 
 # Create your views here.
 from django.views.generic import View
-from accounts.forms import LoginForm, RegisterForm, DetailsForm
+from accounts.forms import LoginForm, RegisterForm, DetailsForm, UserForm, SettingsForm
 
 
 class LoginView(View):
@@ -85,13 +85,54 @@ class CreateNewAccountView(View):
             return render(request, "account/new.html", context)
 
 class ProfileView(View):
-    def get(self, request, username=None):
+    def get(self, request, username=None, mode=None):
         context = {}
 
         if username== None:
             context['user'] = request.user
             context['detailsform'] = DetailsForm(instance=request.user.details)
+            context['userform'] = UserForm(instance=request.user)
+            context['settingsform'] = SettingsForm(instance=request.user.settings)
         else:
             context['user'] = User.objects.filter(username=username)
+
+        return render(request, "account/profile.html", context)
+
+    def post(self, request, username=None, mode=None):
+        context = {}
+
+        if username is not None:
+            return self.get(request, username, mode)
+
+        context['detailsform'] = DetailsForm(instance=request.user.details)
+        context['userform'] = UserForm(instance=request.user)
+        context['settingsform'] = SettingsForm(instance=request.user.settings)
+
+        if mode == "details":
+            form = DetailsForm(request.POST, instance=request.user.details)
+
+            if form.is_valid():
+                form.save()
+                return self.get(request)
+            else:
+                context['detailsform'] = form
+
+        elif mode == "profile":
+            user = UserForm(request.POST, instance=request.user)
+
+            if user.is_valid():
+                user.save()
+                return self.get(request)
+            else:
+                context['userform'] = user
+
+        elif mode == "settings":
+            settings = SettingsForm(request.POST, instance=request.user.settings)
+
+            if settings.is_valid():
+                settings.save()
+                return self.get(request)
+            else:
+                context['settingsform'] = settings
 
         return render(request, "account/profile.html", context)

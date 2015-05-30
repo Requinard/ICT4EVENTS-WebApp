@@ -13,6 +13,7 @@ $(document).ready(function () {
 
 $(function () {
     $(".datepicker").datepicker();
+    $( ".datepicker" ).datepicker( "option", "dateFormat","dd/mm/yy" );
 });
 $(document).ready(function () {
     $("#plek_autosearch").on('input', function (e) {
@@ -72,11 +73,6 @@ $(document).ready(function () {
     });
 });
 
-$(document).ready(function(){
-    $(".plek_clickable").click(function(){
-        console.log("hi")
-    })
-})
 $(document).ready(function ($) {
 
     $('.password-field').strength({

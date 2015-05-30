@@ -65,4 +65,26 @@ class ReserveView(View):
 
     @method_decorator(login_required)
     def post(self, request, event_id):
-        return self.get(request)
+        context = {}
+
+        event = get_object_or_404(Event, pk=event_id)
+
+        form = PlekReserveringForm(request.POST)
+
+        if form.is_valid():
+            plek = form.cleaned_data['plek']
+            datum_begin = event.datumstart
+            datum_eind = event.datumeinde
+            persoon = request.user.details
+
+            ret, p = Plek.reserve(plek, persoon, datum_begin, datum_eind)
+
+            if not ret:
+                messages.error(request, "Deze plek is al gereserveerd")
+            else:
+                messages.success(request, "Je reservering is gelukt!")
+                return redirect("events:details", event_id)
+
+        context['form'] = form
+
+        return render(request, "events/reservation.html", context)

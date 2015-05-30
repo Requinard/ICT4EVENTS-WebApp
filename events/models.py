@@ -85,12 +85,26 @@ class Plek(models.Model):
 
     @staticmethod
     def reserve(plek, persoon, startdate, enddate):
-        plek_id = plek.id
-        pers_id = persoon.id
+        plek_id = Plek.objects.filter(nummer=plek)
+        pers_id = persoon
 
         cursor = connection.cursor()
+        try:
+            cursor.callproc('createreservation', [plek_id.id, pers_id.id, startdate, enddate])
 
-        cursor.callproc('createreservation', [plek_id, pers_id, startdate, enddate])
+        except AttributeError:
+            """We now know that the database does not use stored procedures, so we will save it in python"""
+            reserverd = Reservering.objects.filter(datumstart__gte=startdate, datumeinde__lte=enddate, plekken__icontains=plek_id)
+
+            if len(reserverd) > 0:
+                return (False, None)
+            else:
+                reservation = Reservering(datumstart=startdate, datumeinde=enddate, persoon=pers_id)
+
+                reservation.save()
+
+                reservation.plekken.add(plek)
+                return (True, reservation)
 
 
 class PlekSpecificatie(models.Model):
@@ -121,7 +135,7 @@ class Polsbandje(models.Model):
 class Reservering(models.Model):
     datumstart = models.DateField(blank=True, null=True)
     datumeinde = models.DateField(blank=True, null=True)
-    betaald = models.BooleanField()
+    betaald = models.BooleanField(default=False)
 
     plekken = models.ManyToManyField(Plek)
     persoon = models.ForeignKey('Persoon')

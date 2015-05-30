@@ -62,7 +62,7 @@ $(document).ready(function () {
                         specString += internal_state
                     }
 
-                    var string = '<li class="list-group-item">Naam: ' + plekken[item]['naam'] + "<br />" + specString + "<a href='#' class='btn btn-default plek_clickable' plek_id=" + item + ">Reserveer</a></li>";
+                    var string = '<li class="list-group-item">Naam: ' + plekken[item]['naam'] + "<br />" + specString + "<a href='#' class='btn btn-default plek_clickable pull-right' plek_id=" + item + ">Reserveer</a></li>";
 
                     console.log(string);
                     list.append(string);
@@ -73,8 +73,8 @@ $(document).ready(function () {
 });
 
 $(document).ready(function(){
-    $(".plek_clickable").click(function(e){
-        console.log(e);
+    $(".plek_clickable").click(function(){
+        console.log("hi")
     })
 })
 $(document).ready(function ($) {

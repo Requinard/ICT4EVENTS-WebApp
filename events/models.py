@@ -13,7 +13,7 @@ from django.contrib.auth.models import User
 from django.db import models
 from django.db.models.signals import post_save, pre_delete
 from django.dispatch import receiver
-
+from django.db import connection
 
 class Event(models.Model):
     locatie = models.ForeignKey('Locatie', blank=True, null=True)
@@ -82,6 +82,15 @@ class Plek(models.Model):
 
     def __str__(self):
         return self.nummer
+
+    @staticmethod
+    def reserve(plek, persoon, startdate, enddate):
+        plek_id = plek.id
+        pers_id = persoon.id
+
+        cursor = connection.cursor()
+
+        cursor.callproc('createreservation', [plek_id, pers_id, startdate, enddate])
 
 
 class PlekSpecificatie(models.Model):

@@ -1,4 +1,6 @@
 {% extends "base.html" %}
+{% load crispy_forms_tags %}
+
 {% block content %}
     <div class="container">
         <div class="row">
@@ -9,6 +11,9 @@
                 <p>test</p>
             {% endif %}
             <div class="row">
+                <div class="col-md-3">
+                    {% crispy form %}
+                </div>
                 {% for comment in post.get_child_comments %}
                     <div class="col-lg-3">
                         {% include 'snippet/comment.html' %}

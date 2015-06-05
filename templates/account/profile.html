@@ -20,7 +20,7 @@
 
 						<h3>Gemaakte posts</h3>
 						{% for post in requested_user.settings.get_posts %}
-							<p>{{ post.inhoud }}</p>
+                            {% include "snippet/post.html" %}
 						{% endfor %}
 					</div>
 				</div>

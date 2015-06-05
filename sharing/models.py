@@ -36,7 +36,7 @@ class Bericht(models.Model):
 class Bestand(models.Model):
     bijdrage = models.OneToOneField('Bijdrage')
     categorie = models.ForeignKey('Categorie')
-    bestandslocatie = models.FileField()
+    bestandslocatie = models.FileField(upload_to='user_uploads/%Y/%m/%d')
 
     class Meta:
         managed = True

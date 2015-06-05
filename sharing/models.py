@@ -1,3 +1,4 @@
+from time import timezone
 from django.contrib.auth.models import User
 from django.db import models
 
@@ -19,6 +20,13 @@ class Bericht(models.Model):
     bijdrage = models.OneToOneField('Bijdrage')
     titel = models.CharField(max_length=510, blank=True, null=True)
     inhoud = models.CharField(max_length=255)
+
+    def get_child_comments(self):
+        bijdrages = BijdrageBericht.objects.filter(bijdrage_id = self.bijdrage.id)
+        comments = [x.bericht for x in bijdrages]
+
+        return comments
+
 
     class Meta:
         managed = True

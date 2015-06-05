@@ -97,11 +97,11 @@ WSGI_APPLICATION = 'ICT4EVENTS.wsgi.application'
 # https://docs.djangoproject.com/en/1.8/ref/settings/#databases
 
 DATABASES = {
-    'default': {
+    'sqlite': {
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
     },
-    'postges':{
+    'default':{
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
         'NAME' : 'pts2',
         'USER': 'david',
@@ -111,7 +111,6 @@ DATABASES = {
     }
 }
 
-DEFAULT_DATABASE = 'sqlite'
 # make sure to use sqlite when testing
 
 if 'test' in sys.argv or 'test_coverage' in sys.argv: #Covers regular testing and django-coverage

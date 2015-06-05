@@ -36,8 +36,7 @@ class Bericht(models.Model):
 class Bestand(models.Model):
     bijdrage = models.OneToOneField('Bijdrage')
     categorie = models.ForeignKey('Categorie')
-    bestandslocatie = models.CharField(max_length=510)
-    grootte = models.IntegerField(blank=True, null=True)
+    bestandslocatie = models.FileField()
 
     class Meta:
         managed = True

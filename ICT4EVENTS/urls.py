@@ -17,6 +17,7 @@ from django.conf.urls import include, url
 from django.contrib import admin
 
 urlpatterns = [
+    url(r'^sharing/',include("sharing.urls",namespace="sharing")),
     url(r'^admin/', include(admin.site.urls)),
     url(r'^social/', include("social.apps.django_app.urls", namespace="social")),
     url(r'^account/', include('accounts.urls', namespace="account")),

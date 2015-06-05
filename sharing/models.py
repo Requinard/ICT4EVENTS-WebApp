@@ -2,6 +2,9 @@ from django.contrib.auth.models import User
 from django.db import models
 
 # Create your models here.
+from events.models import Event
+
+
 class AccountBijdrage(models.Model):
     bijdrage = models.ForeignKey('Bijdrage')
     like = models.BooleanField()
@@ -43,6 +46,7 @@ class Bijdrage(models.Model):
     ))
 
     user = models.ForeignKey(User)
+    event = models.ForeignKey(Event)
 
     class Meta:
         managed = True

@@ -3,7 +3,7 @@ from crispy_forms.layout import Layout, Submit, Field
 from django import forms
 
 class PlekReserveringForm(forms.Form):
-    plaats = forms.CharField(
+    plek = forms.CharField(
         max_length=40,
         required=True
     )
@@ -26,7 +26,7 @@ class PlekReserveringForm(forms.Form):
         self.helper.field_class = 'col-lg-8'
 
         self.helper.layout = Layout(
-            Field("plaats"),
+            Field("plek"),
             Field("datum_begin", css_class="datepicker"),
             Field("datum_eind", css_class="datepicker"),
 

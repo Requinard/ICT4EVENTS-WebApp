@@ -80,6 +80,7 @@ TEMPLATES = [
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
+                'django.template.context_processors.media',
                 'django.template.context_processors.debug',
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
@@ -180,3 +181,8 @@ AUTH_LDAP_BIND_TEMPLATE = "uid={username},cn=users,dc=test,dc=com"
 # Crispy Forms
 
 CRISPY_TEMPLATE_PACK = 'bootstrap3'
+
+# Handle media uploads
+
+MEDIA_ROOT =os.path.join(BASE_DIR, 'media')
+MEDIA_URL = '/media/'

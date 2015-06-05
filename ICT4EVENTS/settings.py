@@ -12,9 +12,9 @@ https://docs.djangoproject.com/en/1.8/ref/settings/
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 import os
+import sys
 
 from django.contrib import messages
-import sys
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
@@ -45,7 +45,7 @@ INSTALLED_APPS = (
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'debug_toolbar',
-     'crispy_forms',
+    'crispy_forms',
     'social.apps.django_app.default',
     'rest_framework',
     'events',
@@ -66,7 +66,7 @@ MIDDLEWARE_CLASSES = (
 )
 
 AUTHENTICATION_BACKENDS = (
-  #  'django_auth_ldap3.backends.LDAPBackend',
+    #  'django_auth_ldap3.backends.LDAPBackend',
     'django.contrib.auth.backends.ModelBackend',
     'social.backends.twitter.TwitterOAuth',
 )
@@ -80,6 +80,7 @@ TEMPLATES = [
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
+                'django.template.context_processors.media',
                 'django.template.context_processors.debug',
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
@@ -101,19 +102,19 @@ DATABASES = {
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
     },
-    'default':{
+    'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME' : 'pts2',
+        'NAME': 'pts2',
         'USER': 'david',
-        'PASSWORD' : 'TVnuFxx250',
-        'HOST' : 'ldap.terarion.com',
-        'PORT' : '5432'
+        'PASSWORD': 'TVnuFxx250',
+        'HOST': 'ldap.terarion.com',
+        'PORT': '5432'
     }
 }
 
 # make sure to use sqlite when testing
 
-if 'test' in sys.argv or 'test_coverage' in sys.argv: #Covers regular testing and django-coverage
+if 'test' in sys.argv or 'test_coverage' in sys.argv:  # Covers regular testing and django-coverage
     DATABASES['default'] = {'ENGINE': 'django.db.backends.sqlite3'}
 
 orcl = {
@@ -180,3 +181,8 @@ AUTH_LDAP_BIND_TEMPLATE = "uid={username},cn=users,dc=test,dc=com"
 # Crispy Forms
 
 CRISPY_TEMPLATE_PACK = 'bootstrap3'
+
+# Handle media uploads
+
+MEDIA_ROOT =os.path.join(BASE_DIR, 'media')
+MEDIA_URL = '/media/'

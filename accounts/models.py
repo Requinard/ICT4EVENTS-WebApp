@@ -21,6 +21,8 @@ class Account(models.Model):
         (5, 'Basic'),
     ), default=1)
 
+    profile_picture = models.FileField(blank=True, null=True, upload_to='profilepictures/%Y/%m/%d')
+
     class Meta:
         managed = True
         db_table = 'account'

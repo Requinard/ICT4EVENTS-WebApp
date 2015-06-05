@@ -67,7 +67,10 @@ class Locatie(models.Model):
         return self.naam
 
     def GetSlugifiedName(self):
-        s = "%s+%s,%s,%s" % (self.straat, self.nr, self.postcode, self.plaats)
+        if self.straat is not None:
+            s = "%s+%s,%s,%s" % (self.straat, self.nr, self.postcode, self.plaats)
+        else:
+            s = self.naam
         return s.replace(' ', '+')
 
 

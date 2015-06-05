@@ -8,8 +8,10 @@ from events.models import Event
 
 class AccountBijdrage(models.Model):
     bijdrage = models.ForeignKey('Bijdrage')
-    like = models.BooleanField()
-    ongewenst = models.BooleanField()
+    like = models.BooleanField(default=False)
+    ongewenst = models.BooleanField(default=False)
+
+    user = models.ForeignKey(User)
 
     class Meta:
         managed = True
@@ -54,6 +56,12 @@ class Bijdrage(models.Model):
 
     user = models.ForeignKey(User)
     event = models.ForeignKey(Event)
+
+    def get_like_count(self):
+        return AccountBijdrage.objects.filter(bijdrage=self,like=True).count()
+
+    def get_report_count(self):
+        return AccountBijdrage.objects.filter(bijdrage=self,ongewenst=True).count()
 
     class Meta:
         managed = True

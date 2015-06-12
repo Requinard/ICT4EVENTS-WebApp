@@ -14,13 +14,24 @@
 
 
             </div>
-            <div class="col-lg-9">
-                <h3><a href="{% url 'sharing:post_details' post.bijdrage.id %}">{{ post.titel }}</a></h3>
-                <p class="pull-right">{{ post.bijdrage.get_like_count }} Like(s), {{ post.bijdrage.get_report_count }} Report(s)</p>
-                <h4>{{ post.bijdrage.user }}</h4>
-                <p>{{ post.inhoud|linebreaks }}</p>
-                <a  href="{% url 'sharing:post_details' post.bijdrage.id %}" class="btn pull-right btn-info">Lees meer</a>
-            </div>
+            {% if post.bijdrage.soort == "bericht" %}
+                <div class="col-lg-9">
+                    <h3><a href="{% url 'sharing:post_details' post.bijdrage.id %}">{{ post.titel }}</a></h3>
+                    <p class="pull-right">{{ post.bijdrage.get_like_count }} Like(s), {{ post.bijdrage.get_report_count }} Report(s)</p>
+                    <h4>{{ post.bijdrage.user }}</h4>
+                    <p>{{ post.inhoud|linebreaks }}</p>
+                    <a  href="{% url 'sharing:post_details' post.bijdrage.id %}" class="btn pull-right btn-info">Lees meer</a>
+                </div>
+            {% else %}
+                <div class="col-lg-9">
+                    <h3><a href="{% url 'sharing:post_details' post.bijdrage.id %}">{{ post.titel }}</a></h3>
+                    <p class="pull-right">{{ post.bijdrage.get_like_count }} Like(s), {{ post.bijdrage.get_report_count }} Report(s)</p>
+                    <h4>{{ post.bijdrage.user }}</h4>
+                    <img src="{{ post.bestandslocatie }}"class="img-responsive">
+                    <p>{{ post.inhoud|linebreaks }}</p>
+                    <a  href="{% url 'sharing:post_details' post.bijdrage.id %}" class="btn pull-right btn-info">Lees meer</a>
+                </div>
+            {% endif %}
         </div>
     </div>
 </div>

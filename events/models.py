@@ -122,19 +122,6 @@ class PlekSpecificatie(models.Model):
     def __str__(self):
         return self.waarde
 
-
-class Polsbandje(models.Model):
-    barcode = models.CharField(unique=True, max_length=510)
-    actief = models.BooleanField()
-
-    class Meta:
-        managed = True
-        db_table = 'polsbandje'
-
-    def __str__(self):
-        return self.barcode
-
-
 class Reservering(models.Model):
     datumstart = models.DateField(blank=True, null=True)
     datumeinde = models.DateField(blank=True, null=True)
@@ -149,6 +136,25 @@ class Reservering(models.Model):
 
     def __str__(self):
         return "%s tot %s" % (self.datumstart, self.datumeinde)
+
+class Polsbandje(models.Model):
+    barcode = models.CharField(unique=True, max_length=510)
+    actief = models.BooleanField()
+
+    class Meta:
+        managed = True
+        db_table = 'polsbandje'
+
+    def __str__(self):
+        return self.barcode
+
+    @receiver(post_save, sender=Reservering)
+    def create_new(sender, instance=None, created=False, **kwargs):
+        if created:
+            Account.objects.get_or_create(gebruiker=instance, activatiehash=hash(sender.pk), geactiveerd=False)
+            #ReserveringPolsbandje.objects.get_or_create(polsband=Polsbandje.objects.filter(actief=False)[0],reservering=sender,account=sender.account)
+
+
 
 
 class Specificatie(models.Model):

@@ -1,3 +1,4 @@
+from datetime import datetime
 from django.db import models
 
 # Create your models here.
@@ -18,6 +19,15 @@ class Productexemplaar(models.Model):
 
     product = models.ForeignKey('Product')
 
+    def is_available(self, event):
+        verhuurs = Verhuur.objects.filter(productexemplaar=self, datumuit=event.datumeinde)
+        y = {x.productexemplaar for x in verhuurs}
+        return self not in y
+
+    @staticmethod
+    def get_available_items(event):
+        return {x for x in Productexemplaar.objects.all() if x.is_available(event)}
+
     class Meta:
         managed = True
         db_table = 'productexemplaar'
@@ -25,10 +35,10 @@ class Productexemplaar(models.Model):
 class Verhuur(models.Model):
     productexemplaar = models.ForeignKey(Productexemplaar, blank=True, null=True)
     res_pb = models.ForeignKey(ReserveringPolsbandje, blank=True, null=True)
-    datumin = models.DateField(blank=True, null=True)
+    datumin = models.DateField(blank=True, null=True,default=datetime.now())
     datumuit = models.DateField(blank=True, null=True)
     prijs = models.DecimalField(max_digits=19, decimal_places=2, blank=True, null=True)
-    betaald = models.BooleanField()
+    betaald = models.BooleanField(default=False)
 
     class Meta:
         managed = True

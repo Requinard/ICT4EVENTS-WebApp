@@ -22,9 +22,3 @@ class BijdrageTests(TestCase):
                 self.assertIsNotNone(bij.pk)
             except:
                 self.assertEqual(True, False, 'Could not save bijdrage with valid inputs')
-
-    def test_bijdrage_cannot_be(self):
-        b = Bijdrage()
-        b.soort = "Dit kan nooit"
-        b.datum = datetime.now()
-        self.assertRaises(Exception, b.save())

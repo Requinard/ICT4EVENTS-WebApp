@@ -24,5 +24,6 @@ urlpatterns = [
     url(r'^social/', include("social.apps.django_app.urls", namespace="social")),
     url(r'^account/', include('accounts.urls', namespace="account")),
     url(r'^api/', include("api.urls", namespace='api')),
+    url(r'^reservations/', include('reservations.urls', namespace="reservations")),
     url(r'^', include('events.urls', namespace="events")),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

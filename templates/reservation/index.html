@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <div class="container">
+        <div class="col-lg-9 col-md-9">
+            <h1>Products</h1>
+
+            <div class="row">
+                {% for exemplaar in products %}
+                    <div class="col-lg-4 col-md-6 col-sm-12">
+                        {% include "snippet/item.html" %}
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+        <div class="col-lg-3 col-md-3">
+            <h1>Winkelwagen</h1>
+
+            <div class="panel">
+                <div class="panel-body">
+                    {% if cart %}
+                        {% for exemplaar in cart %}
+                            <p> {{ exemplaar }}</p>
+                        {% endfor %}
+                        <a href="{% url "reservations:deletecart" %}" class="btn btn-danger btn-xs">Maak winkelwagen
+                            leeg</a>
+                    {% else %}
+                        <p> Winkelwagen is leeg</p>
+                    {% endif %}
+
+                </div>
+
+            </div>
+            {% if cart %}
+                <a href="{% url "reservations:confirmcart" %}   " class="btn btn-primary">Producten reserveren</a>
+            {% endif %}
+        </div>
+    </div>
+
+{% endblock %}

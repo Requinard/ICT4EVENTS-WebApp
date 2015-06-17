@@ -38,7 +38,7 @@ class Bericht(models.Model):
 class Bestand(models.Model):
     bijdrage = models.OneToOneField('Bijdrage')
     categorie = models.ForeignKey('Categorie')
-    bestandslocatie = models.FileField()
+    bestandslocatie = models.FileField(upload_to='user_uploads/%Y/%m/%d')
 
     def get_child_comments(self):
         bijdrages = BijdrageBericht.objects.filter(bijdrage_id = self.bijdrage.id)

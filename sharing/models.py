@@ -40,6 +40,12 @@ class Bestand(models.Model):
     categorie = models.ForeignKey('Categorie')
     bestandslocatie = models.FileField()
 
+    def get_child_comments(self):
+        bijdrages = BijdrageBericht.objects.filter(bijdrage_id = self.bijdrage.id)
+        comments = [x.bericht for x in bijdrages]
+
+        return comments
+
     class Meta:
         managed = True
         db_table = 'bestand'

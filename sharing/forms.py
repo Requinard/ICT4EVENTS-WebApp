@@ -10,6 +10,8 @@ class BerichtForm(forms.Form):
         required=True,
         max_length=255
     )
+    bestand = forms.FileInput()
+
     def __init__(self, *args, **kwargs):
         super(BerichtForm, self).__init__(*args, **kwargs)
         self.helper = FormHelper()
@@ -22,6 +24,7 @@ class BerichtForm(forms.Form):
         self.helper.layout = Layout(
             Field("title"),
             Field("bericht"),
+            Field("bestand"),
 
             FormActions(
                 Submit('post', 'Post', css_class=" btn-primary btn-block"),

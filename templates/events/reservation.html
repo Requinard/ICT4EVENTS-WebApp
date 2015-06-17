@@ -17,6 +17,13 @@
 		<ul class="list-group" id="plek_listgroup">
 			<li class="list-group-item">Begin met typen</li>
 		</ul>
+        <ul>
+            {% for place in places %}
+                <li class="list-group-item">{{ place.nummer }}</li>
+            {% endfor %}
+        </ul>
+
+        
 	</div>
 </div>
 <br/>

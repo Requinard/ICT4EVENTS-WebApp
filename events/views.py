@@ -61,6 +61,7 @@ class ReserveView(View):
     def get(self, request, event_id):
         context = {}
         context['form'] = PlekReserveringForm()
+        #context['places'] = Plek.objects.exclude(id__in=Reservering.plekken)
         return render(request, "events/reservation.html", context)
 
     @method_decorator(login_required)

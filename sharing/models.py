@@ -53,11 +53,12 @@ class Bestand(models.Model):
 
 class Bijdrage(models.Model):
     datum = models.DateField(blank=True, null=True)
-    soort = models.CharField(max_length=510, choices=(
-        ('bericht', 'bericht'),
-        ('bestand', 'bestand'),
-        ('categorie', 'categorie'),
-        ('account', 'account')
+    soort = models.IntegerField(choices=(
+        (1, 'bericht'),
+        (2, 'bestand'),
+        (3, 'categorie'),
+        (4, 'account'),
+        (5, 'comment'),
     ))
 
     user = models.ForeignKey(User)

@@ -7,10 +7,10 @@ class BerichtForm(forms.Form):
     title = forms.CharField(max_length=80)
     bericht = forms.CharField(
         widget=forms.TextInput,
-        required=True,
+        required=False,
         max_length=255
     )
-    bestand = forms.FileInput()
+    bestand = forms.FileField(required=False)
 
     def __init__(self, *args, **kwargs):
         super(BerichtForm, self).__init__(*args, **kwargs)

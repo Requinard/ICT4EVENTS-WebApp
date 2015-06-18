@@ -1,12 +1,14 @@
 from django.utils.timezone import datetime
 from django.contrib import messages
 from django.shortcuts import render, redirect, get_object_or_404
+from django.db.models import Q
 
 # Create your views here.
 from django.views.generic import View
 import sharing
+from itertools import chain
 from sharing.forms import BerichtForm, CommentForm
-from sharing.models import Bericht, Bijdrage, Bestand, BijdrageBericht, AccountBijdrage
+from sharing.models import Bericht, Bijdrage, Bestand, BijdrageBericht, AccountBijdrage, Categorie
 
 
 class IndexView(View):
@@ -14,23 +16,33 @@ class IndexView(View):
     template = "sharing/index.html"
     def get(self, request):
         active_event = request.user.settings.active_event
-        p = Bericht.objects.filter(bijdrage__soort =  "bericht",bijdrage__event = active_event)
+        p = Bericht.objects.filter(Q(bijdrage__soort = 1),bijdrage__event = active_event)
+        bestanden = Bestand.objects.filter(bijdrage__soort = 2, bijdrage__event = active_event)
+
+        q =list(chain(list(p), list(bestanden)))
+
+        p = q
         self.context["posts"] = p
         self.context["form"] = BerichtForm()
         return render(request, self.template, self.context)
 
-
-    def post(self,request):
+    def post(self, request):
         context = {}
 
         form = BerichtForm(request.POST)
 
         if form.is_valid():
-            bijdrage = Bijdrage(event=request.user.settings.active_event, user=request.user, datum=datetime.now(), soort="bericht")
-            bijdrage.save()
-            bericht = Bericht(bijdrage=bijdrage, titel=form.cleaned_data["title"], inhoud=form.cleaned_data["bericht"])
-            bericht.save()
-
+            if form.cleaned_data["bestand"] != "" or form.cleaned_data["bestand"] != None:
+                bijdrage = Bijdrage(event=request.user.settings.active_event, user=request.user, datum=datetime.now(), soort=2)
+                bijdrage.save()
+                print()
+                bestand = Bestand(bijdrage=bijdrage, bestandslocatie=request.FILES['bestand'], categorie=Categorie.objects.first())
+                bestand.save()
+            else:
+                bijdrage = Bijdrage(event=request.user.settings.active_event, user=request.user, datum=datetime.now(), soort=1)
+                bijdrage.save()
+                bericht = Bericht(bijdrage=bijdrage, titel=form.cleaned_data["title"], inhoud=form.cleaned_data["bericht"])
+                bericht.save()
             return redirect("sharing:index")
 
         messages.error(request, "form is niet correct ingevuld")
@@ -45,7 +57,7 @@ class PostView(View):
         self.context["form"] = CommentForm()
         p = None
 
-        if bijdrage.soort == "bericht":
+        if bijdrage.soort == 1:
             p = Bericht.objects.get(bijdrage=bijdrage)
         else:
             p = Bestand.objects.get(bijdrage=bijdrage)
@@ -59,7 +71,7 @@ class PostView(View):
         form = CommentForm(request.POST)
 
         if form.is_valid():
-            bijdrage = Bijdrage(event=request.user.settings.active_event, user=request.user, datum=datetime.now(), soort="bericht")
+            bijdrage = Bijdrage(event=request.user.settings.active_event, user=request.user, datum=datetime.now(), soort=5)
             bijdrage.save()
             bericht = Bericht(bijdrage=bijdrage, inhoud=form.cleaned_data["bericht"])
             bericht.save()

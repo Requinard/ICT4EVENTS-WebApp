@@ -1,11 +1,13 @@
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
+from django.core.urlresolvers import reverse
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib import messages
 
 # Create your views here.
 from django.views.generic import View
-from accounts.forms import LoginForm, RegisterForm, DetailsForm, UserForm, SettingsForm
+from accounts.forms import LoginForm, RegisterForm, DetailsForm, UserForm, SettingsForm, ActivateForm
+from accounts.models import Account
 
 
 class LoginView(View):
@@ -145,4 +147,38 @@ class ProfileView(View):
 
 class ActivateView(View):
     def get(self, request, hashcode):
-        pass
+        context = {}
+        user = Account.objects.get(activatiehash=hashcode).gebruiker
+
+        if user.is_active:
+            messages.error(request, "This account has already been activated!")
+            return redirect("account:login")
+
+        context['form'] = ActivateForm(instance=user)
+
+        return render(request, "account/activate.html", context)
+
+    def post(self, request, hashcode):
+        context = {}
+        user = Account.objects.get(activatiehash=hashcode).gebruiker
+
+        if user.is_active:
+            messages.error(request, "This account has already been activated!")
+            return redirect("account:login")
+
+        form = ActivateForm(request.POST, instance=user)
+
+        if form.is_valid():
+            new_user = form.save(commit=False)
+
+            new_user.is_active = True
+            new_user.set_password(form.cleaned_data["password"])
+            new_user.save()
+            messages.success(request, "Account was succesfully activated!")
+            return redirect("account:login")
+
+        context['form'] = form
+
+        return render(request, "account/activate.html", context)
+
+

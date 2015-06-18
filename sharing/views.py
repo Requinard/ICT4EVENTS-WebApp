@@ -71,11 +71,16 @@ class PostView(View):
             context["form"] = form
             return render(request, self.template, context)
 
-class PostView(View):
+class LikeReportView(View):
     context = {}
     template = "sharing/post.html"
 
-    def get(self, bijdrage_id):
+    def get(self, request, post_id,modus):
         bijdrage = get_object_or_404(Bijdrage, pk=post_id)
-        accountbijdrage = AccountBijdrage(bijdrage=)
-        return redirect("sharing/post.html")
+        accountbijdrage = AccountBijdrage.objects.get_or_create(bijdrage=bijdrage,user=request.user)[0]
+        if modus == "like":
+            accountbijdrage.like = True
+        elif modus == "report":
+            accountbijdrage.ongewenst = True
+        accountbijdrage.save()
+        return redirect("sharing:post_details", post_id)

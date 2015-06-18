@@ -1,3 +1,5 @@
+from django.contrib.auth.decorators import login_required
+from django.utils.decorators import method_decorator
 from django.utils.timezone import datetime
 from django.contrib import messages
 from django.shortcuts import render, redirect, get_object_or_404
@@ -14,18 +16,21 @@ from sharing.models import Bericht, Bijdrage, Bestand, BijdrageBericht, AccountB
 class IndexView(View):
     context = {}
     template = "sharing/index.html"
+
+    @method_decorator(login_required)
     def get(self, request):
         active_event = request.user.settings.active_event
-        p = Bericht.objects.filter(Q(bijdrage__soort = 1),bijdrage__event = active_event)
-        bestanden = Bestand.objects.filter(bijdrage__soort = 2, bijdrage__event = active_event)
+        p = Bericht.objects.filter(Q(bijdrage__soort=1), bijdrage__event=active_event)
+        bestanden = Bestand.objects.filter(bijdrage__soort=2, bijdrage__event=active_event)
 
-        q =list(chain(list(p), list(bestanden)))
+        q = list(chain(list(p), list(bestanden)))
 
         p = q
         self.context["posts"] = p
         self.context["form"] = BerichtForm()
         return render(request, self.template, self.context)
 
+    @method_decorator(login_required)
     def post(self, request):
         context = {}
 
@@ -33,26 +38,33 @@ class IndexView(View):
 
         if form.is_valid():
             if form.cleaned_data["bestand"] != "" or form.cleaned_data["bestand"] != None:
-                bijdrage = Bijdrage(event=request.user.settings.active_event, user=request.user, datum=datetime.now(), soort=2)
+                bijdrage = Bijdrage(event=request.user.settings.active_event, user=request.user, datum=datetime.now(),
+                                    soort=2)
                 bijdrage.save()
                 print()
-                bestand = Bestand(bijdrage=bijdrage, bestandslocatie=request.FILES['bestand'], categorie=Categorie.objects.first())
+                bestand = Bestand(bijdrage=bijdrage, bestandslocatie=request.FILES['bestand'],
+                                  categorie=Categorie.objects.first())
                 bestand.save()
             else:
-                bijdrage = Bijdrage(event=request.user.settings.active_event, user=request.user, datum=datetime.now(), soort=1)
+                bijdrage = Bijdrage(event=request.user.settings.active_event, user=request.user, datum=datetime.now(),
+                                    soort=1)
                 bijdrage.save()
-                bericht = Bericht(bijdrage=bijdrage, titel=form.cleaned_data["title"], inhoud=form.cleaned_data["bericht"])
+                bericht = Bericht(bijdrage=bijdrage, titel=form.cleaned_data["title"],
+                                  inhoud=form.cleaned_data["bericht"])
                 bericht.save()
             return redirect("sharing:index")
 
         messages.error(request, "form is niet correct ingevuld")
         context["form"] = form
         return render(request, self.template, context)
+
+
 class PostView(View):
     context = {}
     template = "sharing/post.html"
 
-    def get(self,request, post_id):
+    @method_decorator(login_required)
+    def get(self, request, post_id):
         bijdrage = get_object_or_404(Bijdrage, pk=post_id)
         self.context["form"] = CommentForm()
         p = None
@@ -66,12 +78,14 @@ class PostView(View):
 
         return render(request, self.template, self.context)
 
+    @method_decorator(login_required)
     def post(self, request, post_id):
         context = {}
         form = CommentForm(request.POST)
 
         if form.is_valid():
-            bijdrage = Bijdrage(event=request.user.settings.active_event, user=request.user, datum=datetime.now(), soort=5)
+            bijdrage = Bijdrage(event=request.user.settings.active_event, user=request.user, datum=datetime.now(),
+                                soort=5)
             bijdrage.save()
             bericht = Bericht(bijdrage=bijdrage, inhoud=form.cleaned_data["bericht"])
             bericht.save()
@@ -83,13 +97,15 @@ class PostView(View):
             context["form"] = form
             return render(request, self.template, context)
 
+
 class LikeReportView(View):
     context = {}
     template = "sharing/post.html"
 
-    def get(self, request, post_id,modus):
+    @method_decorator(login_required)
+    def get(self, request, post_id, modus):
         bijdrage = get_object_or_404(Bijdrage, pk=post_id)
-        accountbijdrage = AccountBijdrage.objects.get_or_create(bijdrage=bijdrage,user=request.user)[0]
+        accountbijdrage = AccountBijdrage.objects.get_or_create(bijdrage=bijdrage, user=request.user)[0]
         if modus == "like":
             accountbijdrage.like = True
         elif modus == "report":

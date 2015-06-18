@@ -146,6 +146,7 @@ class PlaceReservationView(View):
 
 
 class PlaceAddnewPerson(View):
+    @method_decorator(login_required)
     def get(self, request, place_id):
         context = {}
 
@@ -153,6 +154,7 @@ class PlaceAddnewPerson(View):
 
         return render(request, "reservation/addPerson.html", context)
 
+    @method_decorator(login_required)
     def post(self, request, place_id):
         context = {}
 
@@ -184,9 +186,8 @@ class PlaceAddnewPerson(View):
 
             # Now that we have all the details, we make a reservation
             plek = Plek.objects.get(pk=place_id)
-            r = Reservering(plekken=plek, persoon=persoon, datumstart=event.datumstart, datumeinde=event.datumeinde)
 
-            r.save()
+            r = Reservering.objects.get_or_create(plekken=plek, persoon=persoon, datumstart=event.datumstart, datumeinde=event.datumeinde)
 
             # Now we send the activation email
             mail_body = "Activeer hier http://localhost:8000/account/activate/{0}/".format(user.settings.activatiehash)

@@ -15,10 +15,11 @@ class IndexView(View):
         context['events'] = Event.objects.all()
         return render(request, 'events/index.html', context)
 
+
 class SetActiveEventView(View):
     @method_decorator(login_required)
     def get(self, request, event_id):
-        #TODO: Schrijf unit tests hiervoor
+        # TODO: Schrijf unit tests hiervoor
         new_event = get_object_or_404(Event, pk=event_id)
 
         request.user.settings.active_event = new_event
@@ -28,8 +29,9 @@ class SetActiveEventView(View):
 
         return redirect("events:index")
 
+
 class EventDetailsView(View):
-    def get(self,request, event_id):
+    def get(self, request, event_id):
         context = {}
         Event.objects.filter(pk=event_id)
         context['event'] = get_object_or_404(Event, pk=event_id)
@@ -39,10 +41,10 @@ class EventDetailsView(View):
 
         return render(request, "events/eventdetails.html", context)
 
-
     @method_decorator(login_required)
     def post(self, request, event_id):
         return self.get(request, event_id)
+
 
 class SearchView(View):
     def get(self, request, query):
@@ -61,7 +63,7 @@ class ReserveView(View):
     def get(self, request, event_id):
         context = {}
         context['form'] = PlekReserveringForm()
-        #context['places'] = Plek.objects.exclude(id__in=Reservering.plekken)
+        # context['places'] = Plek.objects.exclude(id__in=Reservering.plekken)
         return render(request, "events/reservation.html", context)
 
     @method_decorator(login_required)
@@ -80,12 +82,27 @@ class ReserveView(View):
 
             ret, p = Plek.reserve(plek, persoon, datum_begin, datum_eind)
 
+            if not p:
+                plek_id = Plek.objects.get(nummer=plek)
+                pers_id = persoon
+                """We now know that the database does not use stored procedures, so we will save it in python"""
+                reserveringen = Reservering.objects.filter(plekken=plek_id)
+                if len(reserveringen) > 0:
+                    ret = False
+                    p = None
+                else:
+                    reservering = Reservering(datumstart=datum_begin, datumeinde=datum_eind, plekken=plek_id,
+                                                                      persoon=pers_id)
+                    reservering.save()
+                    ret = True
+                    p = reservering
+
             if not ret:
                 messages.error(request, "Deze plek is al gereserveerd")
             else:
                 messages.success(request, "Je reservering is gelukt!")
                 return redirect("events:details", event_id)
 
-        context['form'] = form
+            context['form'] = form
 
         return render(request, "events/reservation.html", context)

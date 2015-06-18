@@ -8,14 +8,6 @@ class PlekReserveringForm(forms.Form):
         required=True
     )
 
-    datum_begin = forms.DateField(
-        required=True
-    )
-
-    datum_eind = forms.DateField(
-        required=True,
-    )
-
     def __init__(self, *args, **kwargs):
         super(PlekReserveringForm, self).__init__(*args, **kwargs)
         self.helper = FormHelper()
@@ -27,8 +19,6 @@ class PlekReserveringForm(forms.Form):
 
         self.helper.layout = Layout(
             Field("plek"),
-            Field("datum_begin", css_class="datepicker"),
-            Field("datum_eind", css_class="datepicker"),
 
             Submit("submit", "Submit", css_class="btn-primary btn-block")
         )

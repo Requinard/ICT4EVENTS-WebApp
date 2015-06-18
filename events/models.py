@@ -89,6 +89,7 @@ class Plek(models.Model):
 
     @staticmethod
     def reserve(plek, persoon, startdate, enddate):
+        '''
         plek_id = Plek.objects.get(nummer=plek)
         pers_id = persoon
 
@@ -98,20 +99,13 @@ class Plek(models.Model):
             cursor.callproc(' CreatePlaceReservation', [startdate, enddate, False, pers_id.id, plek_id.id])
             cursor.execute("COMMIT")
             cursor.close()
+            return (True, None)
         except:
-            """We now know that the database does not use stored procedures, so we will save it in python"""
-            reserverd = Reservering.objects.filter(datumstart__gte=startdate, datumeinde__lte=enddate, plekken__icontains=plek_id)
-
-            if len(reserverd) > 0:
-                return (False, None)
-            else:
-                reservation = Reservering(datumstart=startdate, datumeinde=enddate, persoon=pers_id)
-
-                reservation.save()
-
-                reservation.plekken.add(plek)
-                return (True, reservation)
-
+            cursor.rollback()
+            cursor.close()
+            return (False,None)
+        '''
+        return (False,None)
 
 class PlekSpecificatie(models.Model):
     plek = models.ForeignKey(Plek)
@@ -124,6 +118,7 @@ class PlekSpecificatie(models.Model):
 
     def __str__(self):
         return self.waarde
+
 
 class Reservering(models.Model):
     datumstart = models.DateField(blank=True, null=True)
@@ -140,6 +135,7 @@ class Reservering(models.Model):
     def __str__(self):
         return "%s tot %s" % (self.datumstart, self.datumeinde)
 
+
 class Polsbandje(models.Model):
     barcode = models.CharField(unique=True, max_length=510)
     actief = models.BooleanField()
@@ -155,9 +151,7 @@ class Polsbandje(models.Model):
     def create_new(sender, instance=None, created=False, **kwargs):
         if created:
             pass
-            #ReserveringPolsbandje.objects.get_or_create(polsband=Polsbandje.objects.filter(actief=False)[0],reservering=sender,account=sender.account)
-
-
+            # ReserveringPolsbandje.objects.get_or_create(polsband=Polsbandje.objects.filter(actief=False)[0],reservering=sender,account=sender.account)
 
 
 class Specificatie(models.Model):
@@ -208,4 +202,3 @@ class Persoon(models.Model):
             persoon = Persoon.objects.get(user=instance)
 
             persoon.delete()
-

@@ -67,6 +67,7 @@ class ReserveringPolsbandje(models.Model):
     class Meta:
         managed = True
         db_table = 'reservering_polsbandje'
+        ordering = ("-id",)
 
     """
     Als er een nieuwe reservering wordt gemaakt koppelen wij dit automatisch aan een beschikbaar polsbandje

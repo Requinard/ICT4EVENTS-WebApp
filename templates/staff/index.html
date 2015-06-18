@@ -1,0 +1,80 @@
+{% extends 'base.html' %}
+
+{% load crispy_forms_tags %}
+
+{% block content %}
+<div class="container">
+    <div class="row">
+        <div class="col-lg-12">
+            <h1>Scanner</h1>
+            {% crispy form %}
+        </div>
+        {% if reservering %}
+        <hr />
+        {% if reservering.betaald == False %}
+        <div class="modal fade" id="alert-modal">
+            <div class="modal-dialog">
+                <div class="modal-content modal-danger">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                                aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title">Deze gebruiker heeft niet betaald!</h4>
+                    </div>
+                    <div class="modal-body">
+                        <p>Verwijs deze persoon naar een kassa. Indien hij niet meewerkt moet beveiliging worden
+                            gebeld.</p>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-danger" data-dismiss="modal">Ik heb dit gezien</button>
+                    </div>
+                </div>
+                <!-- /.modal-content -->
+            </div>
+            <!-- /.modal-dialog -->
+        </div>
+        <script type="application/javascript">
+            $("#alert-modal").modal({
+                show: true
+            });
+        </script>
+        <!-- /.modal -->
+        {% endif %}
+        <div class="col-lg-4">
+            <div class="panel {% if reservering.betaald %}panel-success{% else %}panel-danger{% endif %}">
+                <div class="panel-heading"><h3 data-toggle="tooltip" data-placement="bottom"
+                                               title="Bij rood is er NIET betaald">Reservering</h3></div>
+                <div class="panel-body">
+
+                    <p>Naam: {{ reservering.persoon}}</p>
+
+                    <p>Startdatum: {{reservering.datumstart }}</p>
+
+                    <p>Einddatum: {{ reservering.datumeinde }}</p>
+
+                    <p>Gereserveerde plek: {{ reservering.plekken }}</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-8">
+            <div class="panel panel-primary">
+                <div class="panel-heading">
+                    <h3>Gereserveerde items</h3>
+                </div>
+                <div class="panel-body">
+                    {% if items %}
+                    <ul class="list-group">
+                    {% for exemplaar in items %}
+                        <li class="list-group-item {% if exemplaar.betaald %}list-group-item-success{%else%}list-group-item-danger{%endif%}">{{ exemplaar.productexemplaar }}</li>
+                    {% endfor %}
+                        </ul>
+                    {% else %}
+                    <p>Deze persoon heeft nog niks gereserveerd.</p>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

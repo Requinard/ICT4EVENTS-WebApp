@@ -109,6 +109,10 @@
 								<li><a href="/api/">API</a></li>
 								<li class="divider"></li>
 							{% endif %}
+							{% if user.is_staff %}
+								<li><a href="{% url 'staff:index' %}">Barcode scanner</a> </li>
+								<li class="divider"></li>
+							{%endif%}
 							<li><a href="{% url 'account:logout' %}">Logout</a></li>
 						</ul>
 					</li>

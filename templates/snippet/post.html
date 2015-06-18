@@ -40,7 +40,7 @@
 					<p class="pull-right">{{ post.bijdrage.get_like_count }}
 						Like(s), {{ post.bijdrage.get_report_count }} Report(s)</p>
 					<h4>{{ post.bijdrage.user }}</h4>
-					{{ post.bestandslocatie.url|linkify }}
+					{{ post.bestandslocatie.url|linkify|safe }}
 					<a href="{% url 'sharing:post_details' post.bijdrage.id %}" class="btn pull-right btn-info">Lees
 						meer</a>
 				</div>

@@ -49,13 +49,8 @@ class Account(models.Model):
         reservations = Reservering.objects.filter(persoon=self.gebruiker.details)
 
         for r in reservations:
-            plekken = r.plekken
-
-            for p in plekken.all():
-                print(p.locatie)
-                event = Event.objects.filter(locatie=p.locatie, datumstart__lte=r.datumstart, datumeinde__gte=r.datumeinde)
-                for e in event:
-                    events.append(e)
+            event = Event.objects.get(locatie=r.plekken.locatie, datumstart=r.datumstart, datumeinde=r.datumeinde)
+            events.append(event)
 
         return events
 

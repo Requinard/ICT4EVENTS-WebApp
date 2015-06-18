@@ -15,6 +15,7 @@ from django.db.models.signals import post_save, pre_delete
 from django.dispatch import receiver
 from django.db import connection
 
+
 class Event(models.Model):
     locatie = models.ForeignKey('Locatie', blank=True, null=True)
     naam = models.CharField(max_length=510)
@@ -129,7 +130,7 @@ class Reservering(models.Model):
     datumeinde = models.DateField(blank=True, null=True)
     betaald = models.BooleanField(default=False)
 
-    plekken = models.ManyToManyField(Plek)
+    plekken = models.ForeignKey(Plek)
     persoon = models.ForeignKey('Persoon')
 
     class Meta:
@@ -153,7 +154,7 @@ class Polsbandje(models.Model):
     @receiver(post_save, sender=Reservering)
     def create_new(sender, instance=None, created=False, **kwargs):
         if created:
-            Account.objects.get_or_create(gebruiker=instance, activatiehash=hash(sender.pk), geactiveerd=False)
+            pass
             #ReserveringPolsbandje.objects.get_or_create(polsband=Polsbandje.objects.filter(actief=False)[0],reservering=sender,account=sender.account)
 
 

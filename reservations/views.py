@@ -4,7 +4,7 @@ from django.utils.timezone import datetime
 from django.contrib import messages
 from django.shortcuts import render, redirect, get_object_or_404
 from accounts.models import ReserveringPolsbandje
-from events.models import Polsbandje
+from events.models import Polsbandje, Reservering
 import reservations
 
 # Create your views here.
@@ -82,3 +82,23 @@ class CartConfirmView(View):
         else:
             messages.error(request,message="je winkel wagen is leeg")
             return render(request,self.template,self.context)
+
+class PlaceReservationView(View):
+    @method_decorator(login_required)
+    def get(self, request):
+        context = {}
+        event = request.user.settings.active_event
+
+        # Get our reservation
+        reservering = Reservering.objects.filter(datumstart=event.datumstart, datumeinde=event.datumeinde, persoon=request.user.details).first()
+
+        # Get the rest of the people on this address
+        other_reservations = Reservering.objects.filter(datumstart=event.datumstart, datumeinde=event.datumeinde, plek=reservering.plek)
+
+        context['reservering'] = reservering
+        context['other_reservations'] = other_reservations
+
+        return render(request, "reservation/placereservation.html", context)
+
+
+

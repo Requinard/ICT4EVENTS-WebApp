@@ -131,7 +131,7 @@ class ProfileView(View):
                 context['userform'] = user
 
         elif mode == "settings":
-            settings = SettingsForm(request.POST, instance=request.user.settings)
+            settings = SettingsForm(request.POST, request.FILES, instance=request.user.settings)
 
             if settings.is_valid():
                 settings.save()

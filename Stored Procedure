@@ -1,0 +1,20 @@
+-- Function: "CreatePlaceReservation"(date, date, boolean, integer)
+
+-- DROP FUNCTION "CreatePlaceReservation"(date, date, boolean, integer);
+
+CREATE OR REPLACE FUNCTION "CreatePlaceReservation"(
+    "Start" date,
+    "End" date,
+    "Betaald" boolean,
+    "Persoon_id" integer)
+  RETURNS boolean AS
+$BODY$DECLARE
+  l_reserveringid integer;
+  begin
+  insert into reservering(id,datumstart,datumeinde,betaald,persoon_id) VALUES (nextval(reservering_id_seq),"Start","End","Betaald","Persoon_id") RETURNING id into l_reserveringid;
+insert into reservering_plekken(id,reservering_id,plek) VALUES (nextval(reservering_plekken_id_seq),l_reserveringid,"Place_id");
+end;$BODY$
+  LANGUAGE plpgsql VOLATILE
+  COST 100;
+ALTER FUNCTION "CreatePlaceReservation"(date, date, boolean, integer)
+  OWNER TO guus;

@@ -1,10 +1,12 @@
 from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from django.core.urlresolvers import reverse
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib import messages
 
 # Create your views here.
+from django.utils.decorators import method_decorator
 from django.views.generic import View
 from accounts.forms import LoginForm, RegisterForm, DetailsForm, UserForm, SettingsForm, ActivateForm
 from accounts.models import Account
@@ -14,6 +16,10 @@ class LoginView(View):
     context = {}
     template = "account/login.html"
     def get(self, request):
+        if request.user is not None:
+            messages.warning(request, "you are already logged in")
+            return redirect("events:index")
+
         self.context['loginform'] = LoginForm()
         return render(request, self.template, self.context)
 
@@ -87,6 +93,7 @@ class CreateNewAccountView(View):
             return render(request, "account/new.html", context)
 
 class ProfileView(View):
+    @method_decorator(login_required)
     def get(self, request, username=None, mode=None):
         context = {}
 
@@ -100,6 +107,7 @@ class ProfileView(View):
 
         return render(request, "account/profile.html", context)
 
+    @method_decorator(login_required)
     def post(self, request, username=None, mode=None):
         context = {}
 

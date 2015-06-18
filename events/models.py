@@ -88,14 +88,16 @@ class Plek(models.Model):
 
     @staticmethod
     def reserve(plek, persoon, startdate, enddate):
-        plek_id = Plek.objects.filter(nummer=plek)
+        plek_id = Plek.objects.get(nummer=plek)
         pers_id = persoon
 
         cursor = connection.cursor()
         try:
-            cursor.callproc('createreservation', [plek_id.id, pers_id.id, startdate, enddate])
-
-        except AttributeError:
+            cursor.execute("BEGIN")
+            cursor.callproc(' CreatePlaceReservation', [startdate, enddate, False, pers_id.id, plek_id.id])
+            cursor.execute("COMMIT")
+            cursor.close()
+        except:
             """We now know that the database does not use stored procedures, so we will save it in python"""
             reserverd = Reservering.objects.filter(datumstart__gte=startdate, datumeinde__lte=enddate, plekken__icontains=plek_id)
 

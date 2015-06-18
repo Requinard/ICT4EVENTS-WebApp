@@ -66,7 +66,7 @@ MIDDLEWARE_CLASSES = (
 )
 
 AUTHENTICATION_BACKENDS = (
-    #  'django_auth_ldap3.backends.LDAPBackend',
+    'django_auth_ldap3.backends.LDAPBackend',
     'django.contrib.auth.backends.ModelBackend',
     'social.backends.twitter.TwitterOAuth',
 )
@@ -189,5 +189,13 @@ CRISPY_TEMPLATE_PACK = 'bootstrap3'
 
 # Handle media uploads
 
-MEDIA_ROOT =os.path.join(BASE_DIR, 'media')
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 MEDIA_URL = '/media/'
+
+# Email configs
+
+EMAIL_HOST = 'box.terarion.com'
+EMAIL_HOST_USER = 'ICT4EVENTS@terarion.com'
+EMAIL_HOST_PASSWORD = 'testtest'
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True

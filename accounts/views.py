@@ -142,3 +142,7 @@ class ProfileView(View):
                 context['settingsform'] = settings
 
         return render(request, "account/profile.html", context)
+
+class ActivateView(View):
+    def get(self, request, hashcode):
+        pass

@@ -42,6 +42,10 @@ class RegisterForm(forms.Form):
             Field("email"),
             Field("first_name"),
             Field("last_name"),
+            Field("street"),
+            Field("house_number"),
+            Field("town"),
+            Field("bank_number"),
 
             FormActions(
                 Submit('post', 'Post', css_class=" btn-primary btn-block"),
@@ -56,6 +60,22 @@ class RegisterForm(forms.Form):
 
     first_name = forms.CharField(
         required=True
+    )
+
+    street = forms.CharField(
+        required=True
+    )
+
+    house_number = forms.CharField(
+        required=True
+    )
+
+    town = forms.CharField(
+        required=True
+    )
+
+    bank_number = forms.CharField(
+        required=True,
     )
 
     last_name = forms.CharField(

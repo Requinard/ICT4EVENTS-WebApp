@@ -23,6 +23,11 @@ class Account(models.Model):
 
     profile_picture = models.FileField(blank=True, null=True, upload_to='profilepictures/%Y/%m/%d', default="https://www.drupal.org/files/profile_default.png")
 
+    def get_current_reservation(self):
+        if self.active_event is None:
+            return None
+        else:
+            return Reservering.objects.get(datumstart=self.active_event.datumstart, datumeinde=self.active_event.datumeinde, persoon=self.gebruiker.details)
     class Meta:
         managed = True
         db_table = 'account'

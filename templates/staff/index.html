@@ -10,7 +10,9 @@
             {% crispy form %}
         </div>
         {% if reservering %}
-        <hr />
+        <hr/>
+    </div>
+    <div class="row">
         {% if reservering.betaald == False %}
         <div class="modal fade" id="alert-modal">
             <div class="modal-dialog">
@@ -63,10 +65,12 @@
                 <div class="panel-body">
                     {% if items %}
                     <ul class="list-group">
-                    {% for exemplaar in items %}
-                        <li class="list-group-item {% if exemplaar.betaald %}list-group-item-success{%else%}list-group-item-danger{%endif%}">{{ exemplaar.productexemplaar }}</li>
-                    {% endfor %}
-                        </ul>
+                        {% for exemplaar in items %}
+                        <li class="list-group-item {% if exemplaar.betaald %}list-group-item-success{%else%}list-group-item-danger{%endif%}">
+                            {{ exemplaar.productexemplaar }}
+                        </li>
+                        {% endfor %}
+                    </ul>
                     {% else %}
                     <p>Deze persoon heeft nog niks gereserveerd.</p>
                     {% endif %}

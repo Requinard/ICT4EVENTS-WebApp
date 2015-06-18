@@ -89,6 +89,7 @@
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Reserveringen <span class="caret"></span> </a>
                 <ul class="dropdown-menu" role="menu">
                     <li><a href="{% url 'reservations:index'%}">Bekijk de winkel</a> </li>
+                    <li><a href="{%url 'reservations:current_reservations' %}">Bekijk reservaties</a> </li>
                     <li><a href="{% url 'reservations:place'%}">Beheer plaats</a> </li>
                 </ul>
             </li>

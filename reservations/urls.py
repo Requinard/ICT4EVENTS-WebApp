@@ -1,5 +1,5 @@
 from django.conf.urls import url, patterns
-from reservations.views import IndexView, CartView, CartConfirmView, CartDeleteView,PlaceReservationView, PlaceAddnewPerson
+from reservations.views import IndexView, CartView, CartConfirmView, CartDeleteView,PlaceReservationView, PlaceAddnewPerson, CurrentReservationsView
 
 urlpatterns = patterns(
     "",
@@ -8,5 +8,6 @@ urlpatterns = patterns(
     url(r'^cart/delete/',CartDeleteView.as_view(), name="deletecart"),
     url(r'^place/new/(?P<place_id>\d+)/', PlaceAddnewPerson.as_view(), name="place_add"),
     url(r'^place/', PlaceReservationView.as_view(), name="place"),
+    url(r'^current/', CurrentReservationsView.as_view(), name="current_reservations"),
     url(r"^$", IndexView.as_view(), name="index"),
 )

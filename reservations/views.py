@@ -208,3 +208,13 @@ class PlaceAddnewPerson(View):
         context['form'] = form
 
         return render(request, "reservation/addPerson.html", context)
+
+class CurrentReservationsView(View):
+    def get(self, request):
+        context = {}
+        reservering = request.user.settings.get_current_reservation()
+        polsbandje = ReserveringPolsbandje.objects.get(reservering=reservering)
+
+        context['verhuurs'] = Verhuur.objects.filter(res_pb=polsbandje)
+
+        return render(request, "reservation/currentReservations.html", context)

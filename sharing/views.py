@@ -6,7 +6,7 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.views.generic import View
 import sharing
 from sharing.forms import BerichtForm, CommentForm
-from sharing.models import Bericht, Bijdrage, Bestand, BijdrageBericht
+from sharing.models import Bericht, Bijdrage, Bestand, BijdrageBericht, AccountBijdrage
 
 
 class IndexView(View):
@@ -71,3 +71,11 @@ class PostView(View):
             context["form"] = form
             return render(request, self.template, context)
 
+class PostView(View):
+    context = {}
+    template = "sharing/post.html"
+
+    def get(self, bijdrage_id):
+        bijdrage = get_object_or_404(Bijdrage, pk=post_id)
+        accountbijdrage = AccountBijdrage(bijdrage=)
+        return redirect("sharing/post.html")

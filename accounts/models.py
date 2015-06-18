@@ -76,10 +76,13 @@ class ReserveringPolsbandje(models.Model):
     def create_new(sender, instance=None, created=False, **kwargs):
         if created:
             print("polsbandje wordt toegevoegd")
-            polsband = Polsbandje.objects.filter(actief=False).first()
-            polsband.actief = True
-            polsband.save()
-            ReserveringPolsbandje.objects.get_or_create(polsband=polsband, reservering=instance, account=instance.persoon.user.settings)
+            try:
+                polsband = Polsbandje.objects.filter(actief=False).first()
+                polsband.actief = True
+                polsband.save()
+                ReserveringPolsbandje.objects.get_or_create(polsband=polsband, reservering=instance, account=instance.persoon.user.settings)
+            except:
+                instance.delete()
 
 
     def __str__(self):

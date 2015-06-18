@@ -68,5 +68,18 @@ class ReserveringPolsbandje(models.Model):
         managed = True
         db_table = 'reservering_polsbandje'
 
+    """
+    Als er een nieuwe reservering wordt gemaakt koppelen wij dit automatisch aan een beschikbaar polsbandje
+    """
+    @receiver(post_save, sender=Reservering)
+    def create_new(sender, instance=None, created=False, **kwargs):
+        if created:
+            print("polsbandje wordt toegevoegd")
+            polsband = Polsbandje.objects.filter(actief=False).first()
+            polsband.actief = False
+            polsband.save()
+            ReserveringPolsbandje.objects.get_or_create(polsband=polsband, reservering=instance, account=instance.persoon.user.settings)
+
+
     def __str__(self):
-        return self.polsband
+        return self.polsband.barcode

@@ -16,7 +16,7 @@ class LoginView(View):
     context = {}
     template = "account/login.html"
     def get(self, request):
-        if request.user is not None:
+        if request.user.is_active:
             messages.warning(request, "you are already logged in")
             return redirect("events:index")
 

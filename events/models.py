@@ -149,12 +149,6 @@ class Polsbandje(models.Model):
     def __str__(self):
         return self.barcode
 
-    @receiver(post_save, sender=Reservering)
-    def create_new(sender, instance=None, created=False, **kwargs):
-        if created:
-            pass
-            #ReserveringPolsbandje.objects.get_or_create(polsband=Polsbandje.objects.filter(actief=False)[0],reservering=sender,account=sender.account)
-
 
 
 

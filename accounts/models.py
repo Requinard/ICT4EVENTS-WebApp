@@ -21,7 +21,7 @@ class Account(models.Model):
         (5, 'Basic'),
     ), default=1)
 
-    profile_picture = models.FileField(blank=True, null=True, upload_to='profilepictures/%Y/%m/%d')
+    profile_picture = models.FileField(blank=True, null=True, upload_to='profilepictures/%Y/%m/%d', default="https://www.drupal.org/files/profile_default.png")
 
     class Meta:
         managed = True

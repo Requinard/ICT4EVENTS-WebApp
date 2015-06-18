@@ -2,7 +2,7 @@
     <div class="panel-body">
         <div class="row">
             <div class="col-lg-3">
-                <img src="http://lorempixel.com/400/400" class="img-responsive">
+                <img src="{% if user.settings.profile_picture %}{{ user.settings.profile_picture.url }}{% else %}https://www.drupal.org/files/profile_default.png{% endif %}" class="img-responsive">
                 <div class="row">
                     <div class="col-md-12">
                         <a href="{% url "sharing:like" post.bijdrage.id 'like' %}" class="btn btn-primary btn-block"><i class="fa fa-thumbs-up"></i> Like</a>

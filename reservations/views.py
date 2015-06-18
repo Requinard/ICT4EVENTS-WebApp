@@ -22,7 +22,8 @@ class IndexView(View):
         p = Productexemplaar.get_available_items(active_event)
 
         self.context["products"] = p
-        self.context['cart'] = request.session['cart']
+        if 'cart' in request.session:
+            self.context['cart'] = request.session['cart']
         return render(request, self.template, self.context)
 
 class CartView(View):

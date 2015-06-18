@@ -1,37 +1,50 @@
+{% load file_field %}
+
 <div class="panel">
-    <div class="panel-body">
-        <div class="row">
-            <div class="col-lg-3">
-                <img src="{% if user.settings.profile_picture %}{{ user.settings.profile_picture.url }}{% else %}https://www.drupal.org/files/profile_default.png{% endif %}" class="img-responsive">
-                <div class="row">
-                    <div class="col-md-12">
-                        <a href="{% url "sharing:like" post.bijdrage.id 'like' %}" class="btn btn-primary btn-block"><i class="fa fa-thumbs-up"></i> Like</a>
-                    </div>
-                    <div class="col-md-12">
-                        <a href="{% url "sharing:like" post.bijdrage.id 'report' %}"class="btn btn-danger btn-block" ><i class="fa fa-exclamation"></i> Report</a>
-                    </div>
-                </div>
+	<div class="panel-body">
+		<div class="row">
+			<div class="col-lg-3">
+				<img src="
+						{% if user.settings.profile_picture %}{{ user.settings.profile_picture.url }}{% else %}https://www.drupal.org/files/profile_default.png{% endif %}"
+					 class="img-responsive">
+
+				<div class="row">
+					<div class="col-md-12">
+						<a href="{% url "sharing:like" post.bijdrage.id 'like' %}" class="btn btn-primary btn-block"><i
+								class="fa fa-thumbs-up"></i> Like</a>
+					</div>
+					<div class="col-md-12">
+						<a href="{% url "sharing:like" post.bijdrage.id 'report' %}" class="btn btn-danger btn-block"><i
+								class="fa fa-exclamation"></i> Report</a>
+					</div>
+				</div>
 
 
-            </div>
-            {% if post.bijdrage.soort == "bericht" %}
-                <div class="col-lg-9">
-                    <h3><a href="{% url 'sharing:post_details' post.bijdrage.id %}">{{ post.titel }}</a></h3>
-                    <p class="pull-right">{{ post.bijdrage.get_like_count }} Like(s), {{ post.bijdrage.get_report_count }} Report(s)</p>
-                    <h4>{{ post.bijdrage.user }}</h4>
-                    <p>{{ post.inhoud|linebreaks }}</p>
-                    <a  href="{% url 'sharing:post_details' post.bijdrage.id %}" class="btn pull-right btn-info">Lees meer</a>
-                </div>
-            {% else %}
-                <div class="col-lg-9">
-                    <h3><a href="{% url 'sharing:post_details' post.bijdrage.id %}">{{ post.titel }}</a></h3>
-                    <p class="pull-right">{{ post.bijdrage.get_like_count }} Like(s), {{ post.bijdrage.get_report_count }} Report(s)</p>
-                    <h4>{{ post.bijdrage.user }}</h4>
-                    <img src="{{ post.bestandslocatie.url }}"class="img-responsive">
-                    <p>{{ post.inhoud|linebreaks }}</p>
-                    <a  href="{% url 'sharing:post_details' post.bijdrage.id %}" class="btn pull-right btn-info">Lees meer</a>
-                </div>
-            {% endif %}
-        </div>
-    </div>
+			</div>
+			{% if post.bijdrage.soort == 1 %}
+				<div class="col-lg-9">
+					<h3><a href="{% url 'sharing:post_details' post.bijdrage.id %}">{{ post.titel }}</a></h3>
+
+					<p class="pull-right">{{ post.bijdrage.get_like_count }}
+						Like(s), {{ post.bijdrage.get_report_count }} Report(s)</p>
+					<h4>{{ post.bijdrage.user }}</h4>
+
+					<p>{{ post.inhoud|linebreaks }}</p>
+					<a href="{% url 'sharing:post_details' post.bijdrage.id %}" class="btn pull-right btn-info">Lees
+						meer</a>
+				</div>
+			{% else %}
+				<div class="col-lg-9">
+					<h3><a href="{% url 'sharing:post_details' post.bijdrage.id %}">{{ post.titel }}</a></h3>
+
+					<p class="pull-right">{{ post.bijdrage.get_like_count }}
+						Like(s), {{ post.bijdrage.get_report_count }} Report(s)</p>
+					<h4>{{ post.bijdrage.user }}</h4>
+					{{ post.bestandslocatie.url|linkify }}
+					<a href="{% url 'sharing:post_details' post.bijdrage.id %}" class="btn pull-right btn-info">Lees
+						meer</a>
+				</div>
+			{% endif %}
+		</div>
+	</div>
 </div>

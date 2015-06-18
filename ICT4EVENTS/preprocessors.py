@@ -11,7 +11,6 @@ def base(request):
     if request.user.is_active:
         try:
             context['pre_events'] = request.user.settings.get_reservations()
-            print(context['pre_events'])
         except:
             pass
 

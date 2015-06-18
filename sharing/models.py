@@ -33,6 +33,7 @@ class Bericht(models.Model):
     class Meta:
         managed = True
         db_table = 'bericht'
+        ordering = ("-id",)
 
 
 class Bestand(models.Model):
@@ -49,6 +50,7 @@ class Bestand(models.Model):
     class Meta:
         managed = True
         db_table = 'bestand'
+        ordering = ("-id",)
 
 
 class Bijdrage(models.Model):
@@ -73,6 +75,7 @@ class Bijdrage(models.Model):
     class Meta:
         managed = True
         db_table = 'bijdrage'
+        ordering = ("id",)
 
 
 class BijdrageBericht(models.Model):

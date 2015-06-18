@@ -38,6 +38,7 @@ class LoginForm(forms.Form):
             )
         )
 
+
 class RegisterForm(forms.Form):
     username = forms.CharField(
         label="Gebruikersnaam",
@@ -92,6 +93,7 @@ class RegisterForm(forms.Form):
             Submit("submit", "Submit", css_class="btn-primary btn-block")
         )
 
+
 class DetailsForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super(DetailsForm, self).__init__(*args, **kwargs)
@@ -102,15 +104,14 @@ class DetailsForm(forms.ModelForm):
         self.helper.label_class = 'col-lg-3'
         self.helper.field_class = 'col-lg-8'
 
-
         self.helper.form_action = "/account/profile/set/details/"
 
         self.helper.add_input(Submit('submit', 'Adres opslaan', css_class="btn-block"))
 
-
     class Meta:
         model = Persoon
         exclude = ("id", "user")
+
 
 class UserForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
@@ -126,10 +127,10 @@ class UserForm(forms.ModelForm):
 
         self.helper.add_input(Submit('submit', 'Profiel opslaan', css_class="btn-block"))
 
-
     class Meta:
         model = User
         fields = ("username", "first_name", "last_name", "email")
+
 
 class SettingsForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
@@ -145,7 +146,23 @@ class SettingsForm(forms.ModelForm):
 
         self.helper.add_input(Submit('submit', 'Instellingen opslaan', css_class="btn-block"))
 
-
     class Meta:
         model = Account
         exclude = ("id", "gebruiker", "activatiehash", "active_event", "geactiveerd")
+
+
+class ActivateForm(forms.ModelForm):
+    def __init__(self, *args, **kwargs):
+        super(ActivateForm, self).__init__(*args, **kwargs)
+        self.helper = FormHelper()
+
+        self.helper.form_class = 'form-horizontal'
+
+        self.helper.label_class = 'col-lg-3'
+        self.helper.field_class = 'col-lg-8'
+
+        self.helper.add_input(Submit('submit', 'Instellingen opslaan', css_class="btn-block"))
+
+    class Meta:
+        model = User
+        fields = ("username", "first_name", "last_name", "password")

@@ -10,15 +10,14 @@ class BijdrageTests(TestCase):
         pass
 
     def test_bijdrage_can_be_x(self):
-        b = Bijdrage().soort
+        bij = Bijdrage()
 
-        for item in b:
-            bij = Bijdrage()
-
-            bij.soort = item
-            bij.datum = datetime.now()
-            try:
-                bij.save()
-                self.assertIsNotNone(bij.pk)
-            except:
-                self.assertEqual(True, False, 'Could not save bijdrage with valid inputs')
+        bij.soort = 1
+        bij.datum = datetime.now()
+        bij.event_id = 1
+        bij.user_id = 1
+        try:
+            bij.save()
+            self.assertIsNotNone(bij.pk)
+        except:
+            self.assertEqual(True, False, 'Could not save bijdrage with valid inputs')

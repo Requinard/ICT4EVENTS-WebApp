@@ -77,7 +77,7 @@ class ReserveringPolsbandje(models.Model):
         if created:
             print("polsbandje wordt toegevoegd")
             polsband = Polsbandje.objects.filter(actief=False).first()
-            polsband.actief = False
+            polsband.actief = True
             polsband.save()
             ReserveringPolsbandje.objects.get_or_create(polsband=polsband, reservering=instance, account=instance.persoon.user.settings)
 

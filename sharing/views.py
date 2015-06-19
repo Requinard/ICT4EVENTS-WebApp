@@ -60,7 +60,7 @@ class IndexView(View):
 
 class PostView(View):
     context = {}
-    template = "sharing/post.html"
+    template = ""
 
     @method_decorator(login_required)
     def get(self, request, post_id):
@@ -75,7 +75,7 @@ class PostView(View):
 
         self.context['post'] = p
 
-        return render(request, self.template, self.context)
+        return render(request, "sharing/post.html", self.context)
 
     @method_decorator(login_required)
     def post(self, request, post_id):

@@ -1,0 +1,75 @@
+.full-height {
+    min-height: 90vh;
+    width: 100%;
+}
+
+.background-image-1{
+    background-image: url(../../photo-1429032021766-c6a53949594f.jpg) !important;
+    background-attachment: fixed !important;
+    background-size: cover !important;
+    background-color: transparent;
+}
+.background-image-2{
+    background-image: url(../../capital.jpg) !important;
+    background-attachment: fixed !important;
+    background-size: cover !important;
+    background-position: 80% 80%;
+    background-color: transparent;
+}
+.background-image-3{
+    background-image: url(../../london.jpg) !important;
+    background-attachment: fixed !important;
+    background-size: cover !important;
+    background-position: center center;
+    background-color: transparent;
+}
+.background-image-4{
+    background-image: url(../../footer.jpg) !important;
+    background-attachment: fixed !important;
+    background-size: cover !important;
+    background-position: center center;
+    background-color: transparent;
+}
+#first{
+    margin-top: -20px;
+}
+
+.divider {
+    height: 10vh;
+    width: 100%;
+}
+
+.footer{
+    height: 70vh;
+}
+
+.footer-text{
+    min-height: 30vh;
+    background-color: #212121 !important;
+    color: #b0bec5 !important;
+}
+
+.full-vertical-height {
+    height: 90vh;
+}
+
+.background-red {
+    background-color: #f44336 !important;
+}
+.foreground-red {
+    color: #f44336 !important;
+}
+
+.background-blue {
+    background-color: #2196f3 !important;
+}
+.background-light-blue {
+    background-color:  #03a9f4 !important;
+}
+.background-yellow {
+    background-color:  #ffe0b2 !important;
+}
+
+.padding-top-50px {
+    margin-top: 300px !important;
+}

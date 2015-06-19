@@ -1,33 +1,148 @@
-{% extends 'base.html' %}
+{% load staticfiles %}
 
-{% block content %}
-	<div class="container">
-		<div class="row">
-			<div class="col-lg-8">
-				<h1 class="page-header">Opkomende Events</h1>
+<!DOCTYPE html>
+<html>
+<head lang="en">
+	<meta charset="UTF-8">
 
-				<div class="panel">
-					<div class="panel-body">
-						<div class="row">
-							{% for event in events %}
-								{% include 'snippet/event.html' %}
-							{% endfor %}
-						</div>
-					</div>
-				</div>
-			</div>
-			<div class="col-lg-4">
-				<h1>Dit is een zijkolom</h1>
+	<script src="{% static 'js/jquery/jquery.min.js' %}"></script>
+	<script src="{% static 'js/bootstrap/bootstrap.min.js' %}"></script>
 
-				<p>hier kan vanalles</p>
-			</div>
+	<!-- jquery UI -->
 
-			<div class="col-lg-12">
-				<div class="panel">
-					<div class="panel-body">
-						<h1>Hi</h1>
-					</div>
-				</div>
-			</div>
+	<link rel="stylesheet" href="{% static 'js/jquery-ui/jquery-ui.min.css' %}">
+<link rel="stylesheet" href="{% static 'css/frontpage/frontpage.css' %}">
+	<script src="{% static 'js/jquery-ui/jquery-ui.min.js' %}"></script>
+
+	{% if user.settings.active_theme == 2 %}
+		<!-- CSS -->
+		<link rel="stylesheet" href="{% static 'css/bootstrap/bootstrap.min.css' %}">
+		<link rel="stylesheet" href="{% static 'css/metro/metro-bootstrap.min.css' %}">
+	{% elif user.settings.active_theme == 3 %}
+		<!-- CSS -->
+		<link rel="stylesheet" href="{% static 'css/i328/bootstrap.css' %}">
+		<link rel="stylesheet" href="{% static 'css/i328/bootstrap-theme.css' %}">
+	{% elif user.settings.active_theme == 4 %}
+		<link rel="stylesheet" href="{% static 'css/bootsflat/bootstrap.min.css' %}">
+		<link rel="stylesheet" href="{% static 'css/bootsflat/site.min.css' %}">
+
+		<!-- JS -->
+		<script src="{% static 'js/bootsflat/site.min.js' %}"></script>
+	{% elif user.settings.active_theme == 5 %}
+		<link rel="stylesheet" href="{% static 'css/bootstrap/bootstrap.min.css' %}">
+	{% else %}
+		<!-- CSS -->
+		<link rel="stylesheet" href="{% static 'css/bootstrap/bootstrap.min.css' %}">
+		<link rel="stylesheet" href="{% static 'css/material/material.css' %}">
+		<link rel="stylesheet" href="{% static 'css/material/ripples.css' %}">
+		<link rel="stylesheet" href="{% static 'css/material/roboto.css' %}">
+
+		<!-- JS -->
+		<script src="{% static 'js/material/material.min.js' %}"></script>
+		<script src="{% static 'js/material/ripples.min.js' %}"></script>
+		<script type="application/javascript">
+			$(document).ready(function () {
+				$.material.init();
+			});
+		</script>
+	{% endif %}
+	<link rel="stylesheet" href="{% static 'css/font-awesome/font-awesome.min.css' %}">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>{% if user.settings.active_event %} {{ user.settings.active_event }} {% else %} ICT4EVENT {% endif %}</title>
+</head>
+<body>
+
+<nav class="navbar navbar-default">
+	<div class="container-fluid">
+		<!-- Brand and toggle get grouped for better mobile display -->
+		<div class="navbar-header">
+			<button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
+					data-target="#bs-example-navbar-collapse-1">
+				<span class="sr-only">Toggle navigation</span>
+				<span class="icon-bar"></span>
+				<span class="icon-bar"></span>
+				<span class="icon-bar"></span>
+			</button>
+			<a class="navbar-brand" href="{% url 'events:index' %}">{% if user.settings.active_event %}
+				{{ user.settings.active_event|upper }} {% else %} ICT4EVENT {% endif %}</a>
 		</div>
-{% endblock %}
+
+		<!-- Collect the nav links, forms, and other content for toggling -->
+		<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+			<ul class="nav navbar-nav">
+				<li class="dropdown">
+					<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Events
+						<span class="caret"></span></a>
+					<ul class="dropdown-menu" role="menu">
+						{% if pre_events %}
+							{% for event in pre_events %}
+								<li><a href="{% url 'events:set_active_event' event.id %}">{{ event }}</a></li>
+							{% endfor %}
+						{% else %}
+							<li class="navbar-text">Geen registraties!</li>
+						{% endif %}
+					</ul>
+				</li>
+				<li>
+					<a href="{% url "sharing:index" %}">Sharing</a>
+				</li>
+				<li class="dropdown">
+					<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Reserveringen
+						<span class="caret"></span> </a>
+					<ul class="dropdown-menu" role="menu">
+						<li><a href="{% url 'reservations:index' %}">Bekijk de winkel</a></li>
+						<li><a href="{% url 'reservations:current_reservations' %}">Bekijk reservaties</a></li>
+						<li><a href="{% url 'reservations:place' %}">Beheer plaats</a></li>
+					</ul>
+				</li>
+			</ul>
+
+			<ul class="nav navbar-nav navbar-right">
+				{% if user.is_authenticated %}
+
+					<li>
+
+						<div class="navbar-form">
+							<input type="text" class="form-control" placeholder="Search" id="form-field-search">
+						</div>
+					</li>
+					<li class="dropdown">
+						<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button"
+						   aria-expanded="false"><i class="fa fa-user"></i> {{ user.get_full_name }} <span
+								class="caret"></span></a>
+						<ul class="dropdown-menu" role="menu">
+							<li><a href="{% url 'account:profile' %}">Profiel</a></li>
+							<li class="divider"></li>
+							{% if user.is_superuser %}
+								<li><a href="{% url 'admin:index' %}">Admin</a></li>
+								<li><a href="/api/">API</a></li>
+								<li class="divider"></li>
+							{% endif %}
+							{% if user.is_staff %}
+								<li><a href="{% url 'staff:index' %}">Barcode scanner</a></li>
+								<li class="divider"></li>
+							{% endif %}
+							<li><a href="{% url 'account:logout' %}">Logout</a></li>
+						</ul>
+					</li>
+				{% else %}
+					<li><a href="{% url 'account:create' %}">Create account</a></li>
+					<li><a href="{% url 'account:login' %}"><i class="fa fa-child"></i> Log in</a></li>
+				{% endif %}
+			</ul>
+		</div>
+		<!-- /.navbar-collapse -->
+	</div>
+	<!-- /.container-fluid -->
+</nav>
+
+<div class="container full-height">
+
+</div>
+
+
+<script src="{% static 'js/strengthjs/strength.min.js' %}"></script>
+<script src="{% static 'js/SME.js' %}"></script>
+
+</body>
+</html>

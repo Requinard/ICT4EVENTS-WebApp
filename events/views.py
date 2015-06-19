@@ -7,12 +7,39 @@ from django.views.generic import View
 from events.forms import PlekReserveringForm
 from .models import *
 from sharing.models import Bericht
-
+import random
+slogans = [
+    "Van Virtueel naar Hiertueel",
+    "You can't spell exciting without ICT",
+    "Putting the ICT in Social Media",
+    "'; DROP TABLE *;",
+    "This site uses cookiedough",
+    "No animals were harmed in the making of this website",
+    "Why don't you take a seat right there",
+    "I'm not mad, just impressed",
+    "100% uptime, except when we're down",
+    "85% of the time we are up 100% of the time",
+    "Powered by unicorns, rainbow dust and fairy tails",
+    "What's that song? Darude sandstorm",
+    "<a href='https://www.youtube.com/watch?v=dQw4w9WgXcQ'>Click me</a>",
+    "Turn down for patat",
+    "Is het al Doner Donderdag?",
+    "shrek is love. shrek is life",
+    "Brought to you by Heisenberg Meth Emporium",
+    "This site is running on your favourite bath salts",
+    "ITS OVER 9000",
+    "Your mother was a newt and your father smelt of elderberries",
+    "She turned me into a newt! ... I got better."
+]
 
 class IndexView(View):
     def get(self, request):
         context = {}
         context['events'] = Event.objects.all()
+        if request.user.is_active:
+            context['slogan'] = random.choice(slogans)
+        else:
+            context['slogan'] = slogans[0]
         return render(request, 'events/index.html', context)
 
 

@@ -205,7 +205,7 @@ class PlaceAddnewPerson(View):
             polsbandje = ReserveringPolsbandje.objects.get(account=Account.objects.filter(gebruiker=user))
             # Now we send the activation email
 
-            mail_body = "{0} heeft je uitgenodigd om mee te komen naar het {1}, \n activeer nu je account hier http://localhost:8000/account/activate/{2}/ om mee te gaan,\n neem dan je persoonlijke barcode mee die je hier kan vinden http://barcodes4.me/barcode/c128a/{3}.png".format(request.user.get_full_name(), request.user.settings.active_event.naam, user.settings.activatiehash, polsbandje.id)
+            mail_body = "{0} heeft je uitgenodigd om mee te komen naar het {1}, \n activeer nu je account hier http://ict4events.terarion.com/account/activate/{2}/ om mee te gaan,\n neem dan je persoonlijke barcode mee die je hier kan vinden http://barcodes4.me/barcode/c128a/{3}.png".format(request.user.get_full_name(), request.user.settings.active_event.naam, user.settings.activatiehash, polsbandje.id)
             send_mail("Account geregistreerd voor ICT4EVENTS", mail_body, "admin@ict4events.com", [user.email, ],
                       fail_silently=False)
 

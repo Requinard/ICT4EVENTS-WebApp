@@ -12,7 +12,7 @@ from events.models import Reservering, Persoon, Plek
 # Create your views here.
 from django.views.generic import View
 from reservations.forms import EmailReservationForm, RegisterForm
-from reservations.models import Productexemplaar, Verhuur
+from reservations.models import Productexemplaar, Verhuur, Product
 
 
 class IndexView(View):
@@ -48,7 +48,7 @@ class CartView(View):
         else:
             cart = request.session['cart']
 
-        cart[product_id] = 1
+        cart[Productexemplaar.objects.get(id = product_id).product.serie] = product_id
         request.session['cart'] = cart
         self.context['cart'] = cart
 
@@ -80,7 +80,8 @@ class CartConfirmView(View):
         active_event = request.user.settings.active_event
         if 'cart' in request.session:
             cart = request.session.get('cart', {})
-            for product_exemplaar in cart:
+            for product_naam in cart:
+                product_exemplaar = cart[product_naam]
                 datumuit = request.user.settings.active_event.datumeinde
                 prijs = Productexemplaar.objects.get(id=product_exemplaar).product.prijs
                 res_pk = ReserveringPolsbandje.objects.filter(account=request.user.settings)[0]

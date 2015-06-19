@@ -27,7 +27,7 @@
             <div class="panel">
                 <div class="panel-body">
                     {% if cart %}
-                        {% for exemplaar in cart %}
+                        {% for exemplaar in cart.keys %}
                             <p> {{ exemplaar }}</p>
                         {% endfor %}
                         <a href="{% url "reservations:deletecart" %}" class="btn btn-danger btn-xs">Maak winkelwagen

@@ -69,6 +69,7 @@ AUTHENTICATION_BACKENDS = (
     'django_auth_ldap3.backends.LDAPBackend',
     'django.contrib.auth.backends.ModelBackend',
     'social.backends.twitter.TwitterOAuth',
+    'social.backends.facebook.FacebookOAuth2'
 )
 
 FILE_UPLOAD_HANDLERS = (
@@ -85,7 +86,7 @@ TEMPLATE_LOADERS = (
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [os.path.join(BASE_DIR, 'templates'), ],
+        'DIRS': (os.path.join(BASE_DIR, 'templates'), ),
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -180,6 +181,9 @@ LOGOUT_REDIRECT_URL = "events:index"
 # Social auth
 SOCIAL_AUTH_TWITTER_KEY = 'TPCyOZBq49Sje3qr3txoc8FVL'
 SOCIAL_AUTH_TWITTER_SECRET = 'pnMSAx1HKZmoUydhF0IG4zH3nJu4FuFFpmp8dBbhD5fAkendSx'
+
+SOCIAL_AUTH_FACEBOOK_KEY = '1447061265598204'
+SOCIAL_AUTH_FACEBOOK_SECRET = '60e5fbbfd12abbdebce4b6534a15bbc1'
 
 # LDAP Auth
 

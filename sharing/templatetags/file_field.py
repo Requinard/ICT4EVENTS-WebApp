@@ -3,6 +3,7 @@ from django.template.defaultfilters import stringfilter
 
 register = template.Library()
 
+
 @register.filter
 @stringfilter
 def linkify(value):
@@ -15,7 +16,14 @@ def linkify(value):
     elif extension in ["mp3", "wav", "ogg"]:
         print("<audio controls><source='{0}'></audio>".format(value))
         return '<audio src="{0}" controls><a href="{0}"> Download</a></audio>'.format(value)
-    elif extension in ["webm",]:
-        return '<video src="{0}" controls class="img-responsive">you browser doesnt support embedded video. <a href="{0}>Download it here</a></video>'.format(value)
+    elif extension in ["webm", ]:
+        return '<video src="{0}" controls class="img-responsive">you browser doesnt support embedded video. <a href="{0}>Download it here</a></video>'.format(
+            value)
     else:
         return '<a href="{0}" class="btn btn-warning">Download dit bestand</a>'.format(value)
+
+
+@register.filter
+@stringfilter
+def audit(value):
+    pass

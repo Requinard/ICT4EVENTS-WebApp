@@ -3,6 +3,7 @@ from crispy_forms.helper import FormHelper
 from crispy_forms.layout import Layout, Field, Submit
 from django import forms
 
+
 class BerichtForm(forms.Form):
     title = forms.CharField(max_length=80)
     bericht = forms.CharField(
@@ -30,6 +31,8 @@ class BerichtForm(forms.Form):
                 Submit('post', 'Post', css_class=" btn-primary btn-block"),
             )
         )
+
+
 class CommentForm(forms.Form):
     bericht = forms.CharField(
         required=True,
@@ -52,7 +55,3 @@ class CommentForm(forms.Form):
                 Submit('post', 'Post', css_class=" btn-primary btn-block"),
             )
         )
-
-
-
-

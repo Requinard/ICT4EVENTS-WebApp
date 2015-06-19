@@ -21,6 +21,7 @@ class BarcodeForm(forms.Form):
                 Submit('post', 'Scan code', css_class=" btn-primary btn-block"),
             )
         )
+
     barcode = forms.CharField(
         max_length=20,
         required=True,

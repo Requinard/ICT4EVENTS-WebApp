@@ -4,21 +4,23 @@
 {% load crispy_forms_tags %}
 
 {% block content %}
-<div class="container">
-	<div class="row">
-		<div class="col-lg-8">
-			<img src="{% static 'map.png' %}" class="img-responsive">
-		</div>
-		<div class="col-lg-4">
-			<h3>Mijn reservering</h3>
-			<p>{{ reservering.persoon }} op {{ reservering.plekken }}</p>
-			<h3>Mijn plekgenoten</h3>
-			{% for reservering in other_reservations %}
-				<p>{{ reservering.persoon }} op {{ reservering.plekken }}</p>
-			{% endfor %}
+	<div class="container">
+		<div class="row">
+			<div class="col-lg-8">
+				<img src="{% static 'map.png' %}" class="img-responsive">
+			</div>
+			<div class="col-lg-4">
+				<h3>Mijn reservering</h3>
 
-			{% crispy form %}
+				<p>{{ reservering.persoon }} op {{ reservering.plekken }}</p>
+
+				<h3>Mijn plekgenoten</h3>
+				{% for reservering in other_reservations %}
+					<p>{{ reservering.persoon }} op {{ reservering.plekken }}</p>
+				{% endfor %}
+
+				{% crispy form %}
+			</div>
 		</div>
 	</div>
-</div>
 {% endblock %}

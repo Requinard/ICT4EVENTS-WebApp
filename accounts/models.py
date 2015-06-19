@@ -21,13 +21,16 @@ class Account(models.Model):
         (5, 'Basic'),
     ), default=1)
 
-    profile_picture = models.FileField(blank=True, null=True, upload_to='profilepictures/%Y/%m/%d', default="https://www.drupal.org/files/profile_default.png")
+    profile_picture = models.FileField(blank=True, null=True, upload_to='profilepictures/%Y/%m/%d',
+                                       default="https://www.drupal.org/files/profile_default.png")
 
     def get_current_reservation(self):
         if self.active_event is None:
             return None
         else:
-            return Reservering.objects.get(datumstart=self.active_event.datumstart, datumeinde=self.active_event.datumeinde, persoon=self.gebruiker.details)
+            return Reservering.objects.get(datumstart=self.active_event.datumstart,
+                                           datumeinde=self.active_event.datumeinde, persoon=self.gebruiker.details)
+
     class Meta:
         managed = True
         db_table = 'account'
@@ -36,7 +39,6 @@ class Account(models.Model):
     def create_new(sender, instance=None, created=False, **kwargs):
         if created:
             Account.objects.get_or_create(gebruiker=instance, activatiehash=hash(sender.pk), geactiveerd=False)
-
 
     @receiver(pre_delete, sender=User)
     def delete_on_parent(sender, instance=None, **kwargs):
@@ -62,6 +64,7 @@ class Account(models.Model):
     def get_posts(self):
         return Bericht.objects.filter(bijdrage__user=self.gebruiker)
 
+
 class ReserveringPolsbandje(models.Model):
     polsband = models.ForeignKey(Polsbandje)
     reservering = models.ForeignKey(Reservering)
@@ -77,6 +80,7 @@ class ReserveringPolsbandje(models.Model):
     """
     Als er een nieuwe reservering wordt gemaakt koppelen wij dit automatisch aan een beschikbaar polsbandje
     """
+
     @receiver(post_save, sender=Reservering)
     def create_new(sender, instance=None, created=False, **kwargs):
         if created:
@@ -85,10 +89,10 @@ class ReserveringPolsbandje(models.Model):
                 polsband = Polsbandje.objects.filter(actief=False).first()
                 polsband.actief = True
                 polsband.save()
-                ReserveringPolsbandje.objects.get_or_create(polsband=polsband, reservering=instance, account=instance.persoon.user.settings)
+                ReserveringPolsbandje.objects.get_or_create(polsband=polsband, reservering=instance,
+                                                            account=instance.persoon.user.settings)
             except:
                 instance.delete()
-
 
     def __str__(self):
         return self.polsband.barcode

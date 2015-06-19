@@ -82,17 +82,18 @@
 						{% endif %}
 					</ul>
 				</li>
-                <li>
-                    <a href="{% url "sharing:index" %}">Sharing</a>
-                </li>
-            <li class="dropdown">
-                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Reserveringen <span class="caret"></span> </a>
-                <ul class="dropdown-menu" role="menu">
-                    <li><a href="{% url 'reservations:index'%}">Bekijk de winkel</a> </li>
-                    <li><a href="{%url 'reservations:current_reservations' %}">Bekijk reservaties</a> </li>
-                    <li><a href="{% url 'reservations:place'%}">Beheer plaats</a> </li>
-                </ul>
-            </li>
+				<li>
+					<a href="{% url "sharing:index" %}">Sharing</a>
+				</li>
+				<li class="dropdown">
+					<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Reserveringen
+						<span class="caret"></span> </a>
+					<ul class="dropdown-menu" role="menu">
+						<li><a href="{% url 'reservations:index' %}">Bekijk de winkel</a></li>
+						<li><a href="{% url 'reservations:current_reservations' %}">Bekijk reservaties</a></li>
+						<li><a href="{% url 'reservations:place' %}">Beheer plaats</a></li>
+					</ul>
+				</li>
 			</ul>
 
 			<ul class="nav navbar-nav navbar-right">
@@ -109,17 +110,17 @@
 						   aria-expanded="false"><i class="fa fa-user"></i> {{ user.get_full_name }} <span
 								class="caret"></span></a>
 						<ul class="dropdown-menu" role="menu">
-						<li><a href="{% url 'account:profile' %}">Profiel</a> </li>
-						<li class="divider"></li>
+							<li><a href="{% url 'account:profile' %}">Profiel</a></li>
+							<li class="divider"></li>
 							{% if user.is_superuser %}
 								<li><a href="{% url 'admin:index' %}">Admin</a></li>
 								<li><a href="/api/">API</a></li>
 								<li class="divider"></li>
 							{% endif %}
 							{% if user.is_staff %}
-								<li><a href="{% url 'staff:index' %}">Barcode scanner</a> </li>
+								<li><a href="{% url 'staff:index' %}">Barcode scanner</a></li>
 								<li class="divider"></li>
-							{%endif%}
+							{% endif %}
 							<li><a href="{% url 'account:logout' %}">Logout</a></li>
 						</ul>
 					</li>

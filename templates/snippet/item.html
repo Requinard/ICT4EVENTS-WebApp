@@ -1,18 +1,18 @@
 <div class="panel">
-    <div class="panel-body">
-        <div class="col-md-12">
-            <img src="http://lorempixel.com/1000/1000" class="img-responsive">
-        </div>
+	<div class="panel-body">
+		<div class="col-md-12">
+			<img src="http://lorempixel.com/1000/1000" class="img-responsive">
+		</div>
 
-        <div class="col-md-12">
-            <h3>{{ exemplaar.product.merk }}</h3>
+		<div class="col-md-12">
+			<h3>{{ exemplaar.product.merk }}</h3>
 
-            <p>{{ exemplaar.product.serie }}</p>
+			<p>{{ exemplaar.product.serie }}</p>
 
-            <p> {{ exemplaar.product.prijs }} euro</p>
-        </div>
-        <div class="col-md-12">
-            <a href="{% url "reservations:addtocart" exemplaar.id %}" class="btn btn-primary">Reserveren</a>
-        </div>
-    </div>
+			<p> {{ exemplaar.product.prijs }} euro</p>
+		</div>
+		<div class="col-md-12">
+			<a href="{% url "reservations:addtocart" exemplaar.id %}" class="btn btn-primary">Reserveren</a>
+		</div>
+	</div>
 </div>

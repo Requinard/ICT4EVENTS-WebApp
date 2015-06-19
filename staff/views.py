@@ -16,7 +16,7 @@ class IndexView(View):
 
         return render(request, "staff/index.html", context)
 
-    def post(self,request):
+    def post(self, request):
         context = {}
 
         form = BarcodeForm(request.POST)
@@ -40,4 +40,3 @@ class IndexView(View):
         context['form'] = form
 
         return render(request, "staff/index.html", context)
-

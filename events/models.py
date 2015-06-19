@@ -98,7 +98,8 @@ class Plek(models.Model):
 
         except AttributeError:
             """We now know that the database does not use stored procedures, so we will save it in python"""
-            reserverd = Reservering.objects.filter(datumstart__gte=startdate, datumeinde__lte=enddate, plekken__icontains=plek_id)
+            reserverd = Reservering.objects.filter(datumstart__gte=startdate, datumeinde__lte=enddate,
+                                                   plekken__icontains=plek_id)
 
             if len(reserverd) > 0:
                 return (False, None)
@@ -123,6 +124,7 @@ class PlekSpecificatie(models.Model):
     def __str__(self):
         return self.waarde
 
+
 class Reservering(models.Model):
     datumstart = models.DateField(blank=True, null=True)
     datumeinde = models.DateField(blank=True, null=True)
@@ -138,6 +140,7 @@ class Reservering(models.Model):
     def __str__(self):
         return "%s tot %s" % (self.datumstart, self.datumeinde)
 
+
 class Polsbandje(models.Model):
     barcode = models.CharField(unique=True, max_length=510)
     actief = models.BooleanField()
@@ -148,8 +151,6 @@ class Polsbandje(models.Model):
 
     def __str__(self):
         return self.barcode
-
-
 
 
 class Specificatie(models.Model):
@@ -200,4 +201,3 @@ class Persoon(models.Model):
             persoon = Persoon.objects.get(user=instance)
 
             persoon.delete()
-

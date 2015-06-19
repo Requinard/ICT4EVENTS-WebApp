@@ -5,32 +5,33 @@
 {% load crispy_forms_tags %}
 
 {% block content %}
-<div class="container">
-<div class="row">
-	<div class="col-lg-8">
-		<img src="{% static 'map.png' %}" class="img-responsive">
-	</div>
-	<div class="col-lg-4">
-		<h3>zoek naar een plek</h3>
-		<input type="text" id="plek_autosearch" class="form-control">
+	<div class="container">
+		<div class="row">
+			<div class="col-lg-8">
+				<img src="{% static 'map.png' %}" class="img-responsive">
+			</div>
+			<div class="col-lg-4">
+				<h3>zoek naar een plek</h3>
+				<input type="text" id="plek_autosearch" class="form-control">
 
-		<ul class="list-group" id="plek_listgroup">
-			<li class="list-group-item">Begin met typen</li>
-		</ul>
-        <ul>
-            {% for place in places %}
-                <li class="list-group-item">{{ place.nummer }}</li>
-            {% endfor %}
-        </ul>
+				<ul class="list-group" id="plek_listgroup">
+					<li class="list-group-item">Begin met typen</li>
+				</ul>
+				<ul>
+					{% for place in places %}
+						<li class="list-group-item">{{ place.nummer }}</li>
+					{% endfor %}
+				</ul>
 
-        
+
+			</div>
+		</div>
+		<br/>
+
+		<div class="row">
+			<div class="col-lg-12">
+				{% crispy form %}
+			</div>
+		</div>
 	</div>
-</div>
-<br/>
-<div class="row">
-	<div class="col-lg-12">
-		{% crispy form %}
-	</div>
-</div>
-</div>
 {% endblock %}

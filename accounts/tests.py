@@ -1,5 +1,4 @@
 from django.contrib.auth.models import User
-from django.core.urlresolvers import reverse
 from django.test import TestCase
 
 # Create your tests here.
@@ -44,7 +43,8 @@ class LoginViewTest(TestCase):
         messages = list(r.context['messages'])
 
         self.assertTrue(messages)
-        self.assertIn("Uitloggen",messages[0].message)
+        self.assertIn("Uitloggen", messages[0].message)
+
 
 class AccountTests(TestCase):
     def setUp(self):
@@ -80,5 +80,3 @@ class AccountTests(TestCase):
         u = User.objects.get(username='test')
         g = Account.objects.get(gebruiker=u)
         self.assertNotEqual('not test', str(g))
-
-

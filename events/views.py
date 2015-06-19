@@ -92,7 +92,7 @@ class ReserveView(View):
                     p = None
                 else:
                     reservering = Reservering(datumstart=datum_begin, datumeinde=datum_eind, plekken=plek_id,
-                                                                      persoon=pers_id)
+                                              persoon=pers_id)
                     reservering.save()
                     ret = True
                     p = reservering

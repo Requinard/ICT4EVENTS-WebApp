@@ -1,7 +1,6 @@
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
-from django.core.urlresolvers import reverse
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib import messages
 
@@ -15,6 +14,7 @@ from accounts.models import Account
 class LoginView(View):
     context = {}
     template = "account/login.html"
+
     def get(self, request):
         if request.user.is_active:
             messages.warning(request, "you are already logged in")
@@ -27,7 +27,8 @@ class LoginView(View):
         loginform = LoginForm(request.POST)
 
         if loginform.is_valid():
-            user = authenticate(username=loginform.cleaned_data['username'], password=loginform.cleaned_data['password'])
+            user = authenticate(username=loginform.cleaned_data['username'],
+                                password=loginform.cleaned_data['password'])
             if user is not None:
                 if user.is_active:
                     login(request, user)
@@ -44,6 +45,7 @@ class LoginView(View):
             self.context['loginform'] = loginform
             return render(request, self.template, self.context)
 
+
 class LogoutView(View):
     def get(self, request):
         logout(request)
@@ -51,28 +53,29 @@ class LogoutView(View):
 
         return redirect("account:login")
 
+
 class CreateNewAccountView(View):
     def get(self, request):
         context = {}
 
         context['registerform'] = RegisterForm()
-        return render(request, "account/new.html",context)
+        return render(request, "account/new.html", context)
 
     def post(self, request):
         registerform = RegisterForm(request.POST)
-        
+
         if registerform.is_valid():
             username = registerform.cleaned_data['username']
             email = registerform.cleaned_data['email']
             password = registerform.cleaned_data['password']
             password_conf = registerform.cleaned_data['password_repeat']
 
-    
             if password != password_conf:
                 messages.error(request, "De wachtwoorden kwamen niet overeen")
                 return self.get(request)
-    
-            User.objects._create_user(username=username, password=password, email=email, is_staff=False, is_superuser=False)
+
+            User.objects._create_user(username=username, password=password, email=email, is_staff=False,
+                                      is_superuser=False)
 
             user = User.objects.get(username=username)
 
@@ -80,24 +83,25 @@ class CreateNewAccountView(View):
             user.last_name = registerform.cleaned_data['last_name']
 
             user.save()
-    
+
             if user.pk != None:
                 messages.success(request, "Account aangemaakt!")
             else:
                 messages.error(request, "Account niet aangemaakt")
-    
+
             return redirect("events:index")
         else:
-            context = {'registerform' : registerform}
+            context = {'registerform': registerform}
 
             return render(request, "account/new.html", context)
+
 
 class ProfileView(View):
     @method_decorator(login_required)
     def get(self, request, username=None, mode=None):
         context = {}
 
-        if username== None:
+        if username == None:
             context['requested_user'] = request.user
             context['detailsform'] = DetailsForm(instance=request.user.details)
             context['userform'] = UserForm(instance=request.user)
@@ -145,13 +149,14 @@ class ProfileView(View):
 
             if settings.is_valid():
                 settings.save()
-                messages.success(request,"Intelling gewijzigd")
+                messages.success(request, "Intelling gewijzigd")
                 return self.get(request)
             else:
                 messages.warning(request, "Er zijn een paar velden niet goed ingevuld")
                 context['settingsform'] = settings
 
         return render(request, "account/profile.html", context)
+
 
 class ActivateView(View):
     def get(self, request, hashcode):
@@ -188,5 +193,3 @@ class ActivateView(View):
         context['form'] = form
 
         return render(request, "account/activate.html", context)
-
-

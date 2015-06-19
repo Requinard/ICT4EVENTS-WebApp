@@ -33,7 +33,8 @@
 											{% if registered %}
 												<a href="#" class="btn btn-info btn-block">Je bent al ingeschreven!</a>
 											{% else %}
-												<a href="{% url 'events:register' event.id %}" class="btn btn-primary btn-block">Schrijf je in</a>
+												<a href="{% url 'events:register' event.id %}"
+												   class="btn btn-primary btn-block">Schrijf je in</a>
 											{% endif %}
 										{% else %}
 											<a href="{% url 'account:login' %}" class="btn btn-warning btn-block">Log in

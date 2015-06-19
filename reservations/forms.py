@@ -52,7 +52,6 @@ class RegisterForm(forms.Form):
             )
         )
 
-
     email = forms.CharField(
         widget=forms.EmailInput,
         required=True,

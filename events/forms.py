@@ -2,6 +2,7 @@ from crispy_forms.helper import FormHelper
 from crispy_forms.layout import Layout, Submit, Field
 from django import forms
 
+
 class PlekReserveringForm(forms.Form):
     plek = forms.CharField(
         max_length=40,

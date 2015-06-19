@@ -7,7 +7,6 @@ from django.db.models import Q
 
 # Create your views here.
 from django.views.generic import View
-import sharing
 from itertools import chain
 from sharing.forms import BerichtForm, CommentForm
 from sharing.models import Bericht, Bijdrage, Bestand, BijdrageBericht, AccountBijdrage, Categorie

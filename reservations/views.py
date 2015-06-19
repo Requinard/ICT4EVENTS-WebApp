@@ -1,19 +1,18 @@
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
-from django.core.urlresolvers import reverse
 from django.utils.decorators import method_decorator
-from django.utils.timezone import datetime
 from django.contrib import messages
-from django.shortcuts import render, redirect, get_object_or_404
-from accounts.models import ReserveringPolsbandje
-from events.models import Polsbandje, Reservering, Persoon, Plek
+from django.shortcuts import render, redirect
 from django.core.mail import send_mail
-import reservations
+
+from accounts.models import ReserveringPolsbandje
+from events.models import Reservering, Persoon, Plek
+
 
 # Create your views here.
 from django.views.generic import View
 from reservations.forms import EmailReservationForm, RegisterForm
-from reservations.models import Product, Productexemplaar, Verhuur
+from reservations.models import Productexemplaar, Verhuur
 
 
 class IndexView(View):
@@ -189,7 +188,7 @@ class PlaceAddnewPerson(View):
 
             persoon.straat = form.cleaned_data["street"]
             persoon.huisnr = form.cleaned_data["house_number"]
-            persoon.woonplaats  = form.cleaned_data["town"]
+            persoon.woonplaats = form.cleaned_data["town"]
             persoon.banknr = form.cleaned_data["bank_number"]
 
             persoon.save()
@@ -197,17 +196,20 @@ class PlaceAddnewPerson(View):
             # Now that we have all the details, we make a reservation
             plek = Plek.objects.get(pk=place_id)
 
-            r = Reservering.objects.get_or_create(plekken=plek, persoon=persoon, datumstart=event.datumstart, datumeinde=event.datumeinde)
+            r = Reservering.objects.get_or_create(plekken=plek, persoon=persoon, datumstart=event.datumstart,
+                                                  datumeinde=event.datumeinde)
 
             # Now we send the activation email
             mail_body = "Activeer hier http://localhost:8000/account/activate/{0}/".format(user.settings.activatiehash)
-            send_mail("Account geregistreerd voor ICT4EVENTS", mail_body, "admin@ict4events.com", [user.email,], fail_silently=False)
+            send_mail("Account geregistreerd voor ICT4EVENTS", mail_body, "admin@ict4events.com", [user.email, ],
+                      fail_silently=False)
 
             return redirect("reservations:place")
 
         context['form'] = form
 
         return render(request, "reservation/addPerson.html", context)
+
 
 class CurrentReservationsView(View):
     def get(self, request):

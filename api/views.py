@@ -1,6 +1,5 @@
 # Create your views here.
 from rest_framework import viewsets
-
 from rest_framework.generics import ListCreateAPIView
 
 from api.serializers import PlekSerializer, PlekSpecificatieSerializer

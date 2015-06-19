@@ -13,18 +13,19 @@ Including another URLconf
     1. Add an import:  from blog import urls as blog_urls
     2. Add a URL to urlpatterns:  url(r'^blog/', include(blog_urls))
 """
-from django.conf.urls import include, url, patterns
+from django.conf.urls import include, url
 from django.conf.urls.static import static
 from django.contrib import admin
+
 from ICT4EVENTS import settings
 
 urlpatterns = [
-    url(r'^sharing/',include("sharing.urls",namespace="sharing")),
-    url(r'^admin/', include(admin.site.urls)),
-    url(r'^social/', include("social.apps.django_app.urls", namespace="social")),
-    url(r'^account/', include('accounts.urls', namespace="account")),
-    url(r'^api/', include("api.urls", namespace='api')),
-    url(r'^reservations/', include('reservations.urls', namespace="reservations")),
-    url(r'^staff/', include('staff.urls', namespace="staff")),
-    url(r'^', include('events.urls', namespace="events")),
-] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+                  url(r'^sharing/', include("sharing.urls", namespace="sharing")),
+                  url(r'^admin/', include(admin.site.urls)),
+                  url(r'^social/', include("social.apps.django_app.urls", namespace="social")),
+                  url(r'^account/', include('accounts.urls', namespace="account")),
+                  url(r'^api/', include("api.urls", namespace='api')),
+                  url(r'^reservations/', include('reservations.urls', namespace="reservations")),
+                  url(r'^staff/', include('staff.urls', namespace="staff")),
+                  url(r'^', include('events.urls', namespace="events")),
+              ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

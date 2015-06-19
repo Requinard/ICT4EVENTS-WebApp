@@ -1,6 +1,3 @@
-from events.models import Event
-
-
 def base(request):
     """
     Adds basic context to each request.

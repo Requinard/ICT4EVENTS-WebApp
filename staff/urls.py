@@ -1,4 +1,5 @@
 from django.conf.urls import url, patterns
+
 from staff.views import IndexView
 
 urlpatterns = patterns(

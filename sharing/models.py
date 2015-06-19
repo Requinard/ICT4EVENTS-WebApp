@@ -1,4 +1,3 @@
-from time import timezone
 from django.contrib.auth.models import User
 from django.db import models
 
@@ -24,11 +23,10 @@ class Bericht(models.Model):
     inhoud = models.CharField(max_length=255)
 
     def get_child_comments(self):
-        bijdrages = BijdrageBericht.objects.filter(bijdrage_id = self.bijdrage.id)
+        bijdrages = BijdrageBericht.objects.filter(bijdrage_id=self.bijdrage.id)
         comments = [x.bericht for x in bijdrages]
 
         return comments
-
 
     class Meta:
         managed = True
@@ -42,7 +40,7 @@ class Bestand(models.Model):
     bestandslocatie = models.FileField(upload_to='user_uploads/%Y/%m/%d')
 
     def get_child_comments(self):
-        bijdrages = BijdrageBericht.objects.filter(bijdrage_id = self.bijdrage.id)
+        bijdrages = BijdrageBericht.objects.filter(bijdrage_id=self.bijdrage.id)
         comments = [x.bericht for x in bijdrages]
 
         return comments
@@ -67,10 +65,10 @@ class Bijdrage(models.Model):
     event = models.ForeignKey(Event)
 
     def get_like_count(self):
-        return AccountBijdrage.objects.filter(bijdrage=self,like=True).count()
+        return AccountBijdrage.objects.filter(bijdrage=self, like=True).count()
 
     def get_report_count(self):
-        return AccountBijdrage.objects.filter(bijdrage=self,ongewenst=True).count()
+        return AccountBijdrage.objects.filter(bijdrage=self, ongewenst=True).count()
 
     class Meta:
         managed = True

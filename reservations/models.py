@@ -1,5 +1,7 @@
 from datetime import datetime
+
 from django.db import models
+
 
 # Create your models here.
 from accounts.models import ReserveringPolsbandje
@@ -38,10 +40,11 @@ class Productexemplaar(models.Model):
         managed = True
         db_table = 'productexemplaar'
 
+
 class Verhuur(models.Model):
     productexemplaar = models.ForeignKey(Productexemplaar, blank=True, null=True)
     res_pb = models.ForeignKey(ReserveringPolsbandje, blank=True, null=True)
-    datumin = models.DateField(blank=True, null=True,default=datetime.now())
+    datumin = models.DateField(blank=True, null=True, default=datetime.now())
     datumuit = models.DateField(blank=True, null=True)
     prijs = models.DecimalField(max_digits=19, decimal_places=2, blank=True, null=True)
     betaald = models.BooleanField(default=False)
@@ -49,6 +52,7 @@ class Verhuur(models.Model):
     class Meta:
         managed = True
         db_table = 'verhuur'
+
 
 class Product(models.Model):
     productcategorie = models.ForeignKey('Productcat', related_name="+")

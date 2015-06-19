@@ -32,6 +32,8 @@ class IndexView(View):
             else:
                 messages.success(request, "polsbandje gevonden!")
                 polsbandje = polsbandje.first()
+                polsbandje.aanwezig = True
+                polsbandje.save()
 
                 context['reservering'] = polsbandje.reservering
 

@@ -8,6 +8,7 @@ from events.forms import PlekReserveringForm
 from .models import *
 from sharing.models import Bericht
 import random
+
 slogans = [
     "Van Virtueel naar Hiertueel",
     "You can't spell exciting without ICT",
@@ -29,8 +30,11 @@ slogans = [
     "This site is running on your favourite bath salts",
     "ITS OVER 9000",
     "Your mother was a newt and your father smelt of elderberries",
-    "She turned me into a newt! ... I got better."
+    "She turned me into a newt! ... I got better.",
+    "Yer a wizard harry",
+    "Aloha Snackbar"
 ]
+
 
 class IndexView(View):
     def get(self, request):

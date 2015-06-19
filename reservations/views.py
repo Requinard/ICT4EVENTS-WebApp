@@ -200,7 +200,7 @@ class PlaceAddnewPerson(View):
                                                   datumeinde=event.datumeinde)
 
             # Now we send the activation email
-            mail_body = "Activeer hier http://localhost:8000/account/activate/{0}/".format(user.settings.activatiehash)
+            mail_body = "{0} heeft je uitgenodigd om mee te komen naar het{0},activeer nu je account hier http://localhost:8000/account/activate/{0}/ om mee te gaan".format(request.user.settings.naam, request.user.settings.active_event, user.settings.activatiehash)
             send_mail("Account geregistreerd voor ICT4EVENTS", mail_body, "admin@ict4events.com", [user.email, ],
                       fail_silently=False)
 

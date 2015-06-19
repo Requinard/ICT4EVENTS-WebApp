@@ -31,6 +31,7 @@ class SetActiveEventView(View):
 
 
 class EventDetailsView(View):
+    @method_decorator(login_required)
     def get(self, request, event_id):
         context = {}
         Event.objects.filter(pk=event_id)

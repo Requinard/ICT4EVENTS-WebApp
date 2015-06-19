@@ -104,11 +104,10 @@ class Plek(models.Model):
             if len(reserverd) > 0:
                 return (False, None)
             else:
-                reservation = Reservering(datumstart=startdate, datumeinde=enddate, persoon=pers_id)
+                plek = Plek.objects.filter(nummer=plek).first()
+                reservation = Reservering(datumstart=startdate, datumeinde=enddate, persoon=pers_id, plekken=plek)
 
                 reservation.save()
-
-                reservation.plekken.add(plek)
                 return (True, reservation)
 
 

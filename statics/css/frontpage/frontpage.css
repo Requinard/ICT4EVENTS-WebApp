@@ -45,6 +45,7 @@
 
 .footer-text{
     min-height: 30vh;
+    padding: 40px 0px;
     background-color: #212121 !important;
     color: #b0bec5 !important;
 }
@@ -72,4 +73,9 @@
 
 .padding-top-50px {
     margin-top: 300px !important;
+}
+
+.panel {
+    border-bottom-left-radius: 0px !important;
+    border-top-right-radius: 0px !important;
 }

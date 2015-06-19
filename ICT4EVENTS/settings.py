@@ -78,6 +78,10 @@ FILE_UPLOAD_HANDLERS = (
 
 ROOT_URLCONF = 'ICT4EVENTS.urls'
 
+TEMPLATE_LOADERS = (
+    'django.template.loaders.sharing.templatetags.file_field',
+)
+
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',

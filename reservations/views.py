@@ -12,7 +12,7 @@ from events.models import Reservering, Persoon, Plek
 # Create your views here.
 from django.views.generic import View
 from reservations.forms import EmailReservationForm, RegisterForm
-from reservations.models import Productexemplaar, Verhuur
+from reservations.models import Productexemplaar, Verhuur, Product
 
 
 class IndexView(View):
@@ -48,7 +48,7 @@ class CartView(View):
         else:
             cart = request.session['cart']
 
-        cart[product_id] = 1
+        cart[Productexemplaar.objects.get(id = product_id).product.serie] = product_id
         request.session['cart'] = cart
         self.context['cart'] = cart
 
@@ -80,7 +80,8 @@ class CartConfirmView(View):
         active_event = request.user.settings.active_event
         if 'cart' in request.session:
             cart = request.session.get('cart', {})
-            for product_exemplaar in cart:
+            for product_naam in cart:
+                product_exemplaar = cart[product_naam]
                 datumuit = request.user.settings.active_event.datumeinde
                 prijs = Productexemplaar.objects.get(id=product_exemplaar).product.prijs
                 res_pk = ReserveringPolsbandje.objects.filter(account=request.user.settings)[0]
@@ -109,12 +110,15 @@ class PlaceReservationView(View):
         reservering = Reservering.objects.filter(datumstart=event.datumstart, datumeinde=event.datumeinde,
                                                  persoon=request.user.details).first()
 
-        # Get the rest of the people on this address
-        other_reservations = Reservering.objects.filter(datumstart=event.datumstart, datumeinde=event.datumeinde,
-                                                        plekken=reservering.plekken)
+        if reservering:
+            # Get the rest of the people on this address
+            other_reservations = Reservering.objects.filter(datumstart=event.datumstart, datumeinde=event.datumeinde,
+                                                            plekken=reservering.plekken)
 
-        context['reservering'] = reservering
-        context['other_reservations'] = other_reservations
+            context['reservering'] = reservering
+            context['other_reservations'] = other_reservations
+        else:
+            messages.error(request,'Je hebt geen plaats gereserveerd.')
         context['form'] = EmailReservationForm()
 
         return render(request, "reservation/placereservation.html", context)
@@ -200,7 +204,7 @@ class PlaceAddnewPerson(View):
                                                   datumeinde=event.datumeinde)
 
             # Now we send the activation email
-            mail_body = "Activeer hier http://localhost:8000/account/activate/{0}/".format(user.settings.activatiehash)
+            mail_body = "{0} heeft je uitgenodigd om mee te komen naar het{0},activeer nu je account hier http://localhost:8000/account/activate/{0}/ om mee te gaan".format(request.user.settings.naam, request.user.settings.active_event, user.settings.activatiehash)
             send_mail("Account geregistreerd voor ICT4EVENTS", mail_body, "admin@ict4events.com", [user.email, ],
                       fail_silently=False)
 

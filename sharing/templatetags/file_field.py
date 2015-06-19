@@ -16,7 +16,7 @@ def linkify(value):
     elif extension in ["mp3", "wav", "ogg"]:
         print("<audio controls><source='{0}'></audio>".format(value))
         return '<audio src="{0}" controls><a href="{0}"> Download</a></audio>'.format(value)
-    elif extension in ["webm", ]:
+    elif extension in ["webm","mp4" ]:
         return '<video src="{0}" controls class="img-responsive">you browser doesnt support embedded video. <a href="{0}>Download it here</a></video>'.format(
             value)
     else:

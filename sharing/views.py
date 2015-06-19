@@ -22,9 +22,9 @@ class IndexView(View):
         p = Bericht.objects.filter(Q(bijdrage__soort=1), bijdrage__event=active_event)
         bestanden = Bestand.objects.filter(bijdrage__soort=2, bijdrage__event=active_event)
 
-        q = list(chain(list(p), list(bestanden)))
+        if len(bestanden) > 0:
+            p = list(chain(list(p), list(bestanden)))
 
-        p = q
         self.context["posts"] = p
         self.context["form"] = BerichtForm()
         return render(request, self.template, self.context)
@@ -36,7 +36,7 @@ class IndexView(View):
         form = BerichtForm(request.POST)
 
         if form.is_valid():
-            if form.cleaned_data["bestand"] != "" or form.cleaned_data["bestand"] != None:
+            try:
                 bijdrage = Bijdrage(event=request.user.settings.active_event, user=request.user, datum=datetime.now(),
                                     soort=2)
                 bijdrage.save()
@@ -44,7 +44,7 @@ class IndexView(View):
                 bestand = Bestand(bijdrage=bijdrage, bestandslocatie=request.FILES['bestand'],
                                   categorie=Categorie.objects.first())
                 bestand.save()
-            else:
+            except:
                 bijdrage = Bijdrage(event=request.user.settings.active_event, user=request.user, datum=datetime.now(),
                                     soort=1)
                 bijdrage.save()

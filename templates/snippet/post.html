@@ -24,13 +24,13 @@
 			</div>
 			{% if post.bijdrage.soort == 1 %}
 				<div class="col-lg-9">
-					<h3><a href="{% url 'sharing:post_details' post.bijdrage.id %}">{{ post.titel }}</a></h3>
+					<h3><a href="{% url 'sharing:post_details' post.bijdrage.id %}">{{ post.titel|audit }}</a></h3>
 
 					<p class="pull-right">{{ post.bijdrage.get_like_count }}
 						Like(s), {{ post.bijdrage.get_report_count }} Report(s)</p>
 					<h4>{{ post.bijdrage.user }}</h4>
 
-					<p>{{ post.inhoud|linebreaks }}</p>
+					<p>{{ post.inhoud|audit|linebreaks }}</p>
 					<a href="{% url 'sharing:post_details' post.bijdrage.id %}" class="btn pull-right btn-info">Lees
 						meer</a>
 				</div>

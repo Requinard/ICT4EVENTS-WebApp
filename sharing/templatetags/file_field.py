@@ -26,4 +26,11 @@ def linkify(value):
 @register.filter
 @stringfilter
 def audit(value):
-    pass
+    # Deze wordenlijst is bepaald door experts
+    bad_words = ["fuck", "kanker", "kut", "tering", "tyfus", "klote", "Mike", "Martijn", "Oracle", "Mathijs"]
+
+    for word in bad_words:
+        if word in value:
+            value = value.replace(word, "*"*len(word))
+
+    return value

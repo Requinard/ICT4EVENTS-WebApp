@@ -35,6 +35,7 @@ class BerichtForm(forms.Form):
 
 class CommentForm(forms.Form):
     bericht = forms.CharField(
+        widget=forms.Textarea,
         required=True,
         max_length=255
     )
@@ -45,8 +46,8 @@ class CommentForm(forms.Form):
 
         self.helper.form_class = 'form-horizontal'
 
-        self.helper.label_class = 'col-lg-3'
-        self.helper.field_class = 'col-lg-8'
+        self.helper.label_class = 'collapse'
+        self.helper.field_class = 'col-lg-12'
 
         self.helper.layout = Layout(
             Field("bericht"),

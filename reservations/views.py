@@ -22,7 +22,7 @@ class IndexView(View):
     @method_decorator(login_required)
     def get(self, request):
         if request.session.get('cart', False) == False:
-            request.session['cart'] = []
+            request.session['cart'] = {}
 
         active_event = request.user.settings.active_event
         p = Productexemplaar.get_available_items(active_event)
@@ -40,7 +40,7 @@ class CartView(View):
     @method_decorator(login_required)
     def get(self, request, product_id):
         if request.session.get('cart', False) == False:
-            request.session['cart'] = []
+            request.session['cart'] = {}
         active_event = request.user.settings.active_event
         cart = {}
         if 'cart' not in request.session or request.session['cart'] == None:
@@ -76,7 +76,7 @@ class CartConfirmView(View):
     @method_decorator(login_required)
     def get(self, request):
         if request.session.get('cart', False) == False:
-            request.session['cart'] = []
+            request.session['cart'] = {}
         active_event = request.user.settings.active_event
         if 'cart' in request.session:
             cart = request.session.get('cart', {})

@@ -109,12 +109,15 @@ class PlaceReservationView(View):
         reservering = Reservering.objects.filter(datumstart=event.datumstart, datumeinde=event.datumeinde,
                                                  persoon=request.user.details).first()
 
-        # Get the rest of the people on this address
-        other_reservations = Reservering.objects.filter(datumstart=event.datumstart, datumeinde=event.datumeinde,
-                                                        plekken=reservering.plekken)
+        if reservering:
+            # Get the rest of the people on this address
+            other_reservations = Reservering.objects.filter(datumstart=event.datumstart, datumeinde=event.datumeinde,
+                                                            plekken=reservering.plekken)
 
-        context['reservering'] = reservering
-        context['other_reservations'] = other_reservations
+            context['reservering'] = reservering
+            context['other_reservations'] = other_reservations
+        else:
+            messages.error(request,'Je hebt geen plaats gereserveerd.')
         context['form'] = EmailReservationForm()
 
         return render(request, "reservation/placereservation.html", context)

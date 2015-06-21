@@ -19,13 +19,23 @@ class IndexView(View):
     @method_decorator(login_required)
     def get(self, request):
         active_event = request.user.settings.active_event
-        p = Bericht.objects.filter(Q(bijdrage__soort=1), bijdrage__event=active_event)
-        bestanden = Bestand.objects.filter(bijdrage__soort=2, bijdrage__event=active_event)
+        berichten = Bericht.objects.filter(bijdrage__soort=1, bijdrage__event=active_event)[:10]
+        bestanden = Bestand.objects.filter(bijdrage__soort=2, bijdrage__event=active_event)[:10]
 
-        if len(bestanden) > 0:
-            p = list(chain(list(p), list(bestanden)))
+        posts = []
 
-        self.context["posts"] = p
+        for i in range(0, 10):
+            try:
+                posts.append(berichten[i])
+            except:
+                pass
+
+            try:
+                posts.append(bestanden[i])
+            except:
+                pass
+
+        self.context["posts"] = posts
         self.context["form"] = BerichtForm()
         return render(request, self.template, self.context)
 

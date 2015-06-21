@@ -93,3 +93,9 @@ class Categorie(models.Model):
     class Meta:
         managed = True
         db_table = 'categorie'
+
+    def __str__(self):
+        if self.categorie_gerelateerd is None:
+            return self.naam
+        else:
+            return "{0} < {1}".format(self.naam, self.categorie_gerelateerd)

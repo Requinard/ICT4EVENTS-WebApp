@@ -13,10 +13,14 @@
 					<div class="panel-body">
 						<h3>Gevonden events</h3>
 						<ul class="list-group">
+							{% if result_events %}
 							{% for event in result_events %}
 								<li class="list-group-item"><a
 										href="{% url 'events:details' event.id %}">{{ event }}</a></li>
 							{% endfor %}
+						{% else %}
+							<li class="list-group-item">Geen events gevonden!</li>
+						{% endif %}
 						</ul>
 					</div>
 				</div>
@@ -26,9 +30,13 @@
 					<div class="panel-body">
 						<h3>Gevonden posts</h3>
 						<ul>
+						{% if result_posts %}
 							{% for post in result_posts %}
-								<li>{{ post.titel }}</li>
+								<li class="list-group-item">{{ post.titel }}</li>
 							{% endfor %}
+						{% else %}
+							<li class="list-group-item">Geen posts gevonden!</li>
+						{% endif %}
 						</ul>
 					</div>
 				</div>
@@ -39,11 +47,16 @@
 						<h3>Gevonden users</h3>
 
 						<ul class="list-group">
+						{% if result_users %}
 							{% for user in result_users %}
 								<li class="list-group-item"><a
 										href="{% url 'account:profile-user' user.username %}"> {{ user.username }}</a>
 								</li>
 							{% endfor %}
+						{% else %}
+							<li class="list-group-item">Geen gebruikers gevonden!</li>
+
+						{% endif %}
 						</ul>
 					</div>
 				</div>

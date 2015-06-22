@@ -5,6 +5,7 @@ from django.shortcuts import render, redirect
 # Create your views here.
 from django.utils.decorators import method_decorator
 from django.views.generic import View
+from ICT4EVENTS.decorators import event_is_active
 from events.models import Polsbandje, Specificatie, Locatie, Plek, PlekSpecificatie
 from reservations.models import Verhuur, Product, Productcat, Productexemplaar
 from staff.forms import BarcodeForm
@@ -15,6 +16,7 @@ from django.contrib.admin.views.decorators import staff_member_required
 class IndexView(View):
     @method_decorator(login_required)
     @method_decorator(staff_member_required)
+    @method_decorator(event_is_active)
     def get(self, request):
         context = {}
 
@@ -24,6 +26,7 @@ class IndexView(View):
 
     @method_decorator(login_required)
     @method_decorator(staff_member_required)
+    @method_decorator(event_is_active)
     def post(self, request):
         context = {}
 
@@ -52,6 +55,7 @@ class IndexView(View):
         return render(request, "staff/index.html", context)
 
 class GenerateView(View):
+    @method_decorator(login_required)
     def get(self, request):
         if not request.user.is_superuser:
             messages.error(request, "You are not allowed to view this page")

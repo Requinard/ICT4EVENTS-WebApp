@@ -42,6 +42,7 @@ class IndexView(View):
         return render(request, self.template, self.context)
 
     @method_decorator(login_required)
+    @method_decorator(event_is_active)
     def post(self, request):
         context = {}
 
@@ -75,6 +76,7 @@ class PostView(View):
     template = ""
 
     @method_decorator(login_required)
+    @method_decorator(event_is_active)
     def get(self, request, post_id):
         bijdrage = get_object_or_404(Bijdrage, pk=post_id)
         self.context["form"] = CommentForm()
@@ -90,6 +92,7 @@ class PostView(View):
         return render(request, "sharing/post.html", self.context)
 
     @method_decorator(login_required)
+    @method_decorator(event_is_active)
     def post(self, request, post_id):
         context = {}
         form = CommentForm(request.POST)
@@ -114,6 +117,7 @@ class LikeReportView(View):
     template = "sharing/post.html"
 
     @method_decorator(login_required)
+    @method_decorator(event_is_active)
     def get(self, request, post_id, modus):
         bijdrage = get_object_or_404(Bijdrage, pk=post_id)
         accountbijdrage = AccountBijdrage.objects.get_or_create(bijdrage=bijdrage, user=request.user)[0]

@@ -4,6 +4,7 @@ from django.utils.decorators import method_decorator
 from django.contrib import messages
 from django.shortcuts import render, redirect
 from django.core.mail import send_mail
+from ICT4EVENTS.decorators import event_is_active
 
 from accounts.models import ReserveringPolsbandje, Account
 from events.models import Reservering, Persoon, Plek
@@ -21,6 +22,7 @@ class IndexView(View):
     template = "reservation/index.html"
 
     @method_decorator(login_required)
+    @method_decorator(event_is_active)
     def get(self, request):
         if request.session.get('cart', False) == False:
             request.session['cart'] = {}
@@ -39,6 +41,7 @@ class CartView(View):
     template = "reservation/index.html"
 
     @method_decorator(login_required)
+    @method_decorator(event_is_active)
     def get(self, request, product_id):
         if request.session.get('cart', False) == False:
             request.session['cart'] = {}
@@ -61,6 +64,7 @@ class CartDeleteView(View):
     template = "reservation/index.html"
 
     @method_decorator(login_required)
+    @method_decorator(event_is_active)
     def get(self, request):
         if request.session.get('cart', False) == False:
             request.session['cart'] = []
@@ -75,6 +79,7 @@ class CartConfirmView(View):
     template = "reservation/index.html"
 
     @method_decorator(login_required)
+    @method_decorator(event_is_active)
     def get(self, request):
         if request.session.get('cart', False) == False:
             request.session['cart'] = {}
@@ -103,6 +108,7 @@ class CartConfirmView(View):
 
 class PlaceReservationView(View):
     @method_decorator(login_required)
+    @method_decorator(event_is_active)
     def get(self, request):
         context = {}
         event = request.user.settings.active_event
@@ -125,6 +131,7 @@ class PlaceReservationView(View):
         return render(request, "reservation/placereservation.html", context)
 
     @method_decorator(login_required)
+    @method_decorator(event_is_active)
     def post(self, request):
         context = {}
         event = request.user.settings.active_event
@@ -161,6 +168,7 @@ class PlaceReservationView(View):
 
 class PlaceAddnewPerson(View):
     @method_decorator(login_required)
+    @method_decorator(event_is_active)
     def get(self, request, place_id):
         context = {}
 
@@ -169,6 +177,7 @@ class PlaceAddnewPerson(View):
         return render(request, "reservation/addPerson.html", context)
 
     @method_decorator(login_required)
+    @method_decorator(event_is_active)
     def post(self, request, place_id):
         context = {}
 
@@ -220,6 +229,8 @@ class PlaceAddnewPerson(View):
 
 
 class CurrentReservationsView(View):
+    @method_decorator(login_required)
+    @method_decorator(event_is_active)
     def get(self, request):
         context = {}
         reservering = request.user.settings.get_current_reservation()

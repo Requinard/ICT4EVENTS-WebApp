@@ -61,7 +61,7 @@ class Product(models.Model):
     typenummer = models.CharField(max_length=510, blank=True, null=True)
     prijs = models.DecimalField(max_digits=19, decimal_places=2, blank=True, null=True)
 
-    #product_image = models.FileField(upload_to="product/%Y/%m/%d", null=True, blank=True)
+    product_image = models.FileField(upload_to="product/%Y/%m/%d", null=True, blank=True)
 
     class Meta:
         managed = True

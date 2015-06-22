@@ -17,6 +17,7 @@ $(function () {
 });
 $(document).ready(function () {
     $("#plek_autosearch").on('input', function (e) {
+        if(e.va)
         var value = e.currentTarget.value;
 
         if(e.length < 2) return;
@@ -25,8 +26,6 @@ $(document).ready(function () {
         var url = "/api/auto/plek/"
 
         var totalURL = url + value + "/";
-
-        console.log(totalURL);
 
         var plekken = {};
 

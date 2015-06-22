@@ -9,10 +9,11 @@ from accounts.models import ReserveringPolsbandje, Account
 from events.models import Reservering, Persoon, Plek
 
 
+
 # Create your views here.
 from django.views.generic import View
 from reservations.forms import EmailReservationForm, RegisterForm
-from reservations.models import Productexemplaar, Verhuur, Product
+from reservations.models import Productexemplaar, Verhuur
 
 
 class IndexView(View):
@@ -48,7 +49,7 @@ class CartView(View):
         else:
             cart = request.session['cart']
 
-        cart[Productexemplaar.objects.get(id = product_id).product.serie] = product_id
+        cart[Productexemplaar.objects.get(id=product_id).product.serie] = product_id
         request.session['cart'] = cart
         self.context['cart'] = cart
 
@@ -118,7 +119,7 @@ class PlaceReservationView(View):
             context['reservering'] = reservering
             context['other_reservations'] = other_reservations
         else:
-            messages.error(request,'Je hebt geen plaats gereserveerd.')
+            messages.error(request, 'Je hebt geen plaats gereserveerd.')
         context['form'] = EmailReservationForm()
 
         return render(request, "reservation/placereservation.html", context)
@@ -205,7 +206,9 @@ class PlaceAddnewPerson(View):
             polsbandje = ReserveringPolsbandje.objects.get(account=Account.objects.filter(gebruiker=user))
             # Now we send the activation email
 
-            mail_body = "{0} heeft je uitgenodigd om mee te komen naar het {1}, \n activeer nu je account hier http://ict4events.terarion.com/account/activate/{2}/ om mee te gaan,\n neem dan je persoonlijke barcode mee die je hier kan vinden http://barcodes4.me/barcode/c128a/{3}.png".format(request.user.get_full_name(), request.user.settings.active_event.naam, user.settings.activatiehash, polsbandje.id)
+            mail_body = "{0} heeft je uitgenodigd om mee te komen naar het {1}, \n activeer nu je account hier http://ict4events.terarion.com/account/activate/{2}/ om mee te gaan,\n neem dan je persoonlijke barcode mee die je hier kan vinden http://barcodes4.me/barcode/c128a/{3}.png".format(
+                request.user.get_full_name(), request.user.settings.active_event.naam, user.settings.activatiehash,
+                polsbandje.polsband.barcode)
             send_mail("Account geregistreerd voor ICT4EVENTS", mail_body, "admin@ict4events.com", [user.email, ],
                       fail_silently=False)
 

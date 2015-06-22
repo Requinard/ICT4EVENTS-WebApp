@@ -8,6 +8,7 @@ from django.db.models import Q
 # Create your views here.
 from django.views.generic import View
 from itertools import chain
+from ICT4EVENTS.decorators import event_is_active
 from sharing.forms import BerichtForm, CommentForm
 from sharing.models import Bericht, Bijdrage, Bestand, BijdrageBericht, AccountBijdrage, Categorie
 
@@ -17,6 +18,7 @@ class IndexView(View):
     template = "sharing/index.html"
 
     @method_decorator(login_required)
+    @method_decorator(event_is_active)
     def get(self, request):
         active_event = request.user.settings.active_event
         berichten = Bericht.objects.filter(bijdrage__soort=1, bijdrage__event=active_event)[:10]

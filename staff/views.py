@@ -14,7 +14,7 @@ from django.contrib.admin.views.decorators import staff_member_required
 
 class IndexView(View):
     @method_decorator(login_required)
-    @staff_member_required
+    @method_decorator(staff_member_required)
     def get(self, request):
         context = {}
 
@@ -23,7 +23,7 @@ class IndexView(View):
         return render(request, "staff/index.html", context)
 
     @method_decorator(login_required)
-    @staff_member_required
+    @method_decorator(staff_member_required)
     def post(self, request):
         context = {}
 

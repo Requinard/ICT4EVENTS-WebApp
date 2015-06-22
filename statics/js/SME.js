@@ -18,6 +18,8 @@ $(function () {
 $(document).ready(function () {
     $("#plek_autosearch").on('input', function (e) {
         var value = e.currentTarget.value;
+
+        if(e.length < 2) return;
         var list = $("#plek_listgroup");
 
         var url = "/api/auto/plek/"
@@ -36,7 +38,7 @@ $(document).ready(function () {
             else {
                 list.empty()
                 //TODO: make pretty representation
-                for (var i = 0; i != data.length; i++) {
+                for (var i = 0; i != 10; i++) {
                     var inter = {};
                     var id = data[i]['plek']['id']
                     if (id in plekken) {
@@ -63,7 +65,7 @@ $(document).ready(function () {
                         specString += internal_state
                     }
 
-                    var string = '<li class="list-group-item">Naam: ' + plekken[item]['naam'] + "<br />" + specString + "<a href='#' class='btn btn-default plek_clickable pull-right' plek_id=" + item + ">Reserveer</a></li>";
+                    var string = '<li class="list-group-item">Naam: ' + plekken[item]['naam'] + "<br />" + specString + "<br/></li>";
 
                     console.log(string);
                     list.append(string);

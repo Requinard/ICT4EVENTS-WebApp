@@ -1,4 +1,5 @@
 # Create your views here.
+from django.db.models import Q
 from rest_framework import viewsets
 from rest_framework.generics import ListCreateAPIView
 
@@ -11,7 +12,7 @@ class PlekAutocompleteViewset(ListCreateAPIView):
 
     def get_queryset(self):
         name = self.kwargs['name']
-        plekken = PlekSpecificatie.objects.filter(plek__nummer__icontains=str(name))
+        plekken = PlekSpecificatie.objects.filter(Q(plek__nummer__icontains=str(name)) | Q(plek__nummer=str(name)))
         return plekken
 
 

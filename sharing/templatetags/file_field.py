@@ -27,7 +27,7 @@ def linkify(value):
 @stringfilter
 def audit(value):
     # Deze wordenlijst is bepaald door experts
-    bad_words = ["fuck", "kanker", "kut", "tering", "tyfus", "klote", "Mike", "Martijn", "Oracle", "Mathijs", "twat", "cunt", "x", "911", "allahu", "ackbar"]
+    bad_words = ["fuck", "kanker", "kut", "tering", "tyfus", "klote", "Mike", "Martijn", "Oracle", "Mathijs", "twat", "cunt","911", "allahu", "ackbar"]
 
     for word in bad_words:
         if word in value:

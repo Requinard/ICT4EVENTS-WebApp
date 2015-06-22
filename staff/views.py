@@ -57,9 +57,9 @@ class GenerateView(View):
             messages.error(request, "You are not allowed to view this page")
             return redirect("events:index")
 
-        #self.generatePolsbandje()
-        #self.generateProducts()
-        self.generatePlaces()
+        self.generatePolsbandje()
+        self.generateProducts()
+        #self.generatePlaces()
 
         return redirect("staff:index")
 

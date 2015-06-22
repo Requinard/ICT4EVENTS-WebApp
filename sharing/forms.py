@@ -5,7 +5,7 @@ from django import forms
 
 
 class BerichtForm(forms.Form):
-    title = forms.CharField(max_length=80)
+    title = forms.CharField(max_length=80, label="Titel")
     bericht = forms.CharField(
         widget=forms.TextInput,
         required=False,

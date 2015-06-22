@@ -3,6 +3,11 @@
     width: 100%;
 }
 
+body {
+    overflow-x: hidden ! important;
+    overflow-y: visible;
+}
+
 .background-image-1{
     background-image: url(../../first.jpg) !important;
     background-attachment: fixed !important;

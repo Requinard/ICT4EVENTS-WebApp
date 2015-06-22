@@ -9,7 +9,7 @@ class BerichtForm(forms.Form):
     bericht = forms.CharField(
         widget=forms.TextInput,
         required=False,
-        max_length=255
+        max_length=255,
     )
     bestand = forms.FileField(required=False)
 

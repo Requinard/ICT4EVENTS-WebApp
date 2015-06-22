@@ -12,7 +12,12 @@
 				{% endif %}
 				<div class="row">
 					<div class="col-md-3">
-						{% crispy form %}
+						<div class="panel">
+							<div class="panel-body">
+								<h3>Plaats comment</h3>
+								{% crispy form %}
+							</div>
+						</div>
 					</div>
 					{% for comment in post.get_child_comments %}
 						<div class="col-lg-3">

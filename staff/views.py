@@ -1,15 +1,20 @@
 from django.contrib import messages
+from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect
 
 # Create your views here.
+from django.utils.decorators import method_decorator
 from django.views.generic import View
-from events.models import Polsbandje
+from events.models import Polsbandje, Specificatie, Locatie, Plek, PlekSpecificatie
 from reservations.models import Verhuur, Product, Productcat, Productexemplaar
 from staff.forms import BarcodeForm
 from accounts.models import ReserveringPolsbandje
 import random
+from django.contrib.admin.views.decorators import staff_member_required
 
 class IndexView(View):
+    @method_decorator(login_required)
+    @staff_member_required
     def get(self, request):
         context = {}
 
@@ -17,6 +22,8 @@ class IndexView(View):
 
         return render(request, "staff/index.html", context)
 
+    @method_decorator(login_required)
+    @staff_member_required
     def post(self, request):
         context = {}
 
@@ -46,9 +53,34 @@ class IndexView(View):
 
 class GenerateView(View):
     def get(self, request):
-        self.generatePolsbandje()
+        if not request.user.is_superuser:
+            messages.error(request, "You are not allowed to view this page")
+            return redirect("events:index")
+
+        #self.generatePolsbandje()
         #self.generateProducts()
+        self.generatePlaces()
+
         return redirect("staff:index")
+
+    def generatePlaces(self):
+        spec1 = Specificatie.objects.get_or_create(naam="Lawaai")[0]
+        spec1val = ["Hoog", "Gemiddeld", "Laag"]
+        spec2 = Specificatie.objects.get_or_create(naam="Comfort")[0]
+        spec3 = Specificatie.objects.get_or_create(naam="Huisvesting")[0]
+        spec3val = ["Bungalow", "Tent", "Groepstent", "Tipi", "Caravan", "Camper"]
+        loc = Locatie.objects.all().first()
+
+        for i in range(1, 667):
+            p = Plek.objects.get_or_create(nummer=str(i), capaciteit=random.choice(range(1,10)), locatie=loc)[0]
+
+            ps = PlekSpecificatie(plek=p, specificatie=spec1, waarde=random.choice(spec1val))
+            ps.save()
+            ps = PlekSpecificatie(plek=p, specificatie=spec2, waarde=random.choice(spec1val))
+            ps.save()
+            ps = PlekSpecificatie(plek=p, specificatie=spec3, waarde=random.choice(spec3val))
+            ps.save()
+
 
     def generatePolsbandje(self):
         try:

@@ -4,10 +4,11 @@ from django.utils.decorators import method_decorator
 from django.contrib import messages
 from django.shortcuts import render, redirect
 from django.core.mail import send_mail
-from ICT4EVENTS.decorators import event_is_active
 
+from ICT4EVENTS.decorators import event_is_active
 from accounts.models import ReserveringPolsbandje, Account
 from events.models import Reservering, Persoon, Plek
+
 
 
 

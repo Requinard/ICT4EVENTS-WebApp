@@ -13,17 +13,16 @@ $(document).ready(function () {
 
 $(function () {
     $(".datepicker").datepicker();
-    $( ".datepicker" ).datepicker( "option", "dateFormat","dd/mm/yy" );
+    $(".datepicker").datepicker("option", "dateFormat", "dd/mm/yy");
 });
 $(document).ready(function () {
     $("#plek_autosearch").on('input', function (e) {
-        if(e.va)
         var value = e.currentTarget.value;
 
-        if(e.length < 2) return;
+        if (e.length < 2) return;
         var list = $("#plek_listgroup");
 
-        var url = "/api/auto/plek/"
+        var url = "/api/auto/plek/";
 
         var totalURL = url + value + "/";
 
@@ -35,11 +34,11 @@ $(document).ready(function () {
                 list.append('<li class="list-group-item">Niks gevonden!</li>')
             }
             else {
-                list.empty()
+                list.empty();
                 //TODO: make pretty representation
                 for (var i = 0; i != 10; i++) {
                     var inter = {};
-                    var id = data[i]['plek']['id']
+                    var id = data[i]['plek']['id'];
                     if (id in plekken) {
                         plekken[id]['specificatie'].push(data[i]['specificatie']['naam']);
                         plekken[id]['waarde'].push(data[i]['waarde']);

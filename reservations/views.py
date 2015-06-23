@@ -208,7 +208,7 @@ class PlaceAddnewPerson(View):
             persoon.save()
 
             # Now that we have all the details, we make a reservation
-            plek = Plek.objects.get(nummer=place_id)
+            plek = Plek.objects.filter(nummer=place_id).first()
 
             r = Reservering.objects.get_or_create(plekken=plek, persoon=persoon, datumstart=event.datumstart,
                                                   datumeinde=event.datumeinde)

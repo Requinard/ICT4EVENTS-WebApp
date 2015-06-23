@@ -8,7 +8,7 @@ urlpatterns = patterns(
     url(r'^logout/', LogoutView.as_view(), name="logout"),
     url(r'^new/', CreateNewAccountView.as_view(), name="create"),
     url(r'^profile/set/(?P<mode>\w+)/', ProfileView.as_view(), name="profile-set"),
-    url(r'^profile/(?P<username>\w+)/', ProfileView.as_view(), name="profile-user"),
+    url(r'^profile/(?P<username>[A-z.]+)/', ProfileView.as_view(), name="profile-user"),
     url(r'^activate/(?P<hashcode>\d+)/', ActivateView.as_view(), name="activate"),
     url(r'^$', ProfileView.as_view(), name="profile"),
 )

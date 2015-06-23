@@ -40,10 +40,7 @@ class IndexView(View):
     def get(self, request):
         context = {}
         context['events'] = Event.objects.all()
-        if request.user.is_active:
-            context['slogan'] = random.choice(slogans)
-        else:
-            context['slogan'] = slogans[0]
+        context['slogan'] = slogans[0]
         return render(request, 'events/index.html', context)
 
 

@@ -61,11 +61,12 @@ class GenerateView(View):
 
         self.generatePolsbandje()
         self.generateProducts()
-        #self.generatePlaces()
+        self.generatePlaces()
 
         return redirect("staff:index")
 
     def generatePlaces(self):
+        l = Locatie.objects.get_or_create(naam="Camping Reeendael")
         spec1 = Specificatie.objects.get_or_create(naam="Lawaai")[0]
         spec1val = ["Hoog", "Gemiddeld", "Laag"]
         spec2 = Specificatie.objects.get_or_create(naam="Comfort")[0]
